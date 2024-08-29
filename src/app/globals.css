@@ -3,15 +3,6 @@
 @tailwind utilities;
 
 @layer utilities {
-  .albums {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-
-  .grid-4-auto {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-
   .container {
     @apply xl:max-w-[1280px];
   }

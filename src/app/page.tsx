@@ -8,14 +8,14 @@ import { FaFileMedical } from "react-icons/fa6";
 
 const HomePage = () => {
   return (
-    <div className="main-props container flex flex-col items-center">
+    <div className="main-props container flex flex-col items-center py-12">
       <h1 className="text-2xl font-bold capitalize text-blue-600">
         Welcome to the home page...
       </h1>
       <div className="mt-10">
         <Image src={nextImage} alt="next" />
       </div>
-      <div className="grid-4-auto mt-16 grid gap-x-8 gap-y-5 self-stretch text-xl *:transition-all">
+      <div className="mt-16 grid grid-cols-1 items-start gap-x-8 gap-y-5 self-stretch text-xl *:transition-all sm:grid-cols-2 xl:grid-cols-4">
         <div className="border border-blue-300 p-5 text-center shadow shadow-slate-400 hover:bg-slate-200">
           <h2 className="flex items-center gap-2 font-bold text-blue-500">
             <MdOutlineAutoAwesome /> Awesome Framework

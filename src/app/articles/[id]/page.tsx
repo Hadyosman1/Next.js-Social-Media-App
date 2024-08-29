@@ -1,4 +1,6 @@
 import Article from "@/components/Articles/Article";
+import AddCommentsForm from "@/components/Articles/comments/AddCommentsForm";
+import Comments from "@/components/Articles/comments/Comments";
 
 type TProps = {
   params: {
@@ -14,8 +16,14 @@ const SingleArticle = async ({ params }: TProps) => {
   const article = await res.json();
 
   return (
-    <div className="flex justify-center">
-      <Article isSingle={true} {...article} />
+    <div className="flex items-start justify-center py-12">
+      <div className="max-w-2xl rounded border border-sky-400 p-2 shadow shadow-sky-400">
+        <Article isSingle={true} {...article} />
+        <hr className="my-3 border-slate-300" />
+        <Comments />
+        <hr className="my-3 border-slate-300" />
+        <AddCommentsForm />
+      </div>
     </div>
   );
 };

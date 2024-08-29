@@ -1,22 +1,29 @@
 "use client";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [formState, setFormState] = useState({ email: "", password: "" });
+  const router = useRouter();
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (formState.email === "")
-      toast.error("E-mail is required..!", { position: "top-center" });
-    if (formState.password === "")
-      toast.error("Password is required..!", { position: "top-center" });
+    if (formState.email === "") {
+      return toast.error("E-mail is required..!", { position: "top-center" });
+    }
+    if (formState.password === "") {
+      return toast.error("Password is required..!", { position: "top-center" });
+    }
 
-    if (formState.password.length < 8 && formState.password.length > 0)
-      toast.error("Password must be at least 8 digits..!", {
+    if (formState.password.length < 8 && formState.password.length > 0) {
+      return toast.error("Password must be at least 8 digits..!", {
         position: "top-center",
       });
+    }
+
+    router.push("/");
   };
 
   return (
@@ -30,7 +37,7 @@ const LoginForm = () => {
       <div className="mb-4 mt-4">
         <label htmlFor="email">E-mail</label>
         <input
-          className="border-b-2 px-3 py-1 focus:border-sky-700 focus:outline-none"
+          className="border-b-2 p-1 focus:border-sky-700 focus:outline-none"
           type="email"
           id="email"
           placeholder="example@example.com"
@@ -44,7 +51,7 @@ const LoginForm = () => {
       <div className="mb-4">
         <label htmlFor="password">Password</label>
         <input
-          className="border-b-2 px-3 py-1 focus:border-sky-700 focus:outline-none"
+          className="border-b-2 p-1 px-3 focus:border-sky-700 focus:outline-none"
           type="password"
           id="password"
           placeholder="enter your password"

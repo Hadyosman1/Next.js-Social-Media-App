@@ -4,7 +4,7 @@ const linkStyle = " rounded-sm px-3 py-1.5 text-slate-100 ";
 
 const AuthLinks = () => {
   return (
-    <div className="flex items-center gap-3 ms-auto">
+    <div className="ms-auto flex items-center gap-1.5 text-sm">
       <Link
         className={`${linkStyle} bg-green-700 hover:bg-green-800`}
         href={"/login"}

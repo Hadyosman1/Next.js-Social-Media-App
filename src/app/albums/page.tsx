@@ -14,7 +14,7 @@ const Albums = async () => {
   const albums: TAlbum[] = await res.json();
 
   return (
-    <div className="main-props albums container gap-3">
+    <div className="main-props container grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3  py-12">
       {albums.map((album) => (
         <div
           className="grid content-between justify-center justify-items-center gap-2 rounded border border-slate-500 p-4 text-center shadow-md"
