@@ -1,3 +1,9 @@
 import type TArticle from "./article.type";
 
-export { TArticle };
+type TypeJWTPayload = {
+  id: number;
+  email: string;
+  isAdmin: boolean;
+};
+
+export { TArticle, type TypeJWTPayload };

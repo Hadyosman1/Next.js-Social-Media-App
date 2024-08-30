@@ -4,6 +4,7 @@ import { IRegisterUserDto } from "@/types/dtos";
 import { createUserSchema } from "@/schemas/validationsSchemas";
 import bcrypt from "bcryptjs";
 import generateJWT from "@/utils/generateJWT";
+import prepareCookie from "@/utils/prepareCookie";
 
 /**
  * @method  POST
@@ -16,7 +17,6 @@ export async function POST(req: NextRequest) {
     const data = (await req.json()) as IRegisterUserDto;
 
     const validation = createUserSchema.safeParse(data);
-
     if (!validation.success) {
       return NextResponse.json(
         {
@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
     }
 
     const user = await prisma.user.findUnique({ where: { email: data.email } });
-
     if (user) {
       return NextResponse.json(
         { message: "User already exists" },
@@ -40,9 +39,9 @@ export async function POST(req: NextRequest) {
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(data.password, salt);
-
     data.password = hashedPassword;
 
+    //todo: ==>> Handle user Picture
     const createdUser = await prisma.user.create({
       data,
     });
@@ -50,17 +49,17 @@ export async function POST(req: NextRequest) {
     // eslint-disable-next-line no-unused-vars
     const { password, ...createdUserWithOutPassword } = createdUser;
 
-    const JWTPayload = {
+    const token = generateJWT({
       id: createdUser.id,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
-    };
+    });
 
-    const token = generateJWT(JWTPayload);
+    const cookie = prepareCookie(token);
 
     return NextResponse.json(
-      { ...createdUserWithOutPassword, token },
-      { status: 201 },
+      { ...createdUserWithOutPassword },
+      { status: 201, headers: { "Set-Cookie": cookie } },
     );
   } catch (error) {
     return NextResponse.json({ message: "An error occurred" }, { status: 500 });

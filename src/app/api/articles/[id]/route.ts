@@ -2,6 +2,7 @@ import { IUpdateArticleDto } from "@/types/dtos";
 import { NextRequest, NextResponse } from "next/server";
 import { Article } from "@prisma/client";
 import prisma from "@/utils/db";
+import { verifyToken } from "@/utils/verifyToken";
 
 interface IProps {
   params: { id: string };
@@ -17,6 +18,21 @@ export async function GET(req: NextRequest, { params }: IProps) {
   try {
     const article: Article | null = await prisma.article.findUnique({
       where: { id: +params.id },
+      include: {
+        comments: {
+          orderBy: { createdAt: "desc" },
+          include: {
+            user: {
+              select: {
+                id: true,
+                userName: true,
+                profilePicture: true,
+                isAdmin: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!article) {
@@ -37,20 +53,32 @@ export async function GET(req: NextRequest, { params }: IProps) {
  * @method  DELETE
  * @route   ~/api/articles/:id
  * @desc    Delete Article
- * @access  public
+ * @access  private
  */
 export async function DELETE(req: NextRequest, { params }: IProps) {
   try {
+    const userFromToken = verifyToken(req);
+    if (!userFromToken) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const id = +params.id;
-
     const article = await prisma.article.findUnique({ where: { id } });
-
     if (!article) {
       return NextResponse.json(
         { message: "Article not found" },
         { status: 404 },
       );
     }
+
+    if (userFromToken.id !== article.authorId && !userFromToken.isAdmin) {
+      return NextResponse.json(
+        { message: "Unauthorized to delete this article" },
+        { status: 403 },
+      );
+    }
+
+    //todo: ==>> Handle Delete Picture if user Change article picture
 
     const deletedArticle = await prisma.article.delete({ where: { id } });
 
@@ -68,14 +96,17 @@ export async function DELETE(req: NextRequest, { params }: IProps) {
  * @method  PUT
  * @route   ~/api/articles/:id
  * @desc    Update Article
- * @access  public
+ * @access  private
  */
 export async function PUT(req: NextRequest, { params }: IProps) {
   try {
+    const userFromToken = verifyToken(req);
+    if (!userFromToken) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
     const id = +params.id;
-
     const article = await prisma.article.findUnique({ where: { id } });
-
     if (!article) {
       return NextResponse.json(
         { message: "Article not found" },
@@ -83,12 +114,21 @@ export async function PUT(req: NextRequest, { params }: IProps) {
       );
     }
 
+    if (userFromToken.id !== article.authorId && !userFromToken.isAdmin) {
+      return NextResponse.json(
+        { message: "Unauthorized to update this article" },
+        { status: 403 },
+      );
+    }
+
     const data = (await req.json()) as IUpdateArticleDto;
 
+    //todo: ==>> Handle Edit Picture
     const updatedArticle = await prisma.article.update({
       where: { id },
       data: {
-        ...data,
+        title: data.title,
+        description: data.description,
       },
     });
 

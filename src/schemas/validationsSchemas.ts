@@ -18,3 +18,17 @@ export const userLogInSchema = z.object({
   password: z.string().min(8),
 });
 
+export const userUpdateSchema = z.object({
+  userName: z.string().min(2).max(100).optional(),
+  email: z.string().email().min(5).optional(),
+  password: z.string().min(8).optional(),
+});
+
+export const createCommentSchema = z.object({
+  content: z.string().min(2).max(500),
+  articleId: z.number(),
+});
+
+export const updateCommentSchema = z.object({
+  content: z.string().min(2).max(500).optional(),
+});

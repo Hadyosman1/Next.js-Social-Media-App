@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { userLogInSchema } from "@/schemas/validationsSchemas";
 import { ILogInUserDto } from "@/types/dtos";
 import generateJWT from "@/utils/generateJWT";
+import prepareCookie from "@/utils/prepareCookie";
 
 /**
  * @method  POST
@@ -43,17 +44,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const JWTPayload = {
+    const token = generateJWT({
       id: user.id,
       email: user.email,
       isAdmin: user.isAdmin,
-    };
+    });
 
-    const token = generateJWT(JWTPayload);
+    const cookie = prepareCookie(token);
 
     return NextResponse.json(
-      { message: "Authenticated", token },
-      { status: 200 },
+      { message: "Authenticated" },
+      { status: 200, headers: { "Set-Cookie": cookie } },
     );
   } catch (error) {
     console.error(error);
