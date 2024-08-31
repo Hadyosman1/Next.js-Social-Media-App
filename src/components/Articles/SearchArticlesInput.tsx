@@ -23,7 +23,7 @@ const SearchArticlesInput = () => {
 
   return (
     <form
-      className={`flex justify-self-center rounded outline outline-2 outline-sky-500 md:w-3/5`}
+      className={`search_input_wrapper flex w-full justify-self-center rounded bg-white outline outline-2 outline-blue-400`}
       onSubmit={handleSubmit}
     >
       <input
@@ -37,7 +37,7 @@ const SearchArticlesInput = () => {
 
       <button
         type="submit"
-        className="border-s-2 border-sky-400 bg-slate-100 px-2 text-xl text-sky-500 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
+        className="border-s-2 border-blue-400 bg-slate-100 px-2 text-2xl text-sky-500 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
         <IoMdSearch />
       </button>

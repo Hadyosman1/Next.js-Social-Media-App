@@ -10,4 +10,29 @@
   .container.main-props {
     @apply mx-auto px-3;
   }
+
+  .search_input_wrapper:has(input:focus) {
+    @apply ring-[2.5px] ring-blue-400 bg-slate-100;
+  }
+
+  .pagination_btn {
+    @apply border border-blue-300 bg-gray-200/75 px-2 py-1 hover:bg-blue-500 hover:text-white;
+
+    &.active {
+      @apply bg-blue-500 text-white hover:bg-blue-600 hover:text-slate-100;
+    }
+  }
+
+  .comment_wrapper {
+    @apply relative z-10;
+
+    &::before {
+      @apply absolute left-[30px] top-[30px] -z-[1] h-1/2 w-1/2 md:left-[40px];
+      content: "";
+      border-bottom-left-radius: 8px;
+      border: 2.2px solid transparent;
+      border-inline-start-color: #c8d1dc;
+      border-block-end-color: #c8d1dc;
+    }
+  }
 }

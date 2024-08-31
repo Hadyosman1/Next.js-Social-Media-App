@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
-import { Article } from "@prisma/client";
+import { Article, Comment } from "@prisma/client";
 import { verifyToken } from "@/utils/verifyToken";
 import { createArticleSchema } from "@/schemas/validationsSchemas";
 import { ICreateNewArticleDto } from "@/types/dtos";
@@ -22,14 +22,33 @@ export async function GET(req: NextRequest) {
       typeof +limit === "number"
     ) {
       const articlesPerPage = (+page - 1) * +limit;
-      const articles: Article[] = await prisma.article.findMany({
+      const articles = await prisma.article.findMany({
         skip: articlesPerPage,
         take: +limit,
+        include: {
+          author: { select: { userName: true, profilePicture: true } },
+          comments: {
+            include: {
+              user: { select: { userName: true, profilePicture: true } },
+            },
+            orderBy: { createdAt: "desc" },
+          },
+        },
       });
       return NextResponse.json(articles, { status: 200 });
     }
 
-    const articles: Article[] = await prisma.article.findMany();
+    const articles = await prisma.article.findMany({
+      include: {
+        author: { select: { userName: true, profilePicture: true } },
+        comments: {
+          include: {
+            user: { select: { userName: true, profilePicture: true } },
+          },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    });
 
     return NextResponse.json(articles, { status: 200 });
   } catch (error) {
@@ -46,6 +65,16 @@ export async function GET(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   try {
+    // const articles = Array.from({ length: 20 }).map((_, i) => ({
+    //   title: `hello, world${i}`,
+    //   description: `description for hello, world${i}`,
+    //   authorId: 5,
+    // }));
+
+    // await prisma.article.createMany({
+    //   data: articles,
+    // });
+
     const userFromToken = verifyToken(req);
     if (!userFromToken) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

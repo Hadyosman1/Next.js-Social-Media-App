@@ -1,4 +1,5 @@
 import type TArticle from "./article.type";
+import TComment from "./comment.type";
 
 type TypeJWTPayload = {
   id: number;
@@ -6,4 +7,4 @@ type TypeJWTPayload = {
   isAdmin: boolean;
 };
 
-export { TArticle, type TypeJWTPayload };
+export { TArticle, type TypeJWTPayload, type TComment };

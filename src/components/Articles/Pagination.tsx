@@ -1,22 +1,39 @@
-import React from "react";
+import Link from "next/link";
 
-const Pagination = () => {
+type TProps = {
+  count: number;
+  page: string | undefined;
+  limit: string | undefined;
+};
+
+const Pagination = ({ count, page, limit }: TProps) => {
+  const parsedLimit = limit ? parseInt(limit) : 10;
+  const pagesCount = Math.ceil(count / parsedLimit);
+  const parsedPage = page ? parseInt(page) : 1;
+
   return (
     <div className="flex items-center justify-center gap-0.5 text-sky-500 *:rounded-sm">
-      <button className="border border-slate-400 bg-slate-100 px-2 py-1 hover:bg-slate-200">
+      <Link
+        href={`/?page=${parsedPage - 1}`}
+        className={`${parsedPage <= 1 && "pointer-events-none cursor-not-allowed opacity-55"} pagination_btn`}
+      >
         prev
-      </button>
-      {Array.from({ length: 5 }).map((el, i) => (
-        <button
-          className="border border-slate-400 bg-slate-100 px-2 py-1 hover:bg-slate-200"
+      </Link>
+      {Array.from({ length: pagesCount }).map((el, i) => (
+        <Link
+          href={`/?page=${i + 1}`}
+          className={`pagination_btn ${i + 1 === parsedPage && "active"} `}
           key={i}
         >
           {i + 1}
-        </button>
+        </Link>
       ))}
-      <button className="border border-slate-400 bg-slate-100 px-2 py-1 hover:bg-slate-200">
+      <Link
+        href={`/?page=${parsedPage + 1}`}
+        className={`${parsedPage === pagesCount && "pointer-events-none cursor-not-allowed opacity-55"} pagination_btn`}
+      >
         next
-      </button>
+      </Link>
     </div>
   );
 };

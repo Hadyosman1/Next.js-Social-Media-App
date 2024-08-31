@@ -1,30 +1,42 @@
 import { TArticle } from "@/types";
-import Link from "next/link";
+import Image from "next/image";
+import anonymousUser from "@/../../public/anonymous_user.svg";
+import getTimeAgo from "@/utils/getTimeAgo";
+import Comments from "./comments/Comments";
 
-const Article = ({
-  id,
-  body,
-  title,
-  /*  userId,*/
-  isSingle,
-}: TArticle & { isSingle?: boolean }) => {
-  const date = new Date().toISOString();
+import useTextDirByLine from "@/hooks/useTextDirByLine";
+
+const Article = ({ article }: { article: TArticle }) => {
+  const timeAgo = getTimeAgo(article.createdAt);
+  const title = useTextDirByLine(article.title);
+  const description = useTextDirByLine(article.description);
 
   return (
     <article
-      className={`flex ${!isSingle ? "self-center border border-x-blue-300 border-y-blue-400 shadow shadow-blue-500/80" : "self-start"} flex-col items-start gap-2 rounded p-5`}
+      className={`flex w-full flex-col gap-2 rounded border border-blue-300 bg-white p-3 shadow-md shadow-blue-200/75 md:p-5`}
     >
-      <h2 className={`${!isSingle && "line-clamp-1"} text-lg font-bold`}>
-        {title}
-      </h2>
-      <p>{date.slice(0, date.indexOf("T"))}</p>
+      <div className="mb-4 flex w-full items-center gap-2 border-b-2 pb-3">
+        <Image
+          src={article.author.profilePicture ?? anonymousUser}
+          alt={article.author.userName}
+          width={64}
+          height={64}
+          className="w-16 rounded-full bg-slate-400"
+          loading="lazy"
+        />
+        <h2 className="flex flex-col font-bold">
+          {article.author.userName}
+          <span className="text-sm font-normal text-slate-500">{timeAgo}</span>
+          <span className="text-sm font-normal text-slate-500">
+            updated at {article.updatedAt.toString()}
+          </span>
+        </h2>
+      </div>
 
-      <p className={`${!isSingle && "line-clamp-1"} text-lg`}>{body}</p>
-      {!isSingle && (
-        <Link className="text-blue-500 underline" href={`articles/${id}`}>
-          Read more
-        </Link>
-      )}
+      <div className={`text-sm font-medium md:text-lg`}>{title}</div>
+      <div className={`indent-1 text-sm md:text-lg`}>{description}</div>
+
+      <Comments comments={article.comments} />
     </article>
   );
 };
