@@ -4,6 +4,8 @@ import { Article, Comment } from "@prisma/client";
 import { verifyToken } from "@/utils/verifyToken";
 import { createArticleSchema } from "@/schemas/validationsSchemas";
 import { ICreateNewArticleDto } from "@/types/dtos";
+import verifyImage from "@/utils/verifyImage";
+import uploadImageToFirebase from "@/services/uploadImageToFirebase";
 
 /**
  * @method  GET
@@ -60,27 +62,23 @@ export async function GET(req: NextRequest) {
 /**
  * @method  POST
  * @route   ~/api/articles
- * @desc    Create Article
+ * @desc    Create Article only using form data
  * @access  public only users and admins
  */
 export async function POST(req: NextRequest) {
   try {
-    // const articles = Array.from({ length: 20 }).map((_, i) => ({
-    //   title: `hello, world${i}`,
-    //   description: `description for hello, world${i}`,
-    //   authorId: 5,
-    // }));
-
-    // await prisma.article.createMany({
-    //   data: articles,
-    // });
-
     const userFromToken = verifyToken(req);
     if (!userFromToken) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const body = (await req.json()) as ICreateNewArticleDto;
+    const formData = await req.formData();
+
+    const body = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+    } as ICreateNewArticleDto;
+
     const validation = createArticleSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
@@ -94,12 +92,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    //todo: ==>> Handle Add Picture
+    const file: File | null = formData.get("image") as unknown as File;
+    if (file) {
+      const result = verifyImage(file);
+      if (result !== "valid") {
+        return NextResponse.json(
+          { message: result.message },
+          { status: result.status },
+        );
+      }
+
+      const publicImgUrl = await uploadImageToFirebase(file, "article");
+      if (publicImgUrl.ok) body.imageUrl = publicImgUrl.url;
+    }
+
     const article: Article = await prisma.article.create({
       data: {
         title: body.title,
         description: body.description,
         authorId: userFromToken.id,
+        imageUrl: body.imageUrl,
       },
     });
 

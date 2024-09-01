@@ -36,6 +36,16 @@ const Article = ({ article }: { article: TArticle }) => {
       <div className={`text-sm font-medium md:text-lg`}>{title}</div>
       <div className={`indent-1 text-sm md:text-lg`}>{description}</div>
 
+      {article.imageUrl && (
+        <Image
+          className="bg-slate-50"
+          src={article.imageUrl}
+          alt={article.title}
+          width={800}
+          height={400}
+        />
+      )}
+
       <Comments comments={article.comments} />
     </article>
   );

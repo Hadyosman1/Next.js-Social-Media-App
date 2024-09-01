@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 type TProps = {
   count: number;
@@ -10,6 +12,12 @@ const Pagination = ({ count, page, limit }: TProps) => {
   const parsedLimit = limit ? parseInt(limit) : 10;
   const pagesCount = Math.ceil(count / parsedLimit);
   const parsedPage = page ? parseInt(page) : 1;
+
+  if (parsedPage > pagesCount) {
+    const headerList = headers();
+    const pathname = headerList.get("x-current-path");
+    redirect(`${pathname}?page=${pagesCount}`);
+  }
 
   return (
     <div className="flex items-center justify-center gap-0.5 text-sky-500 *:rounded-sm">

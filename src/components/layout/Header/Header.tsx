@@ -20,7 +20,7 @@ const Header = () => {
         <div className="hidden w-1/5 shrink-0 justify-start md:flex">
           <Link className="rounded-full" href={"/"}>
             <Image
-              className="object-cover"
+              className="object-cover w-14 h-14"
               alt="logo"
               src={logo}
               width={56}

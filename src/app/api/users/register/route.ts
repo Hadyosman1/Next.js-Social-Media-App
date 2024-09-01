@@ -5,16 +5,24 @@ import { createUserSchema } from "@/schemas/validationsSchemas";
 import bcrypt from "bcryptjs";
 import generateJWT from "@/utils/generateJWT";
 import prepareCookie from "@/utils/prepareCookie";
+import verifyImage from "@/utils/verifyImage";
+import uploadImageToFirebase from "@/services/uploadImageToFirebase";
 
 /**
  * @method  POST
  * @route   ~/api/users/register
- * @desc    (Create/register) user
+ * @desc    (Create/register) user only using form data
  * @access  public
  */
 export async function POST(req: NextRequest) {
   try {
-    const data = (await req.json()) as IRegisterUserDto;
+    const formData = await req.formData();
+
+    const data = {
+      userName: formData.get("userName"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+    } as IRegisterUserDto;
 
     const validation = createUserSchema.safeParse(data);
     if (!validation.success) {
@@ -41,7 +49,20 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(data.password, salt);
     data.password = hashedPassword;
 
-    //todo: ==>> Handle user Picture
+    const file: File | null = formData.get("profilePicture") as unknown as File;
+    if (file) {
+      const result = verifyImage(file);
+      if (result !== "valid") {
+        return NextResponse.json(
+          { message: result.message },
+          { status: result.status },
+        );
+      }
+
+      const publicImgUrl = await uploadImageToFirebase(file, "user");
+      if (publicImgUrl.ok) data.profilePicture = publicImgUrl.url;
+    }
+
     const createdUser = await prisma.user.create({
       data,
     });

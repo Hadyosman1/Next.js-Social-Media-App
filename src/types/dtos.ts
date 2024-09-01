@@ -2,6 +2,7 @@
 export interface ICreateNewArticleDto {
   title: string;
   description: string;
+  imageUrl?: string | null;
 }
 
 export interface IUpdateArticleDto {
@@ -14,6 +15,7 @@ export interface IRegisterUserDto {
   userName: string;
   email: string;
   password: string;
+  profilePicture?: string | null;
 }
 
 export interface ILogInUserDto {
