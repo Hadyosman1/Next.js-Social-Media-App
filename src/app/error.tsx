@@ -12,7 +12,9 @@ const Error = ({ error, reset }: TErrorProps) => {
     <div className="main-props container grid place-content-center place-items-center gap-3 py-12">
       <div className="text-center text-xl">
         <h1> 400 | Bad Request </h1>
-        <p className="whitespace-break-spaces break-words">{error.message}</p>
+        <p className="break-all">
+          {error.message}
+        </p>
       </div>
 
       <button

@@ -30,7 +30,7 @@ export default function RootLayout({
         <div className="mx-auto flex min-h-svh flex-col">
           <Header />
           <ToastContainer />
-          <main className="grid flex-grow bg-slate-100">{children}</main>
+          <main className="grid flex-grow bg-slate-200/70">{children}</main>
           <Footer />
         </div>
       </body>

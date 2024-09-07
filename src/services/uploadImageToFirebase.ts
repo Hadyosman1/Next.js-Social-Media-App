@@ -3,7 +3,10 @@ import { GetSignedUrlResponse } from "@google-cloud/storage";
 
 type TReturn = { ok: boolean; url: string } | Error;
 
-export default async function (image: File, folder: string) {
+export default async function uploadImageToFirebase(
+  image: File,
+  folder: string,
+) {
   try {
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);

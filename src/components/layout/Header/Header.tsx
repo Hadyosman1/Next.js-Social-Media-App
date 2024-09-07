@@ -1,41 +1,33 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import logo from "@/../../public/logo.png";
-import NavBar from "./NavBar";
 import Link from "next/link";
-import AuthLinks from "./AuthLinks";
+import { cookies } from "next/headers";
+import { verifyTokenForPage } from "@/utils/verifyToken";
 
-//icons
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoCloseSharp } from "react-icons/io5";
+import AuthLinks from "./AuthLinks";
+import NavBar from "./NavBar";
+import User from "@/components/shared/User";
 
 const Header = () => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const token = cookies().get("jwt_token")?.value;
+  const user = verifyTokenForPage(token || "");
 
   return (
-    <header className="relative shadow shadow-sky-200">
-      <div className="main-props container flex items-center justify-start gap-3 py-3">
-        <div className="hidden w-1/5 shrink-0 justify-start md:flex">
-          <Link className="rounded-full" href={"/"}>
+    <header className="bg_glassy sticky top-0 z-[999] bg-white/50 shadow shadow-sky-200">
+      <div className="main-props container flex items-center justify-start gap-3 py-2">
+        <div className="hidden w-1/5 shrink justify-start md:flex">
+          <Link className="max-w-11 rounded-full" href={"/"}>
             <Image
-              className="object-cover w-14 h-14"
+              className="max-h-11 max-w-11 object-contain"
               alt="logo"
               src={logo}
-              width={56}
-              height={56}
             />
           </Link>
         </div>
-        <span
-          onClick={() => setIsNavOpen((prev) => !prev)}
-          className="cursor-pointer text-2xl md:hidden"
-        >
-          {!isNavOpen ? <RxHamburgerMenu /> : <IoCloseSharp />}
-        </span>
-        <NavBar setIsNavOpen={setIsNavOpen} isNavOpen={isNavOpen} />
-        <AuthLinks />
+
+        <NavBar user={user} />
+
+        {!user ? <AuthLinks /> : <User user={user} />}
       </div>
     </header>
   );

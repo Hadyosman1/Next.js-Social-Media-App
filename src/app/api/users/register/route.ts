@@ -74,6 +74,8 @@ export async function POST(req: NextRequest) {
       id: createdUser.id,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
+      userName:createdUser.userName,
+      profilePicture: createdUser.profilePicture,
     });
 
     const cookie = prepareCookie(token);

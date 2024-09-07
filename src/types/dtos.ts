@@ -15,7 +15,7 @@ export interface IRegisterUserDto {
   userName: string;
   email: string;
   password: string;
-  profilePicture?: string | null;
+  profilePicture?:  null|string;
 }
 
 export interface ILogInUserDto {

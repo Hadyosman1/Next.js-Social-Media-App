@@ -18,3 +18,13 @@ export function verifyToken(req: NextRequest): TypeJWTPayload | null {
     return null;
   }
 }
+
+export function verifyTokenForPage(token: string): TypeJWTPayload | null {
+  if (!token) return null;
+
+  const user = jwt.verify(token, process.env.JWT_PRIVATE_KEY as string);
+
+  if (!user) return null;
+
+  return user as TypeJWTPayload;
+}

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
-import { Article, Comment } from "@prisma/client";
+import { Article } from "@prisma/client";
 import { verifyToken } from "@/utils/verifyToken";
 import { createArticleSchema } from "@/schemas/validationsSchemas";
 import { ICreateNewArticleDto } from "@/types/dtos";
@@ -27,6 +27,7 @@ export async function GET(req: NextRequest) {
       const articles = await prisma.article.findMany({
         skip: articlesPerPage,
         take: +limit,
+        orderBy: { createdAt: "desc" },
         include: {
           author: { select: { userName: true, profilePicture: true } },
           comments: {
@@ -41,6 +42,7 @@ export async function GET(req: NextRequest) {
     }
 
     const articles = await prisma.article.findMany({
+      orderBy: { createdAt: "desc" },
       include: {
         author: { select: { userName: true, profilePicture: true } },
         comments: {
@@ -67,6 +69,21 @@ export async function GET(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   try {
+    // let articles = [];
+    // for (let i = 0; i < 40; i++) {
+    //   articles.push({
+    //     title: "*".repeat(i + 1) + " -" + (i + 1),
+    //     description: "*".repeat(i + 1) + " -" + (i + 1),
+    //     authorId: 10,
+    //   });
+    // }
+
+    // await prisma.article.createMany({
+    //   data: articles,
+    // });
+
+    // return NextResponse.json({});
+
     const userFromToken = verifyToken(req);
     if (!userFromToken) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

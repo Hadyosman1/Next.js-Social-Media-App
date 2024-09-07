@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     if (!isAuthenticatedUser) {
       return NextResponse.json(
-        { message: "Invalid email or password" },
+        { message: "Wrong email or password" },
         { status: 401 },
       );
     }
@@ -48,12 +48,14 @@ export async function POST(req: NextRequest) {
       id: user.id,
       email: user.email,
       isAdmin: user.isAdmin,
+      userName: user.userName,
+      profilePicture: user.profilePicture,
     });
 
     const cookie = prepareCookie(token);
 
     return NextResponse.json(
-      { message: "Authenticated" },
+      { message: "Authenticated", user },
       { status: 200, headers: { "Set-Cookie": cookie } },
     );
   } catch (error) {

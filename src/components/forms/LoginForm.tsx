@@ -2,71 +2,76 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import FormInput from "./FormInput";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TLoginInputs, userLogInSchema } from "@/schemas/validationsSchemas";
+import SmallLoadingIndicator from "../shared/SmallLoadingIndicator";
+import { userLogin } from "@/services/auth";
 
 const LoginForm = () => {
-  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
-  const submitHandler = (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    getFieldState,
+    formState: { errors },
+  } = useForm<TLoginInputs>({
+    resolver: zodResolver(userLogInSchema),
+    mode: "onBlur",
+  });
 
-    if (formState.email === "") {
-      return toast.error("E-mail is required..!", { position: "top-center" });
-    }
-    if (formState.password === "") {
-      return toast.error("Password is required..!", { position: "top-center" });
-    }
+  const submitHandler: SubmitHandler<TLoginInputs> = async (data) => {
+    setIsLoading(true);
+    const res = await userLogin(data);
+    setIsLoading(false);
 
-    if (formState.password.length < 8 && formState.password.length > 0) {
-      return toast.error("Password must be at least 8 digits..!", {
-        position: "top-center",
-      });
-    }
+    if (!res.ok) return toast.error(res.error);
 
-    router.push("/");
+    toast.success("logged in successfully");
+
+    router.replace("/");
+    router.refresh();
   };
 
   return (
     <form
-      onSubmit={submitHandler}
-      className="flex w-72 flex-col gap-1 rounded border border-sky-400 px-8 py-5 shadow-md"
+      onSubmit={handleSubmit(submitHandler)}
+      className="flex flex-grow flex-col justify-center rounded border border-sky-400 px-4 py-8 shadow-md md:max-w-xl md:px-8"
     >
-      <h2 className="-mx-8 mb-2 border-b border-sky-400 px-2 pb-3 text-center text-2xl font-bold uppercase text-sky-500">
-        Login
+      <h2 className="mb-4 border-b border-sky-400 px-2 pb-3 text-center text-xl font-bold uppercase text-sky-500">
+        Create Account
       </h2>
-      <div className="mb-4 mt-4">
-        <label htmlFor="email">E-mail</label>
-        <input
-          className="border-b-2 p-1 focus:border-sky-700 focus:outline-none"
-          type="email"
-          id="email"
-          placeholder="example@example.com"
-          value={formState.email}
-          onChange={(e) =>
-            setFormState({ ...formState, email: e.target.value })
-          }
-        />
-      </div>
 
-      <div className="mb-4">
-        <label htmlFor="password">Password</label>
-        <input
-          className="border-b-2 p-1 px-3 focus:border-sky-700 focus:outline-none"
-          type="password"
-          id="password"
-          placeholder="enter your password"
-          value={formState.password}
-          onChange={(e) =>
-            setFormState({ ...formState, password: e.target.value })
-          }
-        />
-      </div>
+      <FormInput
+        error={errors.email?.message}
+        placeholder="example@example.com"
+        label=" E-mail"
+        name="email"
+        register={register}
+        isValid={!errors.email?.message && getFieldState("email").isDirty}
+        validMessage="Valid email address"
+      />
+
+      <FormInput
+        error={errors?.password?.message}
+        placeholder="Enter your password"
+        label="Password"
+        name="password"
+        register={register}
+        isValid={!errors.password?.message && getFieldState("password").isDirty}
+        validMessage="Valid password"
+      />
 
       <button
-        className="mt-3 w-full rounded bg-blue-600 px-10 py-2 text-white hover:bg-blue-700"
+        disabled={isLoading}
+        className={`${isLoading && "opacity-70"} mt-6 flex w-full items-center justify-center gap-2 rounded bg-blue-500 px-10 py-2 text-white hover:bg-blue-600`}
         type="submit"
       >
-        submit
+        {isLoading && <SmallLoadingIndicator />} Submit
       </button>
     </form>
   );

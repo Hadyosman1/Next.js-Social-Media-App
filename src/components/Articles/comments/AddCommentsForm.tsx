@@ -1,41 +1,53 @@
 "use client";
 
-import { useRef, useState } from "react";
+import SmallLoadingIndicator from "@/components/shared/SmallLoadingIndicator";
+import { createComment } from "@/services/comments";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
-const AddCommentsForm = () => {
+const AddCommentsForm = ({ articleId }: { articleId: number }) => {
   const [comment, setComment] = useState("");
-  const toastId: any = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const isSubmitBtnDisabled = !comment.length || isLoading;
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (comment === "" && !toast.isActive(toastId.current)) {
-      toastId.current = toast.error("Comment should be at least one digit..!");
-      return;
+    if (comment.trim().length < 2) {
+      return toast.error("Comment must be at least 2 digits");
     }
 
-    console.log(comment);
+    setIsLoading(true);
+    const res = await createComment({ content: comment, articleId });
+    setIsLoading(false);
+
+    if (!res.ok) return toast.error(res.error);
+
+    toast.success(res.message);
+    router.refresh();
+    setComment("");
   };
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        className="flex w-full gap-2 rounded border border-sky-400"
-      >
-        <input
+      <form onSubmit={handleSubmit} className="add_comment_form">
+        <textarea
+          dir="auto"
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          type="text"
+          onChange={(e) => {
+            setComment(e.target.value.trimStart());
+          }}
           placeholder="Add a comment"
-          className="flex-grow rounded px-3 py-1 focus:outline-none"
+          className={` ${comment.trim().length ? "active min-h-20" : "h-9 max-h-9 min-h-9 w-5 overflow-hidden"} `}
         />
         <button
+          disabled={isSubmitBtnDisabled}
           type="submit"
-          className="rounded border border-gray-200 bg-sky-400 px-4 py-1 text-center text-white hover:bg-sky-500 focus:outline-white"
+          className="submit_btn flex items-center justify-center gap-2"
         >
-          Comment
+          {isLoading && <SmallLoadingIndicator size="sm" />} Comment
         </button>
       </form>
     </>
