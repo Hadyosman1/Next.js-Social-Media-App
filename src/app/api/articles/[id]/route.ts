@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Article } from "@prisma/client";
 import prisma from "@/utils/db";
 import { verifyToken } from "@/utils/verifyToken";
+import { deleteImageFromFirebase } from "@/services/firebase";
 
 interface IProps {
   params: { id: string };
@@ -78,7 +79,19 @@ export async function DELETE(req: NextRequest, { params }: IProps) {
       );
     }
 
-    //todo: ==>> Handle Delete Picture if user Change article picture
+    if (article.imageUrl) {
+      const deleteImage = await deleteImageFromFirebase(
+        article.imageUrl,
+        "article",
+      );
+
+      if (!deleteImage) {
+        return NextResponse.json(
+          { message: "Error deleting image" },
+          { status: 500 },
+        );
+      }
+    }
 
     const deletedArticle = await prisma.article.delete({ where: { id } });
 

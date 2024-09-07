@@ -2,7 +2,7 @@
 
 import { TypeJWTPayload } from "@/types";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import anonymousUser from "@/../../public/anonymous_user.svg";
 import Link from "next/link";
 import SmallLoadingIndicator from "./SmallLoadingIndicator";
@@ -13,36 +13,16 @@ import { toast } from "react-toastify";
 //icons
 import { MdExpandMore } from "react-icons/md";
 import { MdExpandLess } from "react-icons/md";
+import { DropDown } from "./DropDown";
 
 type TProps = {
   user: TypeJWTPayload | null;
 };
 
-const User = ({ user }: TProps) => {
-  const [isMenuHidden, setIsMenuHidden] = useState(true);
+const RoundedUser = ({ user }: TProps) => {
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const handleCloseDropMenu = (e: MouseEvent) => {
-      e.stopPropagation();
-      const target = e.target as HTMLElement;
-      if (
-        !isMenuHidden &&
-        !target.classList.contains("user_dropdown_item") &&
-        !target.classList.contains("logout-btn") &&
-        !(target.id === "user_drop_menu")
-      ) {
-        setIsMenuHidden(true);
-      }
-    };
-
-    document.addEventListener("click", handleCloseDropMenu);
-
-    return () => {
-      document.removeEventListener("click", handleCloseDropMenu);
-    };
-  }, [isMenuHidden]);
 
   const logOutHandler = async () => {
     setIsLoading(true);
@@ -56,11 +36,15 @@ const User = ({ user }: TProps) => {
     router.refresh();
   };
 
+  const closeDropDown = useCallback(() => {
+    setIsDropDownOpen(false);
+  }, []);
+
   return (
     <div className="ms-auto flex items-center justify-end gap-2.5 text-sm md:w-1/5">
       <div className="relative">
         <button
-          onClick={() => setIsMenuHidden((prev) => !prev)}
+          onClick={() => setIsDropDownOpen((prev) => !prev)}
           className="relative rounded-full align-middle"
         >
           <Image
@@ -68,32 +52,35 @@ const User = ({ user }: TProps) => {
             alt={user?.userName ?? "user"}
             width={48}
             height={48}
+            quality={100}
+            unoptimized
+            priority={true}
             className="aspect-square w-12 rounded-full border bg-slate-100 object-cover object-top shadow-sm hover:shadow-inner"
           />
 
           <span className="absolute bottom-0 right-0 translate-y-0.5 rounded-full border bg-slate-100 p-0.5 text-sm text-slate-700 shadow-md">
-            {isMenuHidden ? <MdExpandMore /> : <MdExpandLess />}
+            {!isDropDownOpen ? <MdExpandMore /> : <MdExpandLess />}
           </span>
         </button>
 
-        <nav
-          id="user_drop_menu"
-          className={`${isMenuHidden && "invisible opacity-0"} absolute bottom-0 right-0 z-10 flex min-w-44 translate-y-[calc(100%_+_9px)] flex-col gap-1 rounded border-2 border-slate-300 bg-gray-100 p-1.5 shadow-md transition`}
+        <DropDown
+          position="bottom-left"
+          closeDropDown={closeDropDown}
+          isOpen={isDropDownOpen}
         >
-          <p className="user_dropdown_item overflow-hidden text-ellipsis whitespace-nowrap bg-white font-semibold hover:bg-white hover:indent-0">
+          <DropDown.Header className="font-bold text-blue-700">
             {user?.userName}
-          </p>
+          </DropDown.Header>
 
           <hr />
 
-          <Link className="user_dropdown_item" href="/profile">
+          <DropDown.Item href={"/profile"} as={Link}>
             Profile
-          </Link>
+          </DropDown.Item>
 
-          <p className="user_dropdown_item">anything for now </p>
-          <p className="user_dropdown_item">anything for now </p>
-          <p className="user_dropdown_item">anything for now </p>
-          <p className="user_dropdown_item">anything for now </p>
+          <DropDown.Item>anything for now</DropDown.Item>
+          <DropDown.Item>anything for now</DropDown.Item>
+          <DropDown.Item>anything</DropDown.Item>
 
           <button
             disabled={isLoading}
@@ -102,10 +89,10 @@ const User = ({ user }: TProps) => {
           >
             {isLoading && <SmallLoadingIndicator size="sm" />} Log out
           </button>
-        </nav>
+        </DropDown>
       </div>
     </div>
   );
 };
 
-export default User;
+export default RoundedUser;

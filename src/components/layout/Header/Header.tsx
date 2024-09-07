@@ -6,7 +6,7 @@ import { verifyTokenForPage } from "@/utils/verifyToken";
 
 import AuthLinks from "./AuthLinks";
 import NavBar from "./NavBar";
-import User from "@/components/shared/User";
+import User from "@/components/shared/RoundedUser";
 
 const Header = () => {
   const token = cookies().get("jwt_token")?.value;

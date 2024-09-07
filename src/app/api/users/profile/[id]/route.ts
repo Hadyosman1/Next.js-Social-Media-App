@@ -19,7 +19,16 @@ interface IProps {
 export async function GET(req: NextRequest, { params }: IProps) {
   try {
     const id = +params.id;
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: {
+        articles: {
+          orderBy: { createdAt: "desc" },
+          include: { comments: { orderBy: { createdAt: "desc" } } },
+        },
+      },
+    });
+
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }

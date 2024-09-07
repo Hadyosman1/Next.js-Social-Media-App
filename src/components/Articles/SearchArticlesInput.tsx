@@ -23,11 +23,11 @@ const SearchArticlesInput = () => {
 
   return (
     <form
-      className={`search_input_wrapper max-w-full flex w-full justify-self-center rounded bg-white outline outline-2 outline-blue-400`}
+      className={`search_input_wrapper flex w-full max-w-xl justify-self-center rounded bg-white outline outline-2 outline-blue-400`}
       onSubmit={handleSubmit}
     >
       <input
-        className="flex-grow flex-shrink bg-transparent py-2 ps-2 outline-none valid:bg-transparent"
+        className="flex-shrink flex-grow bg-transparent py-2 ps-2 outline-none valid:bg-transparent"
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
         placeholder="Enter keywords here"

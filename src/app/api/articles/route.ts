@@ -5,7 +5,7 @@ import { verifyToken } from "@/utils/verifyToken";
 import { createArticleSchema } from "@/schemas/validationsSchemas";
 import { ICreateNewArticleDto } from "@/types/dtos";
 import verifyImage from "@/utils/verifyImage";
-import uploadImageToFirebase from "@/services/uploadImageToFirebase";
+import { uploadImageToFirebase } from "@/services/firebase";
 
 /**
  * @method  GET

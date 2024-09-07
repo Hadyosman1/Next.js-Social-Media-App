@@ -74,3 +74,24 @@ export async function createArticle({
     };
   }
 }
+
+type TDeleteArticleReturn =
+  | { ok: true; message: string }
+  | { ok: false; error: string };
+export async function deleteArticle(id: number): Promise<TDeleteArticleReturn> {
+  try {
+    const res = await fetch(`${API_URL}/articles/${id}`, { method: "DELETE" });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.message);
+
+    return { ok: true, message: data.message };
+  } catch (error) {
+    return {
+      ok: false,
+      error:
+        error instanceof Error ? error.message : "Failed to delete article",
+    };
+  }
+}

@@ -5,12 +5,21 @@ import { Inter } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 
 //styles
-import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 
 //components
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
+import { cookies } from "next/headers";
+import { verifyTokenForPage } from "@/utils/verifyToken";
+import { lazy } from "react";
+
+//lazy
+const AddArticleModal = lazy(
+  () => import("@/components/Modals/AddArticleModal"),
+);
+// import AddArticleModal from "@/components/Modals/AddArticleModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,10 +33,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const token = cookies().get("jwt_token")?.value;
+  const user = verifyTokenForPage(token || "");
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <div className="mx-auto flex min-h-svh flex-col">
+          {user && <AddArticleModal />}
           <Header />
           <ToastContainer />
           <main className="grid flex-grow bg-slate-200/70">{children}</main>

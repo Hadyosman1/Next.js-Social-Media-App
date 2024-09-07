@@ -6,6 +6,7 @@ import AddArticleForm from "../forms/AddArticleForm";
 
 //icons
 import { MdPostAdd } from "react-icons/md";
+import ToolTipItem from "../shared/ToolTipItem";
 
 const AddArticleModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,11 +17,15 @@ const AddArticleModal = () => {
 
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)} className="add_article_btn">
+      <button
+        onClick={() => setIsModalOpen(true)}
+        className="add_article_btn tooltip_wrapper"
+      >
         <span className="p-2 text-2xl text-blue-600">
           <MdPostAdd />
         </span>
-        <span className="tooltip_center_top">Add Article</span>
+
+        <ToolTipItem position="top-center">Add Article</ToolTipItem>
       </button>
 
       <ModalWrapper

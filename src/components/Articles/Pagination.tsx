@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { GrNext, GrPrevious } from "react-icons/gr";
 
 type TProps = {
   count: number;
@@ -15,20 +16,26 @@ const Pagination = ({ count, page, limit, path }: TProps) => {
   const prevPage = parsedPage - 1;
   const nextPage = parsedPage + 1;
   const pagesArr = Array.from({ length: pagesCount }).map((el, i) => i + 1);
+  const activePageIdx = pagesArr.indexOf(parsedPage);
   const slicedPagesArr =
-    pagesArr.length < 4 ? pagesArr : pagesArr.slice(parsedPage, parsedPage + 4);
+    pagesArr.length < 6
+      ? pagesArr
+      : pagesArr.slice(
+          activePageIdx - 2 < 0 ? 0 : activePageIdx - 2,
+          activePageIdx + 3,
+        );
 
   if (parsedPage > pagesCount) {
     redirect(`${path}?page=${pagesCount}`);
   }
 
   return (
-    <div className="flex items-center justify-center gap-0.5 text-sky-500 *:rounded-sm">
+    <div className="flex justify-center gap-0.5 text-sky-500 *:rounded-sm">
       <Link
         href={`${path}?page=${prevPage}`}
-        className={`${parsedPage <= 1 && "cursor-no-drop opacity-55"} pagination_btn`}
+        className={`${parsedPage <= 1 && "cursor-no-drop opacity-55"} pagination_btn flex items-center`}
       >
-        prev
+        <GrPrevious />
       </Link>
       {slicedPagesArr.map((el) => (
         <Link
@@ -39,11 +46,28 @@ const Pagination = ({ count, page, limit, path }: TProps) => {
           {el}
         </Link>
       ))}
+
+      {pagesArr.length > 6 &&
+        activePageIdx + 1 !== pagesArr[pagesArr.length - 1] && (
+          <>
+            <span className="pagination_btn flex cursor-default items-center opacity-70 hover:bg-slate-200 hover:text-sky-500">
+              ...
+            </span>
+            <Link
+              href={`${path}?page=${pagesArr[pagesArr.length - 1]}`}
+              className={`pagination_btn ${pagesArr[pagesArr.length - 1] === parsedPage && "active"} `}
+              key={pagesArr[pagesArr.length - 1]}
+            >
+              {pagesArr[pagesArr.length - 1]}
+            </Link>
+          </>
+        )}
+
       <Link
         href={`${path}?page=${nextPage}`}
-        className={`${parsedPage === pagesCount && "cursor-no-drop opacity-55"} pagination_btn`}
+        className={`${parsedPage === pagesCount && "cursor-no-drop opacity-55"} pagination_btn flex items-center`}
       >
-        next
+        <GrNext />
       </Link>
     </div>
   );

@@ -24,7 +24,7 @@ const FileInput = ({ setter, label, fileName }: TProps) => {
           id="file"
           type="file"
           accept="image/*"
-          className="absolute inset-0 z-10 min-w-full max-w-xs cursor-pointer opacity-0 file:cursor-pointer"
+          className="absolute inset-0 z-10 min-w-full max-w-xs cursor-pointer opacity-0 file:cursor-pointer "
           onChange={(e) => {
             const file = e.target.files?.[0];
             setter((_) => file ?? null);

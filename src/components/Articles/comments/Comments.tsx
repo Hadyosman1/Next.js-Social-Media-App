@@ -37,7 +37,7 @@ const Comments = ({ comments, user }: TProps) => {
         <p className="pt-3 text-center text-slate-600">No comments yet.</p>
       )}
 
-      {comments.length > 2 && isCommentsVisible && (
+      {comments.length > 1 && isCommentsVisible && (
         <button
           onClick={() => setIsAllCommentsVisible((prev) => !prev)}
           className="mt-2 flex items-center gap-1 self-start rounded bg-slate-200 px-4 py-1 text-sm underline-offset-2 hover:underline"

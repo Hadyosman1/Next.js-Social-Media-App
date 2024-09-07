@@ -22,11 +22,11 @@ const ModalWrapper = ({
   return (
     <div
       onClick={onClose}
-      className={`${isOpen ? "visible translate-x-0 opacity-100" : "invisible -translate-x-[110%] opacity-0"} fixed inset-0 z-[1000] flex max-h-screen items-center justify-center overflow-y-auto bg-gray-700 bg-opacity-50 p-3 backdrop-blur-sm transition-all delay-75 duration-500`}
+      className={`${isOpen ? "visible translate-x-0 opacity-100" : "invisible -translate-x-[110%] opacity-0"} fixed inset-0 z-[1200] flex max-h-screen items-center justify-center overflow-y-auto bg-gray-700 bg-opacity-50 p-3 backdrop-blur-sm transition-all delay-75 duration-500`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`${className} bg-${bg} ${size === "sm" ? "max-w-xs" : size === "md" ? "md:max-w-xl" : "md:max-w-2xl"} flex max-h-[90%] flex-grow flex-col rounded`}
+        className={`${className} bg-${bg} ${size === "sm" ? "max-w-sm" : size === "md" ? "md:max-w-xl" : "md:max-w-2xl"} flex max-h-[90%] flex-grow flex-col rounded`}
       >
         <div
           className={`${title && "border-b-2 border-slate-300"} ${bg !== "transparent" && "px-2"} flex items-center py-2`}

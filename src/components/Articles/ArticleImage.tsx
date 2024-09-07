@@ -7,9 +7,11 @@ import Image from "next/image";
 const ArticleImage = ({
   image,
   title,
+  imagePriority,
 }: {
   image: string | null;
   title: string;
+  imagePriority: boolean;
 }) => {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
@@ -25,6 +27,7 @@ const ArticleImage = ({
         alt={title}
         width={800}
         height={650}
+        priority={imagePriority}
         onClick={() => setIsImageModalOpen(true)}
       />
 
@@ -38,7 +41,7 @@ const ArticleImage = ({
               width={1000}
               height={800}
             />
-          </div>{" "}
+          </div>
         </ModalWrapper>
       )}
     </>

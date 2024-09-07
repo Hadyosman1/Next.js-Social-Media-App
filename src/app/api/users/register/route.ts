@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import generateJWT from "@/utils/generateJWT";
 import prepareCookie from "@/utils/prepareCookie";
 import verifyImage from "@/utils/verifyImage";
-import uploadImageToFirebase from "@/services/uploadImageToFirebase";
+import {uploadImageToFirebase} from "@/services/firebase";
 
 /**
  * @method  POST
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       id: createdUser.id,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
-      userName:createdUser.userName,
+      userName: createdUser.userName,
       profilePicture: createdUser.profilePicture,
     });
 

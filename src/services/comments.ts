@@ -40,3 +40,72 @@ export async function createComment(
   }
 }
 
+type TUpdateCommentProps = {
+  id: number;
+  content: string;
+};
+
+type TUpdateCommentReturn =
+  | { ok: false; error: string }
+  | { ok: true; message: string };
+
+export async function updateComment({
+  id,
+  content,
+}: TUpdateCommentProps): Promise<TUpdateCommentReturn> {
+  try {
+    const res = await fetch(`${API_URL}/comments/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+
+    return {
+      ok: true,
+      message: data.message,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error:
+        error instanceof Error ? error.message : "Failed to update comment",
+    };
+  }
+}
+
+type TDeleteCommentReturn =
+  | { ok: false; error: string }
+  | { ok: true; message: string };
+
+export async function deleteComment(id: number): Promise<TDeleteCommentReturn> {
+  try {
+    const res = await fetch(`${API_URL}/comments/${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+
+    return {
+      ok: true,
+      message: data.message,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error:
+        error instanceof Error ? error.message : "Failed to delete comment",
+    };
+  }
+}

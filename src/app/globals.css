@@ -37,6 +37,10 @@
     backdrop-filter: blur(12px);
   }
 
+  :has(> input[type="file"]:focus) {
+    @apply rounded border-0 ring-2 focus:ring-sky-300;
+  }
+
   .nav_link {
     @apply flex items-center gap-1 rounded px-2 py-1.5 text-slate-600 hover:bg-gray-200/75 hover:underline md:min-w-[80px] md:justify-center md:py-2;
 
@@ -68,7 +72,7 @@
   }
 
   .add_comment_form {
-    @apply flex w-full max-w-full flex-wrap items-center justify-end rounded border border-blue-400;
+    @apply flex w-full max-w-full flex-wrap items-center justify-end rounded border border-blue-400 bg-slate-100;
 
     .submit_btn {
       @apply rounded border border-gray-200 bg-blue-500 px-3 py-1 text-center text-white hover:bg-blue-600 focus:outline-none focus:ring-[2.5px] focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-90;
@@ -95,7 +99,39 @@
     }
   }
 
-  .user_dropdown_item {
+  .drop_down {
+    @apply absolute z-10 flex translate-y-[calc(100%_+_9px)] flex-col gap-1 rounded border-2 border-slate-300 bg-gray-100 p-1.5 shadow-md transition;
+  }
+
+  .drop_down_sm {
+    @apply min-w-24;
+  }
+
+  .drop_down_md {
+    @apply min-w-44;
+  }
+
+  .drop_down_lg {
+    @apply min-w-56;
+  }
+
+  .absolute_bottom_center {
+    @apply bottom-0 left-1/2 -translate-x-1/2 translate-y-[calc(100%_+_9px)];
+  }
+
+  .absolute_bottom_right {
+    @apply bottom-0 left-0 translate-y-[calc(100%_+_9px)];
+  }
+
+  .absolute_bottom_left {
+    @apply bottom-0 right-0 translate-y-[calc(100%_+_9px)];
+  }
+
+  .drop_down_header {
+    @apply dropdown_item overflow-hidden text-ellipsis whitespace-nowrap bg-white font-semibold hover:bg-white hover:indent-0;
+  }
+
+  .dropdown_item {
     @apply flex items-center justify-center gap-2 rounded bg-white px-2 py-1 font-medium text-slate-700 shadow transition-all hover:bg-slate-50 hover:indent-2;
   }
 
@@ -126,13 +162,23 @@
 
   .add_article_btn {
     @apply fixed bottom-5 right-8 z-20 flex aspect-square items-center justify-center rounded-full border border-blue-400 bg-white shadow-md transition hover:bg-slate-100 md:bottom-10 md:right-10;
-
-    &:hover .tooltip_center_top {
-      @apply visible opacity-100;
-    }
   }
 
-  .tooltip_center_top {
-    @apply invisible absolute left-1/2 top-0 z-10 min-w-24 -translate-x-1/2 -translate-y-[calc(100%_+_5px)] rounded bg-gray-600/80 p-1 text-sm text-white opacity-0 transition;
+  .tooltip_wrapper {
+    .tooltip {
+      @apply invisible absolute z-10 min-w-24 rounded bg-gray-600/80 p-1 text-sm text-white opacity-0 transition delay-300;
+
+      &.tooltip_center_top {
+        @apply left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%_+_10px)];
+      }
+
+      &.tooltip_center_bottom {
+        @apply bottom-0 left-1/2 -translate-x-1/2 translate-y-[calc(100%_+_10px)];
+      }
+    }
+
+    &:hover .tooltip {
+      @apply visible opacity-100;
+    }
   }
 }

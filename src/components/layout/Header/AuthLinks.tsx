@@ -7,15 +7,16 @@ const AuthLinks = () => {
     <div className="ms-auto flex items-center justify-end gap-1.5 text-sm md:w-1/5">
       <Link
         className={`${linkStyle} bg-green-700/80 hover:bg-green-800/80`}
-        href={"/login"}
-      >
-        Login
-      </Link>
-      <Link
-        className={`${linkStyle} bg-blue-600 hover:bg-blue-700`}
         href={"/register"}
       >
         Register
+      </Link>
+
+      <Link
+        className={`${linkStyle} bg-blue-600 hover:bg-blue-700`}
+        href={"/login"}
+      >
+        Log in
       </Link>
     </div>
   );
