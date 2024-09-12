@@ -8,7 +8,7 @@ export async function getArticles(
 ): Promise<TArticle[]> {
   try {
     const res = await fetch(
-      `${API_URL}/articles?page=${pageNumber ? pageNumber : 1}&limit=${limit ? limit : 10}`,
+      `${API_URL}/articles?page=${pageNumber && +pageNumber > 0 ? pageNumber : 1}&limit=${limit ? limit : 10}`,
       {
         cache: "no-store",
       },
@@ -43,7 +43,9 @@ type TCreateArticleProps = {
   image?: File | null;
 };
 
-type TCreateArticleReturn = { ok: true } | { ok: false; error: string };
+type TCreateArticleReturn =
+  | { ok: true; message: string }
+  | { ok: false; error: string };
 
 export async function createArticle({
   title,
@@ -65,7 +67,7 @@ export async function createArticle({
 
     if (!res.ok) throw data.message;
 
-    return { ok: true };
+    return { ok: true, message: "Article created successfully" };
   } catch (error) {
     return {
       ok: false,
@@ -92,6 +94,48 @@ export async function deleteArticle(id: number): Promise<TDeleteArticleReturn> {
       ok: false,
       error:
         error instanceof Error ? error.message : "Failed to delete article",
+    };
+  }
+}
+
+type TUpdateArticleProps = {
+  id: number;
+  title: string;
+  description: string;
+  image?: File | null;
+};
+
+type TUpdateArticleReturn =
+  | { ok: true; message: string }
+  | { ok: false; error: string };
+
+export async function updateArticle({
+  id,
+  title,
+  description,
+  image,
+}: TUpdateArticleProps): Promise<TUpdateArticleReturn> {
+  try {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    if (image) formData.append("image", image);
+
+    const res = await fetch(`${API_URL}/articles/${id}`, {
+      method: "PUT",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.message);
+
+    return { ok: true, message: "Article updated successfully" };
+  } catch (error) {
+    return {
+      ok: false,
+      error:
+        error instanceof Error ? error.message : "Failed to update article",
     };
   }
 }

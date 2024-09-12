@@ -5,9 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 //icons
-import { MdOutlineHome as HomeIcon } from "react-icons/md";
+import { IoHome as HomeIcon } from "react-icons/io5";
 import { HiOutlineClipboardDocumentList as AboutIcon } from "react-icons/hi2";
-import { FaFolderOpen as AlbumsIcon } from "react-icons/fa6";
+import { FaCircleUser } from "react-icons/fa6";
 import { TbLayoutDashboard as DashboardIcon } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
@@ -16,7 +16,7 @@ import { TypeJWTPayload } from "@/types";
 let navLinks = [
   { href: "/", label: "Home", icon: <HomeIcon /> },
   { href: "/about", label: "About", icon: <AboutIcon /> },
-  { href: "/albums", label: "Albums", icon: <AlbumsIcon /> },
+  { href: "/profile", label: "Profile", icon: <FaCircleUser /> },
   { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon /> },
 ];
 
@@ -35,6 +35,10 @@ const NavBar = ({ user }: TProps) => {
 
   if (!user?.isAdmin) {
     navLinks = navLinks.filter((el) => !el.href.includes("dashboard"));
+  }
+
+  if (!user) {
+    navLinks = navLinks.filter((el) => !el.href.includes("profile"));
   }
 
   return (

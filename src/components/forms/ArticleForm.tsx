@@ -4,7 +4,7 @@ import {
   createArticleSchema,
   TArticleInputs,
 } from "@/schemas/validationsSchemas";
-import { createArticle } from "@/services/articles";
+import { createArticle, updateArticle } from "@/services/articles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -13,8 +13,21 @@ import SmallLoadingIndicator from "../shared/SmallLoadingIndicator";
 import FileInput from "./FileInput";
 import { useRouter } from "next/navigation";
 import DisplayUploadedImage from "./DisplayUploadedImage";
+import Image from "next/image";
 
-const AddArticleForm = ({ onClose }: { onClose: () => void }) => {
+const ArticleForm = ({
+  onClose,
+  status,
+  prevDataToEdit,
+  articleId,
+  imageUrl,
+}: {
+  onClose: () => void;
+  status: "create" | "edit";
+  prevDataToEdit?: TArticleInputs;
+  articleId?: number;
+  imageUrl: string | null;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const router = useRouter();
@@ -22,14 +35,21 @@ const AddArticleForm = ({ onClose }: { onClose: () => void }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<TArticleInputs>({
     resolver: zodResolver(createArticleSchema),
   });
 
+  const operation = status === "create" ? createArticle : updateArticle;
+
   const onSubmit: SubmitHandler<TArticleInputs> = async (data) => {
     setIsLoading(true);
-    const res = await createArticle({ ...data, image });
+    const res = await operation({
+      ...data,
+      image,
+      id: status === "edit" && articleId ? articleId : 0,
+    });
     setIsLoading(false);
 
     if (!res.ok) {
@@ -38,12 +58,14 @@ const AddArticleForm = ({ onClose }: { onClose: () => void }) => {
       });
     }
 
-    toast.success("Article created successfully", {
+    toast.success(res.message, {
       position: "bottom-center",
     });
 
     // close modal
     onClose();
+    setImage(null);
+    reset();
     router.refresh();
   };
 
@@ -55,6 +77,7 @@ const AddArticleForm = ({ onClose }: { onClose: () => void }) => {
       <label htmlFor="title">Title</label>
       <textarea
         dir="auto"
+        defaultValue={prevDataToEdit && prevDataToEdit.title}
         placeholder="Enter article title"
         {...register("title")}
         id="title"
@@ -68,6 +91,7 @@ const AddArticleForm = ({ onClose }: { onClose: () => void }) => {
       <label htmlFor="description">Description</label>
       <textarea
         dir="auto"
+        defaultValue={prevDataToEdit && prevDataToEdit.description}
         placeholder="Enter article description"
         {...register("description")}
         id="description"
@@ -84,17 +108,29 @@ const AddArticleForm = ({ onClose }: { onClose: () => void }) => {
         setter={setImage}
       />
 
-      <DisplayUploadedImage image={image} />
+      {image && <DisplayUploadedImage image={image} />}
+
+      {imageUrl && !image && (
+        <div className="my-2">
+          <Image
+            src={imageUrl ?? ""}
+            alt={prevDataToEdit?.title ?? "article image"}
+            width={800}
+            height={600}
+            className="h-auto max-h-[600px] w-full rounded bg-slate-100/50 object-contain"
+          />
+        </div>
+      )}
 
       <button
         type="submit"
         disabled={isLoading}
-        className="mt-4 flex items-center justify-center gap-2 rounded bg-blue-600 py-1 text-white hover:bg-blue-700"
+        className="mt-4 flex items-center justify-center gap-2 rounded bg-blue-600 py-1 capitalize text-white hover:bg-blue-700"
       >
-        {isLoading && <SmallLoadingIndicator />} Add Article
+        {isLoading && <SmallLoadingIndicator />} {status} Article
       </button>
     </form>
   );
 };
 
-export default AddArticleForm;
+export default ArticleForm;

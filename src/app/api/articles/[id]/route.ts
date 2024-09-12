@@ -3,7 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { Article } from "@prisma/client";
 import prisma from "@/utils/db";
 import { verifyToken } from "@/utils/verifyToken";
-import { deleteImageFromFirebase } from "@/services/firebase";
+import {
+  deleteImageFromFirebase,
+  uploadImageToFirebase,
+} from "@/services/firebase";
+import { updateArticleSchema } from "@/schemas/validationsSchemas";
+import verifyImage from "@/utils/verifyImage";
 
 interface IProps {
   params: { id: string };
@@ -134,14 +139,62 @@ export async function PUT(req: NextRequest, { params }: IProps) {
       );
     }
 
-    const data = (await req.json()) as IUpdateArticleDto;
+    const formData = await req.formData();
 
-    //todo: ==>> Handle Edit Picture
+    const body = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+    } as IUpdateArticleDto;
+
+    const validation = updateArticleSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          message: validation.error.errors[0].message,
+          path: validation.error.errors[0].path[0],
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const file: File | null = formData.get("image") as unknown as File;
+    if (file) {
+      const result = verifyImage(file);
+
+      if (result !== "valid") {
+        return NextResponse.json(
+          { message: result.message },
+          { status: result.status },
+        );
+      }
+
+      // delete old image
+      if (article.imageUrl != null) {
+        const deleteImage = await deleteImageFromFirebase(
+          article.imageUrl,
+          "article",
+        );
+
+        if (!deleteImage) {
+          return NextResponse.json(
+            { message: "Error deleting image" },
+            { status: 500 },
+          );
+        }
+      }
+
+      const publicImgUrl = await uploadImageToFirebase(file, "article");
+      if (publicImgUrl.ok) body.imageUrl = publicImgUrl.url;
+    }
+
     const updatedArticle = await prisma.article.update({
       where: { id },
       data: {
-        title: data.title,
-        description: data.description,
+        title: body.title,
+        description: body.description,
+        imageUrl: body.imageUrl,
       },
     });
 

@@ -8,6 +8,7 @@ export interface ICreateNewArticleDto {
 export interface IUpdateArticleDto {
   title?: string;
   description?: string;
+  imageUrl?: string | null;
 }
 
 // ============ users ================
@@ -15,7 +16,7 @@ export interface IRegisterUserDto {
   userName: string;
   email: string;
   password: string;
-  profilePicture?:  null|string;
+  profilePicture?: null | string;
 }
 
 export interface ILogInUserDto {
@@ -27,6 +28,8 @@ export interface IUpdateUserDto {
   userName?: string;
   email?: string;
   password?: string;
+  profilePicture?: string | null;
+  isAdmin?: boolean;
 }
 
 // ============ comments ================

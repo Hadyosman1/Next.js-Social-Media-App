@@ -1,3 +1,6 @@
+"use client";
+
+import { createPortal } from "react-dom";
 import { RiCloseLargeFill } from "react-icons/ri";
 
 interface ModalProps {
@@ -19,20 +22,20 @@ const ModalWrapper = ({
   size = "md",
   children,
 }: ModalProps) => {
-  return (
+  const Modal = (
     <div
       onClick={onClose}
-      className={`${isOpen ? "visible translate-x-0 opacity-100" : "invisible -translate-x-[110%] opacity-0"} fixed inset-0 z-[1200] flex max-h-screen items-center justify-center overflow-y-auto bg-gray-700 bg-opacity-50 p-3 backdrop-blur-sm transition-all delay-75 duration-500`}
+      className={`${isOpen ? "show" : "hide"} modal_wrapper`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`${className} bg-${bg} ${size === "sm" ? "max-w-sm" : size === "md" ? "md:max-w-xl" : "md:max-w-2xl"} flex max-h-[90%] flex-grow flex-col rounded`}
+        className={`${className} bg-${bg} ${size === "sm" ? "max-w-sm" : size === "md" ? "md:max-w-xl" : "md:max-w-2xl"} max-w-full flex max-h-[85%] flex-grow flex-col rounded`}
       >
         <div
           className={`${title && "border-b-2 border-slate-300"} ${bg !== "transparent" && "px-2"} flex items-center py-2`}
         >
           {title && (
-            <h2 className="flex-grow text-center text-lg font-semibold text-slate-700">
+            <h2 className="flex-grow text-center text-lg font-semibold capitalize text-slate-600">
               {title}
             </h2>
           )}
@@ -46,10 +49,12 @@ const ModalWrapper = ({
           </button>
         </div>
 
-        {children}
+        <div className="max-h-full  overflow-y-auto">{children}</div>
       </div>
     </div>
   );
+
+  return createPortal(Modal, document.body);
 };
 
 export default ModalWrapper;

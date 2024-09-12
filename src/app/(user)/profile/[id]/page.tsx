@@ -1,19 +1,17 @@
-import { verifyTokenForPage } from "@/utils/verifyToken";
-
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { getUserArticles, getUserInfo } from "@/services/users";
-import UserInfo from "@/components/profile/UserInfo";
 import ArticlesList from "@/components/Articles/ArticlesList";
-import { User } from "@prisma/client";
+import UserInfo from "@/components/profile/UserInfo";
+import { getUserArticles, getUserInfo } from "@/services/users";
 import { TArticle } from "@/types";
+import { User } from "@prisma/client";
 
-async function ProfilePage() {
-  const token = cookies().get("jwt_token")?.value;
-  const userFromToken = verifyTokenForPage(token ?? "");
-  if (!userFromToken) return redirect("/");
+type TProps = {
+  params: {
+    id: string;
+  };
+};
 
-  const user: User = await getUserInfo(userFromToken?.id ?? 0);
+const UserProfilePage = async ({ params: { id } }: TProps) => {
+  const user: User = await getUserInfo(parseInt(id) ?? 0);
   const userArticles: TArticle[] = await getUserArticles(user.id);
 
   return (
@@ -23,7 +21,8 @@ async function ProfilePage() {
           <UserInfo user={user} />
 
           <h2 className="rounded-md bg-white p-3 text-xl font-semibold shadow">
-            Your Articles
+            {user.userName}
+            {"'s"} Articles
           </h2>
 
           {userArticles.length ? (
@@ -35,5 +34,6 @@ async function ProfilePage() {
       </div>
     </section>
   );
-}
-export default ProfilePage;
+};
+
+export default UserProfilePage;

@@ -18,9 +18,22 @@ const HomePage = async ({ searchParams }: TProps) => {
 
   return (
     <div className="main-props container flex flex-col items-center gap-5 py-8">
-      <SearchArticlesInput />
-      <ArticlesList articles={articles} />
-      <Pagination path="/" limit={limit} page={page} count={articlesCount} />
+      {articlesCount > 0 ? (
+        <>
+          <SearchArticlesInput />
+          <ArticlesList articles={articles} />
+          <Pagination
+            path="/"
+            limit={limit}
+            page={page}
+            count={articlesCount}
+          />
+        </>
+      ) : (
+        <p className="flex grow items-center text-lg font-semibold text-slate-600">
+          There are no articles..!
+        </p>
+      )}
     </div>
   );
 };

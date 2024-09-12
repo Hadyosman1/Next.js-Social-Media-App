@@ -33,8 +33,8 @@ const LoginForm = () => {
 
     toast.success("logged in successfully");
 
-    router.replace("/");
     router.refresh();
+    router.replace("/");
   };
 
   return (

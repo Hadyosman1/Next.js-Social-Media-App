@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
   try {
     const page = req.nextUrl.searchParams.get("page");
     const limit = req.nextUrl.searchParams.get("limit");
+
     if (
       page &&
       limit &&

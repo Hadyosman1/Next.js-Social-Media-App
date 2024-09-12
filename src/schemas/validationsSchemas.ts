@@ -9,6 +9,18 @@ export const createArticleSchema = z.object({
 });
 export type TArticleInputs = z.infer<typeof createArticleSchema>;
 
+export const updateArticleSchema = z.object({
+  title: z
+    .string()
+    .min(2, "Title must be more than 2 digits")
+    .max(200, "Title must be less than 200 digits")
+    .optional(),
+  description: z
+    .string()
+    .min(10, "description must be more than 10 digits")
+    .optional(),
+});
+
 export const createUserSchema = z.object({
   userName: z
     .string()
@@ -39,6 +51,7 @@ export const userUpdateSchema = z.object({
   userName: z.string().min(2).max(100).optional(),
   email: z.string().email().min(5).optional(),
   password: z.string().min(8).optional(),
+  isAdmin: z.boolean().optional(),
 });
 
 export const createCommentSchema = z.object({

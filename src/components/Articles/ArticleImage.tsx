@@ -1,6 +1,6 @@
 "use client";
 
-import ModalWrapper from "../Modals/ModalWrapper";
+import ModalWrapper from "../modals/ModalWrapper";
 import { useCallback, useState } from "react";
 import Image from "next/image";
 
@@ -25,7 +25,7 @@ const ArticleImage = ({
         className="h-auto max-h-[650px] w-full cursor-pointer rounded bg-slate-100/50 object-contain"
         src={image}
         alt={title}
-        width={800}
+        width={1000}
         height={650}
         priority={imagePriority}
         onClick={() => setIsImageModalOpen(true)}

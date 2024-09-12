@@ -47,9 +47,9 @@ const CommentForm = ({
       });
     } else {
       if (prevValue?.trim() === comment.trim() && onCancelEdit) {
-        toast.error("can't update comment with same content",{
-          position:"bottom-center"
-        })
+        toast.error("can't update comment with same content", {
+          position: "bottom-center",
+        });
         return onCancelEdit(false);
       }
       res = await updateComment({ content: comment, id: commentId ?? 0 });
@@ -74,7 +74,7 @@ const CommentForm = ({
             setComment(e.target.value.trimStart());
           }}
           placeholder="Add a comment"
-          className={` ${comment.trim().length ? "active min-h-20" : "h-9 max-h-9 min-h-9 w-5 overflow-hidden"} `}
+          className={` ${comment.trim().length ? "active min-h-20" : "h-9 max-h-9 min-h-9 w-4 overflow-hidden"} `}
         />
 
         {onCancelEdit && (
@@ -92,7 +92,8 @@ const CommentForm = ({
           type="submit"
           className="submit_btn flex items-center justify-center gap-2 capitalize"
         >
-          {isLoading && <SmallLoadingIndicator size="sm" />} {status}
+          {isLoading && <SmallLoadingIndicator size="sm" />}
+          {status === "create" ? "Comment" : "Edit"}
         </button>
       </form>
     </>

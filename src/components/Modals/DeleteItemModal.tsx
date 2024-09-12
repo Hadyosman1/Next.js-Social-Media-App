@@ -1,25 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import ModalWrapper from "./ModalWrapper";
 import SmallLoadingIndicator from "../shared/SmallLoadingIndicator";
 import { toast } from "react-toastify";
 import { deleteComment } from "@/services/comments";
 import { deleteArticle } from "@/services/articles";
+import { deleteUser } from "@/services/users";
 
 type TProps = {
   commentId?: number;
   articleId?: number;
+  userId?: number;
   onClose: () => void;
   isModalOpen: boolean;
-  item: "comment" | "article";
+  item: "comment" | "article" | "account";
 };
 
 const DeleteItemModal = ({
   commentId,
   item,
+  userId,
   isModalOpen,
   articleId,
   onClose,
@@ -28,9 +30,15 @@ const DeleteItemModal = ({
 
   const router = useRouter();
 
-  const deleteFn = item === "comment" ? deleteComment : deleteArticle;
+  const deleteFn =
+    item === "comment"
+      ? deleteComment
+      : item === "article"
+        ? deleteArticle
+        : deleteUser;
 
-  const itemId = item === "comment" ? commentId : articleId;
+  const itemId =
+    item === "comment" ? commentId : item === "article" ? articleId : userId;
 
   const handleDeleteItem = async () => {
     setIsLoading(true);
@@ -44,7 +52,7 @@ const DeleteItemModal = ({
     router.refresh();
   };
 
-  const MyModal = (
+  return (
     <ModalWrapper
       className="shadow shadow-blue-500"
       title={`Delete ${item}`}
@@ -77,8 +85,6 @@ const DeleteItemModal = ({
       </div>
     </ModalWrapper>
   );
-
-  return createPortal(MyModal, document.body);
 };
 
 export default DeleteItemModal;

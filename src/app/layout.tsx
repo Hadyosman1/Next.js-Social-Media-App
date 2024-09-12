@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
+import { verifyTokenForPage } from "@/utils/verifyToken";
+import { lazy } from "react";
 
 // libraries
 import { ToastContainer } from "react-toastify";
@@ -11,15 +14,11 @@ import "./globals.css";
 //components
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
-import { cookies } from "next/headers";
-import { verifyTokenForPage } from "@/utils/verifyToken";
-import { lazy } from "react";
 
 //lazy
-const AddArticleModal = lazy(
-  () => import("@/components/Modals/AddArticleModal"),
+const OpenAddArticleModalBtn = lazy(
+  () => import("@/components/Articles/OpenAddArticleModalBtn"),
 );
-// import AddArticleModal from "@/components/Modals/AddArticleModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,11 +38,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <ToastContainer />
+
         <div className="mx-auto flex min-h-svh flex-col">
-          {user && <AddArticleModal />}
+          {user && <OpenAddArticleModalBtn />}
+
           <Header />
-          <ToastContainer />
+
           <main className="grid flex-grow bg-slate-200/70">{children}</main>
+
           <Footer />
         </div>
       </body>

@@ -35,15 +35,19 @@ const Article = ({
     <>
       <article className={`article`}>
         <div className="mb-4 flex w-full items-center gap-2 border-b-2 pb-3">
-          <Image
-            src={article.author.profilePicture ?? anonymousUser}
-            alt={article.author.userName}
-            width={64}
-            height={64}
-            unoptimized
-            className="aspect-square w-16 rounded-full bg-slate-100 object-cover object-top shadow"
-            priority={imagePriority}
-          />
+          <Link
+            href={`/profile/${!(user?.id === article.authorId) ? article.authorId : ""}`}
+          >
+            <Image
+              src={article.author.profilePicture ?? anonymousUser}
+              alt={article.author.userName}
+              width={64}
+              height={64}
+              unoptimized
+              className="aspect-square w-16 rounded-full bg-slate-100 object-cover object-top shadow"
+              priority={imagePriority}
+            />
+          </Link>
 
           <h2 className="flex flex-col font-bold">
             {article.author.userName}
@@ -58,7 +62,12 @@ const Article = ({
           </h2>
 
           {user?.id === article.authorId && (
-            <ArticleControls articleId={article.id} />
+            <ArticleControls
+              imageUrl={article.imageUrl}
+              title={article.title}
+              description={article.description}
+              articleId={article.id}
+            />
           )}
         </div>
 

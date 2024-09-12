@@ -1,4 +1,4 @@
-import DeleteItemModal from "@/components/Modals/DeleteItemModal";
+import DeleteItemModal from "@/components/modals/DeleteItemModal";
 import { useCallback, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";

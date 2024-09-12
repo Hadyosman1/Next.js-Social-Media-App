@@ -5,6 +5,13 @@ import { IUpdateUserDto } from "@/types/dtos";
 import bcrypt from "bcryptjs";
 import { userUpdateSchema } from "@/schemas/validationsSchemas";
 import { cookies } from "next/headers";
+import verifyImage from "@/utils/verifyImage";
+import {
+  deleteImageFromFirebase,
+  uploadImageToFirebase,
+} from "@/services/firebase";
+import generateJWT from "@/utils/generateJWT";
+import prepareCookie from "@/utils/prepareCookie";
 
 interface IProps {
   params: { id: string };
@@ -19,15 +26,7 @@ interface IProps {
 export async function GET(req: NextRequest, { params }: IProps) {
   try {
     const id = +params.id;
-    const user = await prisma.user.findUnique({
-      where: { id },
-      include: {
-        articles: {
-          orderBy: { createdAt: "desc" },
-          include: { comments: { orderBy: { createdAt: "desc" } } },
-        },
-      },
-    });
+    const user = await prisma.user.findUnique({ where: { id } });
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
@@ -65,7 +64,20 @@ export async function DELETE(req: NextRequest, { params }: IProps) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     }
 
-    //todo: ==>> Handle delete user Picture from cloud
+    if (user.profilePicture != null) {
+      const deleteImage = await deleteImageFromFirebase(
+        user.profilePicture,
+        "user",
+      );
+
+      if (!deleteImage) {
+        return NextResponse.json(
+          { message: "Error deleting image" },
+          { status: 500 },
+        );
+      }
+    }
+
     const deletedUser = await prisma.user.delete({ where: { id } });
 
     if (
@@ -107,7 +119,14 @@ export async function PUT(req: NextRequest, { params }: IProps) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     }
 
-    const data = (await req.json()) as IUpdateUserDto;
+    const formData = await req.formData();
+
+    const data = {
+      userName: formData.get("userName") ?? user.userName,
+      email: formData.get("email") ?? user.email,
+      password: formData.get("password") || undefined,
+      isAdmin: formData.get("isAdmin") ?? user.isAdmin,
+    } as IUpdateUserDto;
 
     const validation = userUpdateSchema.safeParse(data);
     if (!validation.success) {
@@ -127,13 +146,54 @@ export async function PUT(req: NextRequest, { params }: IProps) {
       data.password = await bcrypt.hash(data.password, salt);
     }
 
-    //todo: ==>> Handle delete user Picture and add another new one
+    const file: File | null = formData.get("profilePicture") as unknown as File;
+    if (file) {
+      const result = verifyImage(file);
+
+      if (result !== "valid") {
+        return NextResponse.json(
+          { message: result.message },
+          { status: result.status },
+        );
+      }
+
+      // delete old image
+      if (user.profilePicture != null) {
+        const deleteImage = await deleteImageFromFirebase(
+          user.profilePicture,
+          "user",
+        );
+
+        if (!deleteImage) {
+          return NextResponse.json(
+            { message: "Error deleting image" },
+            { status: 500 },
+          );
+        }
+      }
+
+      const publicImgUrl = await uploadImageToFirebase(file, "user");
+      if (publicImgUrl.ok) data.profilePicture = publicImgUrl.url;
+    }
+
+    const token = generateJWT({
+      id: id,
+      email: data.email ?? user.email,
+      isAdmin: data.isAdmin ?? user.isAdmin,
+      userName: data.userName ?? user.userName,
+      profilePicture: data.profilePicture ?? user.profilePicture,
+    });
+
+    const cookie = prepareCookie(token);
+
     const updatedUser = await prisma.user.update({
       where: { id },
       data: {
-        userName: data.userName,
-        email: data.email,
-        password: data.password,
+        password: data.password ?? user.password,
+        email: data.email ?? user.email,
+        isAdmin: data.isAdmin ?? user.isAdmin,
+        userName: data.userName ?? user.userName,
+        profilePicture: data.profilePicture ?? user.profilePicture,
       },
     });
 
@@ -141,8 +201,8 @@ export async function PUT(req: NextRequest, { params }: IProps) {
     const { password, ...userWithOutPassword } = updatedUser;
 
     return NextResponse.json(
-      { message: "User updated successfully", userWithOutPassword },
-      { status: 200 },
+      { message: "User updated successfully", user: userWithOutPassword },
+      { status: 200, headers: { "Set-Cookie": cookie } },
     );
   } catch (error) {
     console.error(error);

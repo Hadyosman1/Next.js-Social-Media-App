@@ -1,4 +1,4 @@
-import RegisterForm from "@/components/forms/RegisterForm";
+import RegisterOrEditForm from "@/components/forms/RegisterOrEditForm";
 import { verifyTokenForPage } from "@/utils/verifyToken";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -11,7 +11,7 @@ const RegisterPage = () => {
 
   return (
     <section className="main-props container flex items-center justify-center py-12">
-      <RegisterForm />
+      <RegisterOrEditForm status="register" />
     </section>
   );
 };

@@ -9,11 +9,13 @@ import SmallLoadingIndicator from "./SmallLoadingIndicator";
 import { useRouter } from "next/navigation";
 import { userLogOut } from "@/services/auth";
 import { toast } from "react-toastify";
+import { DropDown } from "./DropDown";
 
 //icons
 import { MdExpandMore } from "react-icons/md";
 import { MdExpandLess } from "react-icons/md";
-import { DropDown } from "./DropDown";
+import { FaSignOutAlt } from "react-icons/fa";
+import { FaCircleUser } from "react-icons/fa6";
 
 type TProps = {
   user: TypeJWTPayload | null;
@@ -33,6 +35,7 @@ const RoundedUser = ({ user }: TProps) => {
 
     toast.success(res.message);
     router.replace("/");
+    closeDropDown();
     router.refresh();
   };
 
@@ -74,20 +77,27 @@ const RoundedUser = ({ user }: TProps) => {
 
           <hr />
 
-          <DropDown.Item href={"/profile"} as={Link}>
-            Profile
+          <DropDown.Item onClick={closeDropDown} href={"/profile"} as={Link}>
+            <FaCircleUser /> Profile
           </DropDown.Item>
 
-          <DropDown.Item>anything for now</DropDown.Item>
-          <DropDown.Item>anything for now</DropDown.Item>
-          <DropDown.Item>anything</DropDown.Item>
+          <DropDown.Item onClick={closeDropDown}>
+            anything for now
+          </DropDown.Item>
+
+          <DropDown.Item onClick={closeDropDown}>
+            anything for now
+          </DropDown.Item>
+
+          <DropDown.Item onClick={closeDropDown}>anything</DropDown.Item>
 
           <button
             disabled={isLoading}
             onClick={logOutHandler}
             className={`logout-btn flex items-center justify-center gap-1 rounded-sm bg-red-700/80 px-3 py-1 text-slate-100 transition-all hover:bg-red-800/80 hover:indent-2`}
           >
-            {isLoading && <SmallLoadingIndicator size="sm" />} Log out
+            {isLoading ? <SmallLoadingIndicator size="sm" /> : <FaSignOutAlt />}{" "}
+            Log out
           </button>
         </DropDown>
       </div>

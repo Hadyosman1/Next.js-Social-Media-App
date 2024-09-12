@@ -3,17 +3,31 @@
 import { useCallback, useState } from "react";
 import { DropDown } from "../shared/DropDown";
 import ToolTipItem from "../shared/ToolTipItem";
-import DeleteItemModal from "../Modals/DeleteItemModal";
+import DeleteItemModal from "../modals/DeleteItemModal";
 
 import { BsThreeDots } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import { BiEditAlt, BiTrashAlt } from "react-icons/bi";
+import ArticleModal from "../modals/ArticleModal";
 
-const ArticleControls = ({ articleId }: { articleId: number }) => {
+const ArticleControls = ({
+  articleId,
+  imageUrl,
+  title,
+  description,
+}: {
+  articleId: number;
+  imageUrl: string | null;
+  title: string;
+  description: string;
+}) => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const onModalClose = useCallback(() => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const onDeleteModalClose = useCallback(() => {
     setIsDeleteModalOpen(false);
   }, []);
 
@@ -23,7 +37,7 @@ const ArticleControls = ({ articleId }: { articleId: number }) => {
 
   return (
     <>
-      <div className="relative ms-auto self-start">
+      <div className="relative ms-auto self-start me-1">
         <button
           onClick={() => setIsDropDownOpen((prev) => !prev)}
           className="tooltip_wrapper flex items-center justify-center rounded-md bg-slate-100 px-3 py-1.5 text-xl text-slate-500 hover:bg-slate-200"
@@ -45,6 +59,7 @@ const ArticleControls = ({ articleId }: { articleId: number }) => {
           position="bottom-left"
         >
           <button
+            onClick={() => setIsEditModalOpen(true)}
             className={`flex items-center justify-between gap-0.5 rounded-sm bg-blue-600/80 px-3 py-1 text-slate-100 transition-all hover:bg-blue-700/80`}
           >
             Edit
@@ -61,11 +76,22 @@ const ArticleControls = ({ articleId }: { articleId: number }) => {
         </DropDown>
       </div>
 
+      {isEditModalOpen && (
+        <ArticleModal
+          prevDataToEdit={{ title, description }}
+          imageUrl={imageUrl}
+          articleId={articleId}
+          isModalOpen={isEditModalOpen}
+          setIsModalOpen={setIsEditModalOpen}
+          status="edit"
+        />
+      )}
+
       {isDeleteModalOpen && (
         <DeleteItemModal
           item="article"
           isModalOpen={isDeleteModalOpen}
-          onClose={onModalClose}
+          onClose={onDeleteModalClose}
           articleId={articleId}
         />
       )}
