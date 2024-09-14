@@ -38,6 +38,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <div id="modal-container"></div>
+
         <ToastContainer />
 
         <div className="mx-auto flex min-h-svh flex-col">

@@ -24,6 +24,10 @@
   border: 5px solid #2e6384;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer utilities {
   .container {
     @apply xl:max-w-[1280px];
@@ -55,11 +59,11 @@
     &::after {
       content: "";
       border-radius: 6px 6px 0 0;
-      @apply absolute bottom-0 left-0 right-0 h-[4px] bg-blue-600 opacity-0 transition-all;
+      @apply absolute bottom-0 left-0 right-0 h-[4px] bg-blue-400 opacity-0 transition-all;
     }
 
     &.active {
-      @apply bg-slate-200/70 text-blue-600;
+      @apply bg-slate-200/70 text-blue-400;
 
       &:after {
         @apply opacity-100;
@@ -183,7 +187,7 @@
   }
 
   .profile_section {
-    background-image: linear-gradient(to bottom, #3f86e86b, transparent 30%);
+    background-image: linear-gradient(to bottom, #3f86e86b, transparent 350px);
   }
 
   .modal_wrapper {
@@ -195,6 +199,22 @@
 
     &.show {
       @apply visible translate-y-0 opacity-100;
+    }
+  }
+
+  .side_bar_link {
+    @apply relative flex items-center gap-2 rounded bg-white text-base text-blue-400 hover:bg-slate-100 hover:underline;
+
+    &.active {
+      @apply border border-white bg-blue-500 text-white;
+    }
+
+    > span.absolute_right {
+      @apply invisible absolute right-0 top-1/2 -translate-y-1/2 translate-x-[calc(100%_+_15px)] rounded border border-blue-400 bg-white px-2 py-0.5 text-blue-400 shadow-md transition-all hover:bg-slate-100;
+    }
+
+    &:hover > span.absolute_right {
+      @apply visible;
     }
   }
 }

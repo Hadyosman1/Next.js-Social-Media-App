@@ -30,16 +30,16 @@ const Pagination = ({ count, page, limit, path }: TProps) => {
   }
 
   return (
-    <div className="flex justify-center gap-0.5 text-sky-500 *:rounded-sm">
+    <div className="mx-auto flex justify-center gap-0.5 text-sky-500 *:rounded-sm">
       <Link
-        href={`${path}?page=${prevPage}`}
-        className={`${parsedPage <= 1 && "cursor-no-drop opacity-55"} pagination_btn flex items-center`}
+        href={`${path}?page=${prevPage}&limit=${parsedLimit}`}
+        className={`${parsedPage <= 1 && "pointer-events-none cursor-no-drop opacity-55"} pagination_btn flex items-center`}
       >
         <GrPrevious />
       </Link>
       {slicedPagesArr.map((el) => (
         <Link
-          href={`${path}?page=${el}`}
+          href={`${path}?page=${el}&limit=${parsedLimit}`}
           className={`pagination_btn ${el === parsedPage && "active"} `}
           key={el}
         >
@@ -54,7 +54,7 @@ const Pagination = ({ count, page, limit, path }: TProps) => {
               ...
             </span>
             <Link
-              href={`${path}?page=${pagesArr[pagesArr.length - 1]}`}
+              href={`${path}?page=${pagesArr[pagesArr.length - 1]}&limit=${parsedLimit}`}
               className={`pagination_btn ${pagesArr[pagesArr.length - 1] === parsedPage && "active"} `}
               key={pagesArr[pagesArr.length - 1]}
             >
@@ -64,8 +64,8 @@ const Pagination = ({ count, page, limit, path }: TProps) => {
         )}
 
       <Link
-        href={`${path}?page=${nextPage}`}
-        className={`${parsedPage === pagesCount && "cursor-no-drop opacity-55"} pagination_btn flex items-center`}
+        href={`${path}?page=${nextPage}&limit=${parsedLimit}`}
+        className={`${parsedPage === pagesCount && "pointer-events-none cursor-no-drop opacity-55"} pagination_btn flex items-center`}
       >
         <GrNext />
       </Link>

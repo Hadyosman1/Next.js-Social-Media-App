@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { RiCloseLargeFill } from "react-icons/ri";
 
@@ -22,6 +23,14 @@ const ModalWrapper = ({
   size = "md",
   children,
 }: ModalProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
   const Modal = (
     <div
       onClick={onClose}
@@ -29,7 +38,7 @@ const ModalWrapper = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`${className} bg-${bg} ${size === "sm" ? "max-w-sm" : size === "md" ? "md:max-w-xl" : "md:max-w-2xl"} max-w-full flex max-h-[85%] flex-grow flex-col rounded`}
+        className={`${className} bg-${bg} ${size === "sm" ? "max-w-sm" : size === "md" ? "md:max-w-xl" : "md:max-w-2xl"} flex max-h-[85%] max-w-full flex-grow flex-col rounded`}
       >
         <div
           className={`${title && "border-b-2 border-slate-300"} ${bg !== "transparent" && "px-2"} flex items-center py-2`}
@@ -49,12 +58,15 @@ const ModalWrapper = ({
           </button>
         </div>
 
-        <div className="max-h-full  overflow-y-auto">{children}</div>
+        <div className="max-h-full overflow-y-auto">{children}</div>
       </div>
     </div>
   );
 
-  return createPortal(Modal, document.body);
+  return createPortal(
+    Modal,
+    document.getElementById("modal-container") || document.body,
+  );
 };
 
 export default ModalWrapper;

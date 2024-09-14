@@ -6,7 +6,7 @@ import { verifyTokenForPage } from "@/utils/verifyToken";
 
 import AuthLinks from "./AuthLinks";
 import NavBar from "./NavBar";
-import User from "@/components/shared/RoundedUser";
+import RoundedUser from "@/components/shared/RoundedUser";
 
 const Header = () => {
   const token = cookies().get("jwt_token")?.value;
@@ -27,7 +27,7 @@ const Header = () => {
 
         <NavBar user={user} />
 
-        {!user ? <AuthLinks /> : <User user={user} />}
+        {!user ? <AuthLinks /> : <RoundedUser user={user} />}
       </div>
     </header>
   );

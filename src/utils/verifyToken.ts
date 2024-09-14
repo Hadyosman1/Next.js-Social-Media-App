@@ -6,15 +6,16 @@ export function verifyToken(req: NextRequest): TypeJWTPayload | null {
   try {
     const jwtToken = req.cookies.get("jwt_token");
     const token = jwtToken?.value as string;
+    console.log("token: ", token);
+
     if (!token) return null;
 
-    const userFromToken = jwt.verify(
+    return jwt.verify(
       token,
       process.env.JWT_PRIVATE_KEY as string,
     ) as TypeJWTPayload;
-
-    return userFromToken;
   } catch (error) {
+    console.error("Error verifying token: ", error);
     return null;
   }
 }

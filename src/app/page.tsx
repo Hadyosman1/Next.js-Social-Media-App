@@ -22,6 +22,14 @@ const HomePage = async ({ searchParams }: TProps) => {
         <>
           <SearchArticlesInput />
           <ArticlesList articles={articles} />
+
+          <p className="my-3 text-xl font-medium text-slate-600">
+            {(parseInt(page ?? "1") - 1) * parseInt(limit ?? "10") + 1} to{" "}
+            {articles.length +
+              (parseInt(page ?? "1") - 1) * parseInt(limit ?? "10")}{" "}
+            from ({articlesCount} Articles)
+          </p>
+
           <Pagination
             path="/"
             limit={limit}

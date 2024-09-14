@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
     //   articles.push({
     //     title: "*".repeat(i + 1) + " -" + (i + 1),
     //     description: "*".repeat(i + 1) + " -" + (i + 1),
-    //     authorId: 10,
+    //     authorId: 5,
     //   });
     // }
 

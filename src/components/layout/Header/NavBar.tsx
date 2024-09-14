@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,12 +13,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
 import { TypeJWTPayload } from "@/types";
 
-let navLinks = [
-  { href: "/", label: "Home", icon: <HomeIcon /> },
-  { href: "/about", label: "About", icon: <AboutIcon /> },
-  { href: "/profile", label: "Profile", icon: <FaCircleUser /> },
-  { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon /> },
-];
+// let navLinks = [
+//   { href: "/", label: "Home", icon: <HomeIcon /> },
+//   { href: "/about", label: "About", icon: <AboutIcon /> },
+//   { href: "/profile", label: "Profile", icon: <FaCircleUser /> },
+//   { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon /> },
+// ];
 
 const isActive = (href: string, pathname: string) => {
   if (href !== "/") {
@@ -33,13 +33,30 @@ const NavBar = ({ user }: TProps) => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const pathname = usePathname();
 
-  if (!user?.isAdmin) {
-    navLinks = navLinks.filter((el) => !el.href.includes("dashboard"));
-  }
+  const navLinks = useMemo(() => {
+    let links = [
+      { href: "/", label: "Home", icon: <HomeIcon /> },
+      { href: "/about", label: "About", icon: <AboutIcon /> },
+    ];
 
-  if (!user) {
-    navLinks = navLinks.filter((el) => !el.href.includes("profile"));
-  }
+    if (user) {
+      links.push({
+        href: "/profile",
+        label: "Profile",
+        icon: <FaCircleUser />,
+      });
+
+      if (user.isAdmin) {
+        links.push({
+          href: "/dashboard",
+          label: "Dashboard",
+          icon: <DashboardIcon />,
+        });
+      }
+    }
+
+    return links;
+  }, [user]);
 
   return (
     <>
@@ -49,6 +66,7 @@ const NavBar = ({ user }: TProps) => {
       >
         {!isNavOpen ? <RxHamburgerMenu /> : <IoCloseSharp />}
       </span>
+
       <nav
         className={`absolute bottom-0 left-0 right-0 z-40 flex flex-grow translate-y-full items-center justify-center bg-white p-4 text-white shadow shadow-blue-300 transition-[opacity,visibility] duration-300 ease-linear sm:p-7 md:visible md:static md:translate-y-0 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${isNavOpen ? "opacity-100" : "invisible opacity-0"} `}
       >

@@ -21,12 +21,14 @@ const ArticleForm = ({
   prevDataToEdit,
   articleId,
   imageUrl,
+  title,
 }: {
-  onClose: () => void;
+  onClose?: () => void;
   status: "create" | "edit";
   prevDataToEdit?: TArticleInputs;
   articleId?: number;
-  imageUrl: string | null;
+  imageUrl?: string | null;
+  title?: string;
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
@@ -63,7 +65,7 @@ const ArticleForm = ({
     });
 
     // close modal
-    onClose();
+    onClose?.();
     setImage(null);
     reset();
     router.refresh();
@@ -72,8 +74,14 @@ const ArticleForm = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-2 overflow-y-auto rounded bg-white px-4 py-8 md:px-8"
+      className="flex w-full max-w-xl flex-col gap-2 overflow-y-auto rounded bg-white px-4 py-8 md:px-8"
     >
+      {title && (
+        <h3 className="border-b border-blue-400 pb-3 text-center text-xl font-semibold text-blue-400">
+          {title}
+        </h3>
+      )}
+
       <label htmlFor="title">Title</label>
       <textarea
         dir="auto"

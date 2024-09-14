@@ -3,8 +3,8 @@ import API_URL from "./API_URL";
 
 // Get Articles
 export async function getArticles(
-  pageNumber: string | undefined,
-  limit: string | undefined,
+  pageNumber?: string | undefined,
+  limit?: string | undefined,
 ): Promise<TArticle[]> {
   try {
     const res = await fetch(

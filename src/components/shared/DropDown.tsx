@@ -51,7 +51,7 @@ export const DropDown = ({
     return () => {
       document.removeEventListener("click", handleCloseDropMenu);
     };
-  }, [isOpen]);
+  }, [closeDropDown, isOpen]);
 
   return (
     <Element
@@ -63,6 +63,7 @@ export const DropDown = ({
   );
 };
 
+// eslint-disable-next-line react/display-name
 DropDown.Header = ({
   className,
   children,
@@ -75,6 +76,7 @@ DropDown.Header = ({
   children: React.ReactNode;
   as?: React.ElementType;
   href?: string;
+  // eslint-disable-next-line no-unused-vars
   onClick?: (e: Event) => void;
 }) => {
   const handleClick = (e: MouseEvent) => {
@@ -94,6 +96,7 @@ DropDown.Header = ({
   );
 };
 
+// eslint-disable-next-line react/display-name
 DropDown.Item = ({
   className,
   children,
@@ -106,6 +109,7 @@ DropDown.Item = ({
   children: React.ReactNode;
   as?: React.ElementType;
   href?: string;
+  // eslint-disable-next-line no-unused-vars
   onClick?: (e: Event) => void;
 }) => {
   const handleClick = (e: MouseEvent) => {

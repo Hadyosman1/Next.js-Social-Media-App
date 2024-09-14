@@ -75,11 +75,11 @@ const RegisterOrEditForm = ({ status, oldData, closeModal }: TProps) => {
       `Account ${status === "register" ? "created" : "updated"} successfully`,
     );
 
-    router.refresh();
-
     if (status === "register") router.replace("/");
 
     if (closeModal) closeModal();
+
+    router.refresh();
   };
 
   return (

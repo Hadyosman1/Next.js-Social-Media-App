@@ -1,4 +1,4 @@
-export default function (
+export default function verifyImage (
   file: File,
 ): { message: string; status: number } | "valid" {
   const isImage = file.type.startsWith("image");

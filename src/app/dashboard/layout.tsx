@@ -5,9 +5,9 @@ import { Metadata } from "next";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-x-4">
+    <div className="grid max-h-[calc(100dvh_-_120px)] grid-cols-[auto_1fr]">
       <SideBar />
-      <div>{children}</div>
+      <div className="overflow-y-auto px-3 md:px-6">{children}</div>
     </div>
   );
 };

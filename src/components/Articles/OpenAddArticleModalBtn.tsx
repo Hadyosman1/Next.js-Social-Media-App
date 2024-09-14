@@ -6,9 +6,15 @@ import ArticleModal from "../modals/ArticleModal";
 //icons
 import { MdPostAdd } from "react-icons/md";
 import ToolTipItem from "../shared/ToolTipItem";
+import { usePathname } from "next/navigation";
 
 const OpenAddArticleModalBtn = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <>

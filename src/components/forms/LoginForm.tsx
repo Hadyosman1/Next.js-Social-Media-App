@@ -31,10 +31,9 @@ const LoginForm = () => {
 
     if (!res.ok) return toast.error(res.error);
 
-    toast.success("logged in successfully");
-
-    router.refresh();
     router.replace("/");
+    toast.success("logged in successfully");
+    router.refresh();
   };
 
   return (
@@ -43,7 +42,7 @@ const LoginForm = () => {
       className="flex flex-grow flex-col justify-center rounded border border-sky-400 px-4 py-8 shadow-md md:max-w-xl md:px-8"
     >
       <h2 className="mb-4 border-b border-sky-400 px-2 pb-3 text-center text-xl font-bold uppercase text-sky-500">
-        Create Account
+        Log in
       </h2>
 
       <FormInput
