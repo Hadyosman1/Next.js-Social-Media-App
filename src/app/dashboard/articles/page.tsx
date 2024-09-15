@@ -1,7 +1,7 @@
 import Pagination from "@/components/Articles/Pagination";
 import ArticlesTable from "@/components/dashboard/articles/ArticlesTable";
 import PageTitle from "@/components/dashboard/PageTitle";
-import { getArticles, getArticlesCount } from "@/services/articles";
+import { getArticles } from "@/services/articles";
 import { TArticle } from "@/types";
 import prisma from "@/utils/db";
 import Link from "next/link";

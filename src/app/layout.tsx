@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import { verifyTokenForPage } from "@/utils/verifyToken";
-import { lazy } from "react";
 
 // libraries
 import { ToastContainer } from "react-toastify";
@@ -15,10 +14,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 
-//lazy
-const OpenAddArticleModalBtn = lazy(
-  () => import("@/components/Articles/OpenAddArticleModalBtn"),
-);
+import OpenAddArticleModalBtn from "@/components/Articles/OpenAddArticleModalBtn";
 
 const inter = Inter({ subsets: ["latin"] });
 

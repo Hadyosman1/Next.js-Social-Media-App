@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
-import ArticleModal from "../modals/ArticleModal";
+import ArticleModal from "@/components/modals/ArticleModal";
 
 const EditArticleBtn = ({
   title,
   description,
   imageUrl,
-  articleId
+  articleId,
 }: {
   articleId: number;
   title: string;

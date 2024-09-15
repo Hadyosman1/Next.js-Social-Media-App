@@ -1,7 +1,8 @@
 import DeleteCommentBtn from "@/components/Articles/comments/DeleteCommentBtn";
 import { Comment } from "@prisma/client";
-import { FaTrash } from "react-icons/fa6";
 import CommentContent from "./CommentContent";
+
+import { FaTrash } from "react-icons/fa6";
 
 const CommentsTable = ({ comments }: { comments: Comment[] }) => {
   return (
