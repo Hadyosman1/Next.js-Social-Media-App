@@ -1,28 +1,21 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { TypeJWTPayload } from "@/types";
 
 //icons
 import { IoHome as HomeIcon } from "react-icons/io5";
-import { HiOutlineClipboardDocumentList as AboutIcon } from "react-icons/hi2";
 import { FaCircleUser } from "react-icons/fa6";
 import { TbLayoutDashboard as DashboardIcon } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
-import { TypeJWTPayload } from "@/types";
-
-// let navLinks = [
-//   { href: "/", label: "Home", icon: <HomeIcon /> },
-//   { href: "/about", label: "About", icon: <AboutIcon /> },
-//   { href: "/profile", label: "Profile", icon: <FaCircleUser /> },
-//   { href: "/dashboard", label: "Dashboard", icon: <DashboardIcon /> },
-// ];
+import { GrArticle as ArticleIcon } from "react-icons/gr";
 
 const isActive = (href: string, pathname: string) => {
   if (href !== "/") {
-    return pathname.startsWith(href) ? "active" : "";
+    return pathname.startsWith(href.split("?")[0]) ? "active" : "";
   }
   return pathname === href ? "active" : "";
 };
@@ -36,7 +29,11 @@ const NavBar = ({ user }: TProps) => {
   const navLinks = useMemo(() => {
     let links = [
       { href: "/", label: "Home", icon: <HomeIcon /> },
-      { href: "/about", label: "About", icon: <AboutIcon /> },
+      {
+        href: "/articles?page=1&limit=10",
+        label: "Articles",
+        icon: <ArticleIcon />,
+      },
     ];
 
     if (user) {

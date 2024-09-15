@@ -1,6 +1,26 @@
-import { User } from "@prisma/client";
 import API_URL from "./API_URL";
+import { User } from "@prisma/client";
 import { TArticle } from "@/types";
+
+export async function getAllUsers(): Promise<User[]> {
+  try {
+    const res = await fetch(`${API_URL}/users`, {
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data?.message || "Failed to get users");
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to get users",
+    );
+  }
+}
 
 type TGetUserInfoReturn = User;
 

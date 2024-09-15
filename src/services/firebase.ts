@@ -42,16 +42,13 @@ const extractFilePathFromUrl = (
   url: string,
   path: "article" | "user",
 ): string => {
-  // التحقق من وجود المسار المطلوب داخل الـ URL
   const index = url.indexOf(`/${path}/`);
 
   if (index === -1) throw new Error("Invalid Google Cloud Storage URL");
 
-  // قطع الجزء الذي بعد المسار المحدد
-  const urlWithoutQueryParams = url.split("?")[0]; // إزالة المعاملات إن وجدت
-  let filePath = urlWithoutQueryParams.substring(index + 1); // استخراج المسار بعد "article" أو "user"
+  const urlWithoutQueryParams = url.split("?")[0];
+  let filePath = urlWithoutQueryParams.substring(index + 1);
 
-  // فك تشفير المسار ليصبح قابل للقراءة (تحويل %20 إلى مسافات وغيرها)
   filePath = decodeURIComponent(filePath);
 
   return filePath;
@@ -63,17 +60,18 @@ export async function deleteImageFromFirebase(
 ): Promise<true> {
   try {
     const filePath = extractFilePathFromUrl(url, path);
-    console.log("filePath ====>", filePath);
 
     const file = storage.file(filePath);
 
     const [exists] = await file.exists();
 
     if (!exists) throw new Error("File does not exist");
+
     await file.delete();
+
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }

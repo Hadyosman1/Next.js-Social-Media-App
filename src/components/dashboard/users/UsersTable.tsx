@@ -1,12 +1,11 @@
 "use client";
 
-import { TArticle } from "@/types";
+import DeleteUserBtn from "@/components/profile/DeleteUserBtn";
+import { User } from "@prisma/client";
 import Image from "next/image";
 import { MouseEventHandler } from "react";
-import DeleteArticleBtn from "../Articles/DeleteArticleBtn";
-import EditArticleBtn from "../Articles/EditArticleBtn";
 
-const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
+const UsersTable = ({ users }: { users: User[] }) => {
   const handleImageClicked: MouseEventHandler = (e) => {
     const target = e.target as HTMLElement;
 
@@ -29,20 +28,25 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
               <thead className="border-b border-neutral-200 font-medium">
                 <tr>
                   <th scope="col" className="px-6 py-2">
-                    Title
+                    User name
                   </th>
+
                   <th scope="col" className="px-6 py-2">
-                    Description
+                    E-mail
                   </th>
+
                   <th scope="col" className="px-6 py-2">
                     Image
                   </th>
+
                   <th scope="col" className="px-6 py-2">
-                    Author
+                    Role
                   </th>
+
                   <th scope="col" className="px-6 py-2">
-                    Comments count
+                    Created At
                   </th>
+
                   <th scope="col" className="px-6 py-2">
                     Controls
                   </th>
@@ -50,25 +54,27 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
               </thead>
 
               <tbody>
-                {articles.map((article) => (
+                {users.map((user) => (
                   <tr
-                    key={article.id}
+                    key={user.id}
                     className="border-b border-neutral-200 font-medium"
                   >
-                    <td className="px-6 py-4">{article.title}</td>
-
-                    <td className="px-6 py-4">{article.description}</td>
+                    <td className="px-6 py-4">{user.userName}</td>
 
                     <td className="whitespace-nowrap px-6 py-4">
-                      {article.imageUrl ? (
+                      {user.email}
+                    </td>
+
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {user.profilePicture ? (
                         <Image
                           onClick={handleImageClicked}
                           className="mx-auto aspect-square max-w-52 cursor-pointer rounded shadow"
                           width={500}
                           height={500}
                           unoptimized
-                          src={article.imageUrl}
-                          alt={article.title}
+                          src={user.profilePicture}
+                          alt={user.userName}
                         />
                       ) : (
                         <span className="mx-auto">With no image</span>
@@ -76,41 +82,31 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4">
-                      {article.author.userName}
+                      {user.isAdmin ? "Admin" : "User"}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4">
-                      {article.comments.length === 0 ? (
-                        "No comments yet..."
-                      ) : (
-                        <div className="flex flex-col items-center gap-2">
-                          <p>
-                            {article.comments.length} comment
-                            {article.comments.length > 2 ? "s" : ""}{" "}
-                          </p>
-
-                          <button className="rounded bg-slate-400 px-3 py-1 font-normal text-white hover:bg-slate-500">
-                            view comments
-                          </button>
-                        </div>
-                      )}
+                      {new Date(user.createdAt).toDateString()}
                     </td>
 
                     <td className="whitespace-nowrap px-6 py-4">
                       <div className="mx-auto flex max-w-20 flex-col justify-center gap-2 bg-slate-50">
-                        <EditArticleBtn
-                          articleId={article.id}
-                          imageUrl={article.imageUrl}
-                          title={article.title}
-                          description={article.description}
-                        />
-
-                        <DeleteArticleBtn articleId={article.id} />
+                        <DeleteUserBtn id={user.id} />
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
+
+              {users.length === 0 && (
+                <tfoot>
+                  <tr>
+                    <td className="py-2 font-semibold" colSpan={8}>
+                      There is no users yet...
+                    </td>
+                  </tr>
+                </tfoot>
+              )}
             </table>
           </div>
         </div>
@@ -119,4 +115,4 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
   );
 };
 
-export default ArticlesTable;
+export default UsersTable;

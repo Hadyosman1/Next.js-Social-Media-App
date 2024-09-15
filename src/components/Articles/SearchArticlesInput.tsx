@@ -16,7 +16,6 @@ const SearchArticlesInput = () => {
     if (!searchInput) {
       return toast.error("You must enter at least 1 digit...!");
     }
-    console.log(searchInput);
 
     router.push(`/articles/search?searchKey=${searchInput}`);
   };

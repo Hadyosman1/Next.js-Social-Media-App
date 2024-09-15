@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
     //   articles.push({
     //     title: "*".repeat(i + 1) + " -" + (i + 1),
     //     description: "*".repeat(i + 1) + " -" + (i + 1),
-    //     authorId: 5,
+    //     authorId: 1,
     //   });
     // }
 
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     //   data: articles,
     // });
 
-    // return NextResponse.json({});
+    // return NextResponse.json({}, { status: 200 });
 
     const userFromToken = verifyToken(req);
     if (!userFromToken) {

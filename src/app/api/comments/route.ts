@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
-import { verifyToken } from "@/utils/verifyToken";
+import { verifyToken, verifyTokenForPage } from "@/utils/verifyToken";
 import { ICreateNewCommentDto } from "@/types/dtos";
 import { createCommentSchema } from "@/schemas/validationsSchemas";
 
@@ -8,7 +8,7 @@ import { createCommentSchema } from "@/schemas/validationsSchemas";
  * @method  POST
  * @route   ~/api/comments
  * @desc    Create comment
- * @access  private
+ * @access  private only logged in user or admin
  */
 export async function POST(req: NextRequest) {
   try {
@@ -66,14 +66,28 @@ export async function POST(req: NextRequest) {
  */
 export async function GET(req: NextRequest) {
   try {
-    const userFromToken = verifyToken(req);
-    if (!userFromToken || !userFromToken.isAdmin) {
+    const Authorization = req.headers.get("Authorization");
+
+    if (!Authorization || !Authorization.startsWith("Bearer")) {
       return NextResponse.json(
         { message: "Unauthorized , only Admin can get comments" },
         { status: 401 },
       );
     }
+
+    const token = Authorization?.split(" ")[1];
+
+    const userFromToken = verifyTokenForPage(token ?? "");
+
+    if (!userFromToken || !userFromToken?.isAdmin) {
+      return NextResponse.json(
+        { message: "Unauthorized , only Admin can get comments" },
+        { status: 401 },
+      );
+    }
+
     const comments = await prisma.comment.findMany();
+
     return NextResponse.json(comments, { status: 200 });
   } catch (error) {
     console.error(error);

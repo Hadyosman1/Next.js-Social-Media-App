@@ -4,9 +4,7 @@ import jwt from "jsonwebtoken";
 
 export function verifyToken(req: NextRequest): TypeJWTPayload | null {
   try {
-    const jwtToken = req.cookies.get("jwt_token");
-    const token = jwtToken?.value as string;
-    console.log("token: ", token);
+    const token = req.cookies.get("jwt_token")?.value;
 
     if (!token) return null;
 

@@ -8,12 +8,14 @@ import DeleteUserBtn from "./DeleteUserBtn";
 import { cookies } from "next/headers";
 import { verifyTokenForPage } from "@/utils/verifyToken";
 
+import { MdAdminPanelSettings } from "react-icons/md";
+
 type TProps = {
   user: User;
 };
 
 const UserInfo = ({ user }: TProps) => {
-  const { profilePicture, userName, email, createdAt, id } = user;
+  const { profilePicture, userName, email, createdAt, id, isAdmin } = user;
 
   const token = cookies().get("jwt_token")?.value;
   const userFromToken = verifyTokenForPage(token || "");
@@ -45,7 +47,15 @@ const UserInfo = ({ user }: TProps) => {
         </div>
 
         <div className="flex grow flex-col items-center justify-center gap-3 px-3">
-          <h1 className="text-2xl font-bold">{userName}</h1>
+          <h1 className="flex flex-wrap items-center gap-2 text-2xl font-bold">
+            {userName}{" "}
+            {isAdmin && (
+              <span className="flex items-center gap-0.5 rounded-md bg-sky-500 px-1 py-0.5 text-base font-normal text-white">
+                <MdAdminPanelSettings /> Admin
+              </span>
+            )}
+          </h1>
+
           <p className="text-base text-gray-500">{email}</p>
           <p className="text-base text-gray-500">
             Joining Date :{" "}

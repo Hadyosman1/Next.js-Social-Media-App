@@ -10,6 +10,7 @@ type TProps<TFieldValue extends FieldValues> = {
   isValid: boolean;
   validMessage: string;
   defaultValue?: string | undefined;
+  [key: string]: any;
 };
 
 const FormInput = <TFieldValue extends FieldValues>({
@@ -22,6 +23,7 @@ const FormInput = <TFieldValue extends FieldValues>({
   error,
   isValid,
   validMessage,
+  ...other
 }: TProps<TFieldValue>) => {
   const inputStyle = ` ${
     error
@@ -37,6 +39,7 @@ const FormInput = <TFieldValue extends FieldValues>({
         {label}
       </label>
       <input
+        {...other}
         defaultValue={defaultValue}
         className={inputStyle}
         type={type}

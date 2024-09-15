@@ -41,6 +41,7 @@ const ArticleForm = ({
     formState: { errors },
   } = useForm<TArticleInputs>({
     resolver: zodResolver(createArticleSchema),
+    mode: "onSubmit",
   });
 
   const operation = status === "create" ? createArticle : updateArticle;
@@ -84,6 +85,7 @@ const ArticleForm = ({
 
       <label htmlFor="title">Title</label>
       <textarea
+        autoFocus
         dir="auto"
         defaultValue={prevDataToEdit && prevDataToEdit.title}
         placeholder="Enter article title"

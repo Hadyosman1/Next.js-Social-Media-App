@@ -1,12 +1,10 @@
 import Pagination from "@/components/Articles/Pagination";
-import ArticlesTable from "@/components/dashboard/ArticlesTable";
+import ArticlesTable from "@/components/dashboard/articles/ArticlesTable";
 import PageTitle from "@/components/dashboard/PageTitle";
 import { getArticles, getArticlesCount } from "@/services/articles";
 import { TArticle } from "@/types";
-import { verifyTokenForPage } from "@/utils/verifyToken";
-import { cookies } from "next/headers";
+import prisma from "@/utils/db";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 //icons
 import { IoAddCircle } from "react-icons/io5";
@@ -19,17 +17,12 @@ type TProps = {
 };
 
 const ArticlesPage = async ({ searchParams: { page, limit } }: TProps) => {
-  const token = cookies().get("jwt_token")?.value;
-  const userFromToken = verifyTokenForPage(token ?? "");
-
-  if (!userFromToken?.isAdmin || !token) return redirect("/");
-
   const articles: TArticle[] = await getArticles(page, limit);
 
-  const articlesCount: number = await getArticlesCount();
+  const articlesCount: number = await prisma.article.count();
 
   return (
-    <section className="py-7">
+    <section className="flex h-full flex-col py-7">
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <PageTitle title={"articles"} />
 
@@ -43,18 +36,20 @@ const ArticlesPage = async ({ searchParams: { page, limit } }: TProps) => {
 
       <ArticlesTable articles={articles} />
 
-      <p className="my-3 text-xl font-medium text-slate-600">
+      <p className="my-3 text-sm font-medium text-slate-600 md:text-xl">
         {(parseInt(page) - 1) * parseInt(limit) + 1} to{" "}
         {articles.length + (parseInt(page) - 1) * parseInt(limit)} from (
         {articlesCount} Articles)
       </p>
 
-      <Pagination
-        path="/dashboard/articles"
-        page={page}
-        limit={limit}
-        count={articlesCount}
-      />
+      <div className="mt-auto pb-3">
+        <Pagination
+          path="/dashboard/articles"
+          page={page}
+          limit={limit}
+          count={articlesCount}
+        />
+      </div>
     </section>
   );
 };

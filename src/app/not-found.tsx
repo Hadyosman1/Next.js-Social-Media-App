@@ -1,5 +1,4 @@
 import GoToHomePage from "@/components/shared/GoToHomePage";
-import React from "react";
 
 const NotFound = () => {
   return (

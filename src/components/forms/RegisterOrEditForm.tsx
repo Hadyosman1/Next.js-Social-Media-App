@@ -49,7 +49,7 @@ const RegisterOrEditForm = ({ status, oldData, closeModal }: TProps) => {
     formState: { errors },
   } = useForm<TRegisterInputs>({
     resolver: zodResolver(schema),
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   const submitHandler: SubmitHandler<TRegisterInputs> = async (data) => {
@@ -94,6 +94,7 @@ const RegisterOrEditForm = ({ status, oldData, closeModal }: TProps) => {
       )}
 
       <FormInput
+        autoFocus
         defaultValue={oldData?.userName}
         error={errors.userName?.message}
         placeholder="John Doe"

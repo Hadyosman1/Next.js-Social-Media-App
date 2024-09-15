@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { userLogOut } from "@/services/auth";
 import { toast } from "react-toastify";
 import { DropDown } from "./DropDown";
+import EditUserBtn from "../profile/EditUserBtn";
 
 //icons
 import { MdExpandMore } from "react-icons/md";
@@ -81,15 +82,7 @@ const RoundedUser = ({ user }: TProps) => {
             <FaCircleUser /> Profile
           </DropDown.Item>
 
-          <DropDown.Item onClick={closeDropDown}>
-            anything for now
-          </DropDown.Item>
-
-          <DropDown.Item onClick={closeDropDown}>
-            anything for now
-          </DropDown.Item>
-
-          <DropDown.Item onClick={closeDropDown}>anything</DropDown.Item>
+          {user && <EditUserBtn user={user} />}
 
           <button
             disabled={isLoading}

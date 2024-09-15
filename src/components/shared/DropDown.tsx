@@ -106,9 +106,9 @@ DropDown.Item = ({
   ...other
 }: {
   className?: string;
-  children: React.ReactNode;
-  as?: React.ElementType;
+  children?: React.ReactNode;
   href?: string;
+  as?: React.ElementType;
   // eslint-disable-next-line no-unused-vars
   onClick?: (e: Event) => void;
 }) => {

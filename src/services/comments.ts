@@ -109,3 +109,26 @@ export async function deleteComment(id: number): Promise<TDeleteCommentReturn> {
     };
   }
 }
+
+export async function getAllComments(token: string): Promise<TComment[]> {
+  try {
+    const res = await fetch(`${API_URL}/comments`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+
+    return data;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to get comments",
+    );
+  }
+}

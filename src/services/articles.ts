@@ -26,9 +26,14 @@ export async function getArticles(
 // Get Articles Count
 export async function getArticlesCount(): Promise<number> {
   try {
-    const res = await fetch(`${API_URL}/articles/count`);
+    const res = await fetch(`${API_URL}/articles/count`, {
+      cache: "no-store",
+    });
+
     if (!res.ok) throw new Error("Failed to fetch articles count");
+
     const { articlesCount } = await res.json();
+
     return articlesCount;
   } catch (error) {
     console.error(error);

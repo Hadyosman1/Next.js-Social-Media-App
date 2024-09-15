@@ -71,8 +71,8 @@ const Article = ({
           )}
         </div>
 
-        <div className={`text-sm font-medium md:text-lg`}>{title}</div>
-        <div className={`indent-1 text-sm md:text-lg`}>{description}</div>
+        <div className={`-mb-1 text-sm font-medium md:text-lg`}>{title}</div>
+        <div className={`text-sm md:text-lg`}>{description}</div>
 
         <ArticleImage
           imagePriority={imagePriority}

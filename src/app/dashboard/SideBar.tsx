@@ -30,9 +30,27 @@ const SideBar = () => {
     };
   }, []);
 
+  const links = [
+    {
+      href: "/dashboard/articles/?page=1&limit=10",
+      icon: <PiArticleNyTimes className="text-xl" />,
+      label: "Articles",
+    },
+    {
+      href: "/dashboard/comments",
+      icon: <FaComments className="text-xl" />,
+      label: "Comments",
+    },
+    {
+      href: "/dashboard/users",
+      icon: <FaUsers className="text-xl" />,
+      label: "Users",
+    },
+  ];
+
   return (
     <div
-      className={`${isSideBarFull ? "w-[200px]" : "w-auto"} relative flex w-fit flex-col border-2 border-l-0 border-t-0 border-white bg-slate-400/75 px-3 py-5 text-white transition-[width] duration-500`}
+      className={`${isSideBarFull ? "min-w-[200px]" : "w-auto"} relative flex w-fit flex-col border-2 border-l-0 border-t-0 border-white bg-slate-400/75 px-3 py-5 text-white transition-[width] duration-500`}
     >
       <Link
         href="/dashboard"
@@ -47,41 +65,20 @@ const SideBar = () => {
       <div
         className={`my-5 flex flex-grow flex-col gap-3 ${isSideBarFull ? "overflow-y-auto" : ""}`}
       >
-        <Link
-          className={`${!isSideBarFull ? "justify-center px-1 py-1" : "px-3 py-0.5"} ${pathname === "/dashboard/articles" || pathname === "/dashboard/articles/add-article" ? "active" : ""} side_bar_link`}
-          href={"/dashboard/articles/?page=1&limit=10"}
-        >
-          <PiArticleNyTimes className="text-xl" />
-          <span
-            className={`${!isSideBarFull ? "absolute_right" : "md:block"} static`}
+        {links.map((link, index) => (
+          <Link
+            key={index}
+            href={link.href}
+            className={`${!isSideBarFull ? "justify-center px-1 py-1" : "px-3 py-0.5"} ${pathname.includes(link.label.toLowerCase()) ? "active" : ""} side_bar_link`}
           >
-            Articles
-          </span>
-        </Link>
-
-        <Link
-          className={`${!isSideBarFull ? "justify-center px-1 py-1" : "px-3 py-0.5"} ${pathname === "/dashboard/comments" ? "active" : ""} side_bar_link`}
-          href={"/dashboard/comments"}
-        >
-          <FaComments className="text-xl" />
-          <span
-            className={`${!isSideBarFull ? "absolute_right" : "md:block"} static`}
-          >
-            Comments
-          </span>
-        </Link>
-
-        <Link
-          className={`${!isSideBarFull ? "justify-center px-1 py-1" : "px-3 py-0.5"} ${pathname === "/dashboard/users" || pathname === "/dashboard/users/add-user" ? "active" : ""} side_bar_link`}
-          href={"/dashboard/users"}
-        >
-          <FaUsers className="text-xl" />
-          <span
-            className={`${!isSideBarFull ? "absolute_right" : "md:block"} static`}
-          >
-            Users
-          </span>
-        </Link>
+            {link.icon}
+            <span
+              className={`${!isSideBarFull ? "hidden" : "md:block"} hidden`}
+            >
+              {link.label}
+            </span>
+          </Link>
+        ))}
       </div>
 
       <button

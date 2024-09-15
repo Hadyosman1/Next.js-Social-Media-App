@@ -21,7 +21,7 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm<TLoginInputs>({
     resolver: zodResolver(userLogInSchema),
-    mode: "onBlur",
+    mode: "onSubmit",
   });
 
   const submitHandler: SubmitHandler<TLoginInputs> = async (data) => {
@@ -46,6 +46,7 @@ const LoginForm = () => {
       </h2>
 
       <FormInput
+        autoFocus
         error={errors.email?.message}
         placeholder="example@example.com"
         label=" E-mail"
