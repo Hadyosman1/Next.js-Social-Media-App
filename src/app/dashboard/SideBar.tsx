@@ -63,7 +63,7 @@ const SideBar = () => {
       </Link>
 
       <div
-        className={`my-5 flex flex-grow flex-col gap-3 ${isSideBarFull ? "overflow-y-auto" : ""}`}
+        className={`my-5 flex flex-grow flex-col overflow-y-auto gap-3 ${isSideBarFull ? "overflow-y-auto" : ""}`}
       >
         {links.map((link, index) => (
           <Link

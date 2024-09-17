@@ -8,7 +8,7 @@ import AuthLinks from "./AuthLinks";
 import NavBar from "./NavBar";
 import RoundedUser from "@/components/shared/RoundedUser";
 
-const Header = () => {
+const Header = async () => {
   const token = cookies().get("jwt_token")?.value;
   const user = verifyTokenForPage(token || "");
 

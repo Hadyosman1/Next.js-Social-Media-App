@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import Pagination from "@/components/Articles/Pagination";
+import Pagination from "@/components/shared/Pagination";
 import ArticlesList from "@/components/Articles/ArticlesList";
-import { getArticles, getArticlesCount } from "@/services/articles";
+import { getArticles } from "@/services/articles";
 import SearchArticlesInput from "@/components/Articles/SearchArticlesInput";
 import prisma from "@/utils/db";
 
@@ -15,7 +15,21 @@ type TProps = {
 const ArticlesPage = async ({ searchParams }: TProps) => {
   const { page, limit } = searchParams;
   const articles = await getArticles(page, limit);
-  const articlesCount: number = await prisma.article.count();
+  let articlesCount: number = 0;
+
+  try {
+    articlesCount = await prisma.article.count();
+  } catch (error) {
+    console.error(error);
+    throw new Error(
+      error instanceof Error ? error?.message : "Error fetching articles count",
+    );
+  }
+
+  const currentPage = parseInt(page ?? "1");
+  const currentLimit = parseInt(limit ?? "10");
+  const start = (currentPage - 1) * currentLimit + 1;
+  const end = start + articles.length - 1;
 
   return (
     <div className="main-props container flex flex-col items-center gap-5 py-8">
@@ -25,10 +39,7 @@ const ArticlesPage = async ({ searchParams }: TProps) => {
           <ArticlesList articles={articles} />
 
           <p className="my-3 text-sm font-medium text-slate-600 md:text-xl">
-            {(parseInt(page ?? "1") - 1) * parseInt(limit ?? "10") + 1} to{" "}
-            {articles.length +
-              (parseInt(page ?? "1") - 1) * parseInt(limit ?? "10")}{" "}
-            from ({articlesCount} Articles)
+            {start} to {end} of ({articlesCount} Articles)
           </p>
 
           <Pagination

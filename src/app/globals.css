@@ -64,10 +64,10 @@ html {
 
     &.active {
       @apply bg-slate-200/70 text-blue-400;
+    }
 
-      &:after {
-        @apply opacity-100;
-      }
+    &.active::after {
+      @apply opacity-100;
     }
   }
 

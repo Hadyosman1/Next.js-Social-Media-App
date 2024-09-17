@@ -1,4 +1,4 @@
-import Pagination from "@/components/Articles/Pagination";
+import Pagination from "@/components/shared/Pagination";
 import ArticlesTable from "@/components/dashboard/articles/ArticlesTable";
 import PageTitle from "@/components/dashboard/PageTitle";
 import { getArticles } from "@/services/articles";
@@ -18,8 +18,16 @@ type TProps = {
 
 const ArticlesPage = async ({ searchParams: { page, limit } }: TProps) => {
   const articles: TArticle[] = await getArticles(page, limit);
+  let articlesCount: number = 0;
 
-  const articlesCount: number = await prisma.article.count();
+  try {
+    articlesCount = await prisma.article.count();
+  } catch (error) {
+    console.error(error);
+    throw new Error(
+      error instanceof Error ? error?.message : "Error fetching articles count",
+    );
+  }
 
   return (
     <section className="flex h-full flex-col py-7">

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-const HomePage = async () => {
+const HomePage = () => {
   return (
     <div className="relative isolate px-6 lg:px-8">
       <div
@@ -43,5 +43,5 @@ export default HomePage;
 
 export const metadata: Metadata = {
   title: "Blog | Home",
-  description: "List of all articles",
+  description: "Next.js Blog Home Page",
 };

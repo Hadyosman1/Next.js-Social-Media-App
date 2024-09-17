@@ -16,7 +16,7 @@ const Pagination = ({ count, page, limit, path }: TProps) => {
   const prevPage = pageNumber - 1;
   const nextPage = pageNumber + 1;
   const pagesArr = Array.from({ length: pagesCount }).map((el, i) => i + 1);
-  const activePageIdx = pagesArr.indexOf(pageNumber);
+  // const activePageIdx = pagesArr.indexOf(pageNumber);
 
   // const slicedPagesArr =
   //   pagesArr.length < 6
