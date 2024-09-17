@@ -8,6 +8,9 @@ import { Article } from "@prisma/client";
  * @desc    Get Articles By searchKey
  * @access  public
  */
+
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
     const searchKey = req.nextUrl.searchParams.get("searchKey");

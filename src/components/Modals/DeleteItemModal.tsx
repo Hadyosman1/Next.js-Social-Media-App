@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import ModalWrapper from "./ModalWrapper";
+import ModalWrapper from "../Modals/ModalWrapper";
 import SmallLoadingIndicator from "../shared/SmallLoadingIndicator";
 import { toast } from "react-toastify";
 import { deleteComment } from "@/services/comments";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ArticleModal from "../modals/ArticleModal";
+import ArticleModal from "../Modals/ArticleModal";
 
 //icons
 import { MdPostAdd } from "react-icons/md";

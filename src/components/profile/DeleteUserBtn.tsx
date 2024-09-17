@@ -1,7 +1,7 @@
 "use client";
 
 import { FaTrash } from "react-icons/fa6";
-import DeleteItemModal from "../modals/DeleteItemModal";
+import DeleteItemModal from "../Modals/DeleteItemModal";
 import { useCallback, useState } from "react";
 
 const DeleteUserBtn = ({ id }: { id: number }) => {

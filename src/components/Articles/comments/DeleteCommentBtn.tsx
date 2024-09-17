@@ -1,6 +1,6 @@
 "use client";
 
-import DeleteItemModal from "../../modals/DeleteItemModal";
+import DeleteItemModal from "../../Modals/DeleteItemModal";
 import { useCallback, useState } from "react";
 
 type TProps = {

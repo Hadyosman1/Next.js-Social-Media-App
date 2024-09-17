@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
+import DeleteItemModal from "../Modals/DeleteItemModal";
+
 import { BiTrashAlt } from "react-icons/bi";
-import DeleteItemModal from "../modals/DeleteItemModal";
 
 const DeleteArticleBtn = ({ articleId }: { articleId: number }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { FaGear } from "react-icons/fa6";
-import ModalWrapper from "../modals/ModalWrapper";
+import ModalWrapper from "../Modals/ModalWrapper";
 import RegisterOrEditForm from "../forms/RegisterOrEditForm";
 import { TypeJWTPayload } from "@/types";
 

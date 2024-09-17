@@ -1,6 +1,6 @@
 "use client";
 
-import ChangeUserPictureModal from "../modals/ChangeUserPictureModal";
+import ChangeUserPictureModal from "../Modals/ChangeUserPictureModal";
 
 //icons
 import { FcEditImage } from "react-icons/fc";
@@ -17,7 +17,7 @@ const ChangeProfilePictureBtn = ({ id }: { id: number }) => {
     <>
       <button
         onClick={() => setIsUserPictureImageOpen(true)}
-        className="tooltip_wrapper absolute bottom-0 right-0 -translate-x-full  rounded-full bg-slate-200 p-2 text-2xl shadow-md hover:bg-slate-300"
+        className="tooltip_wrapper absolute bottom-0 right-0 -translate-x-full rounded-full bg-slate-200 p-2 text-2xl shadow-md hover:bg-slate-300"
       >
         <FcEditImage />
         <span className="tooltip tooltip_center_top whitespace-nowrap text-sm">

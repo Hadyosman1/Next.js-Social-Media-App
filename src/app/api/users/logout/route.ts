@@ -7,6 +7,9 @@ import { cookies } from "next/headers";
  * @desc    logout user
  * @access  public
  */
+
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     cookies().delete("jwt_token");
