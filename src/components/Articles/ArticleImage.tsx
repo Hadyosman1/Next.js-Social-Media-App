@@ -1,6 +1,6 @@
 "use client";
 
-import ModalWrapper from "@/components/modals/ModalWrapper";
+import ModalWrapper from "../modals/ModalWrapper";
 import { useCallback, useState } from "react";
 import Image from "next/image";
 
