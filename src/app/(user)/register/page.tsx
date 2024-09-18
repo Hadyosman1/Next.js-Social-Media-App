@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import RegisterOrEditForm from "@/components/forms/RegisterOrEditForm";
 
 const RegisterPage = () => {
@@ -9,3 +10,8 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+export const metadata: Metadata = {
+  title: "Register",
+  description: "User Registration",
+};

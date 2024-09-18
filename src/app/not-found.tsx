@@ -1,4 +1,5 @@
 import GoToHomePage from "@/components/shared/GoToHomePage";
+import { Metadata } from "next";
 
 const NotFound = () => {
   return (
@@ -12,3 +13,8 @@ const NotFound = () => {
 };
 
 export default NotFound;
+
+export const metadata: Metadata = {
+  title: "Not Found Page",
+  description: "Not Found page",
+};

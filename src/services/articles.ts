@@ -23,23 +23,27 @@ export async function getArticles(
   }
 }
 
-// // Get Articles Count
-// export async function getArticlesCount(): Promise<number> {
-//   try {
-//     const res = await fetch(`${API_URL}/articles/count`, {
-//       cache: "no-store",
-//     });
+//search in articles
 
-//     if (!res.ok) throw new Error("Failed to fetch articles count");
+export async function searchInArticles(searchKey: string) {
+  try {
+    const res = await fetch(
+      `${API_URL}/articles/search?searchKey=${searchKey}`,
+      {
+        cache: "no-store",
+      },
+    );
 
-//     const { articlesCount } = await res.json();
+    const data = await res.json();
 
-//     return articlesCount;
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error("Failed to get articles count");
-//   }
-// }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to search in articles",
+    );
+  }
+}
 
 // Create Article
 type TCreateArticleProps = {

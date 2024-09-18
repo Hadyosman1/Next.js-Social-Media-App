@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+
 const Loading = () => {
   return (
     <div className="grid place-content-center" role="status">
@@ -23,3 +25,8 @@ const Loading = () => {
 };
 
 export default Loading;
+
+export const metadata: Metadata = {
+  title: "Loading...",
+  description: "Loading Indicator",
+};

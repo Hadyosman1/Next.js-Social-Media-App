@@ -24,6 +24,15 @@ export async function GET(req: NextRequest) {
             { description: { contains: searchKey, mode: "insensitive" } },
           ],
         },
+        orderBy: { createdAt: "desc" },
+        include: {
+          author: { select: { userName: true, profilePicture: true } },
+          comments: {
+            include: {
+              user: { select: { userName: true, profilePicture: true } },
+            },
+          },
+        },
       });
     }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import GoToHomePage from "@/components/shared/GoToHomePage";
+import { Metadata } from "next";
 
 type TErrorProps = {
   error: Error;
@@ -12,9 +13,7 @@ const Error = ({ error, reset }: TErrorProps) => {
     <div className="main-props container grid place-content-center place-items-center gap-3 py-12">
       <div className="text-center text-xl">
         <h1> 400 | Bad Request </h1>
-        <p className="break-all">
-          {error.message}
-        </p>
+        <p className="break-all">{error.message}</p>
       </div>
 
       <button
@@ -29,3 +28,8 @@ const Error = ({ error, reset }: TErrorProps) => {
 };
 
 export default Error;
+
+export const metadata: Metadata = {
+  title: "Error",
+  description: "Error page",
+};

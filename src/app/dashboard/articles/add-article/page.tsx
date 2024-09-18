@@ -1,5 +1,6 @@
 import ArticleForm from "@/components/forms/ArticleForm";
 import BackBtn from "@/components/shared/BackBtn";
+import { Metadata } from "next";
 
 const AddProductPage = () => {
   return (
@@ -16,3 +17,8 @@ const AddProductPage = () => {
 };
 
 export default AddProductPage;
+
+export const metadata: Metadata = {
+  title: "Dashboard | Articles",
+  description: "Add article from admin",
+};

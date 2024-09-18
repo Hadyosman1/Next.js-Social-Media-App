@@ -1,6 +1,7 @@
 import CommentsTable from "@/components/dashboard/comments/CommentsTable";
 import PageTitle from "@/components/dashboard/PageTitle";
 import { getAllComments } from "@/services/comments";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 
 const CommentsPage = async () => {
@@ -20,3 +21,8 @@ const CommentsPage = async () => {
 };
 
 export default CommentsPage;
+
+export const metadata: Metadata = {
+  title: "Dashboard | Comments",
+  description: "List of comments",
+};

@@ -3,6 +3,7 @@ import UserInfo from "@/components/profile/UserInfo";
 import { getUserArticles, getUserInfo } from "@/services/users";
 import { TArticle } from "@/types";
 import { User } from "@prisma/client";
+import { Metadata } from "next";
 
 type TProps = {
   params: {
@@ -37,3 +38,8 @@ const UserProfilePage = async ({ params: { id } }: TProps) => {
 };
 
 export default UserProfilePage;
+
+export const metadata: Metadata = {
+  title: "User Profile",
+  description: "User Profile",
+};

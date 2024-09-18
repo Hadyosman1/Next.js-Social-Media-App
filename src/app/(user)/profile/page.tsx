@@ -6,6 +6,7 @@ import UserInfo from "@/components/profile/UserInfo";
 import ArticlesList from "@/components/Articles/ArticlesList";
 import { User } from "@prisma/client";
 import { TArticle } from "@/types";
+import { Metadata } from "next";
 
 async function ProfilePage() {
   const token = cookies().get("jwt_token")?.value;
@@ -34,3 +35,9 @@ async function ProfilePage() {
   );
 }
 export default ProfilePage;
+
+export const metadata: Metadata = {
+  title: "Profile",
+  description: "Your Profile",
+};
+

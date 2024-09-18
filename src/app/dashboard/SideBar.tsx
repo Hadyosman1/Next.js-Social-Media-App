@@ -50,7 +50,7 @@ const SideBar = () => {
 
   return (
     <div
-      className={`${isSideBarFull ? "min-w-[200px]" : "w-auto"} relative flex w-fit flex-col border-2 border-l-0 border-t-0 border-white bg-slate-400/75 px-3 py-5 text-white transition-[width] duration-500`}
+      className={`${isSideBarFull ? "min-w-[200px] overflow-y-auto" : "w-auto"} relative flex w-fit flex-col border-2 border-l-0 border-t-0 border-white bg-slate-400/75 px-3 py-5 text-white transition-[width] duration-500`}
     >
       <Link
         href="/dashboard"
@@ -62,9 +62,7 @@ const SideBar = () => {
         </span>
       </Link>
 
-      <div
-        className={`my-5 flex flex-grow flex-col overflow-y-auto gap-3 ${isSideBarFull ? "overflow-y-auto" : ""}`}
-      >
+      <div className={`my-5 flex flex-grow flex-col gap-3`}>
         {links.map((link, index) => (
           <Link
             key={index}
@@ -73,7 +71,7 @@ const SideBar = () => {
           >
             {link.icon}
             <span
-              className={`${!isSideBarFull ? "hidden" : "md:block"} hidden`}
+              className={`${!isSideBarFull ? "absolute_right" : "md:block"} `}
             >
               {link.label}
             </span>

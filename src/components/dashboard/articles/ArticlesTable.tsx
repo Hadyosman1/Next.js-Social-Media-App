@@ -7,6 +7,7 @@ import DeleteArticleBtn from "../../Articles/DeleteArticleBtn";
 import EditArticleBtn from "../../Articles/EditArticleBtn";
 import Description from "./Description";
 import Title from "./Title";
+import Link from "next/link";
 
 const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
   const handleImageClicked: MouseEventHandler = (e) => {
@@ -16,8 +17,10 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
       typeof target.requestFullscreen === "function" &&
       !document.fullscreenElement
     ) {
-      return target.requestFullscreen();
+      target.style.objectFit = "contain";
+      target.requestFullscreen();
     } else if (typeof document.exitFullscreen === "function") {
+      target.style.objectFit = "cover";
       document.exitFullscreen();
     }
   };
@@ -89,7 +92,7 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
                         {article.imageUrl ? (
                           <Image
                             onClick={handleImageClicked}
-                            className="mx-auto aspect-square max-w-52 cursor-pointer rounded shadow"
+                            className="mx-auto aspect-square max-w-52 cursor-pointer rounded object-cover shadow"
                             width={500}
                             height={500}
                             unoptimized
@@ -109,9 +112,12 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
                         <div className="flex flex-col items-center gap-2">
                           <p>{article.author.userName}</p>
 
-                          <button className="rounded bg-slate-400 px-3 py-1 font-normal text-white hover:bg-slate-500">
-                            view user
-                          </button>
+                          <Link
+                            href={`/profile/${article.authorId}`}
+                            className="rounded bg-slate-400 px-3 py-1 font-normal text-white hover:bg-slate-500"
+                          >
+                            view user profile
+                          </Link>
                         </div>
                       </td>
 
@@ -124,10 +130,6 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
                               {article.comments.length} comment
                               {article.comments.length > 2 ? "s" : ""}{" "}
                             </p>
-
-                            <button className="rounded bg-slate-400 px-3 py-1 font-normal text-white hover:bg-slate-500">
-                              view comments
-                            </button>
                           </div>
                         )}
                       </td>

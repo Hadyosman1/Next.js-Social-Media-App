@@ -4,18 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { IoMdSearch } from "react-icons/io";
-import { toast } from "react-toastify";
 
-const SearchArticlesInput = () => {
+const SearchArticlesInput = ({ defaultValue }: { defaultValue?: string }) => {
   const [searchInput, setSearchInput] = useState("");
 
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!searchInput) {
-      return toast.error("You must enter at least 1 digit...!");
-    }
 
     router.push(`/articles/search?searchKey=${searchInput}`);
   };
@@ -26,6 +22,7 @@ const SearchArticlesInput = () => {
       onSubmit={handleSubmit}
     >
       <input
+        defaultValue={defaultValue}
         className="flex-shrink flex-grow bg-transparent py-2 ps-2 outline-none valid:bg-transparent"
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
@@ -35,6 +32,7 @@ const SearchArticlesInput = () => {
       />
 
       <button
+        disabled={!searchInput}
         type="submit"
         className="border-s-2 border-blue-400 bg-slate-100 px-2 text-2xl text-sky-500 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >

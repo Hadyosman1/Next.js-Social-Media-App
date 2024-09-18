@@ -2,6 +2,7 @@ import PageTitle from "@/components/dashboard/PageTitle";
 import UsersTable from "@/components/dashboard/users/UsersTable";
 import { getAllUsers } from "@/services/users";
 import { User } from "@prisma/client";
+import { Metadata } from "next";
 import Link from "next/link";
 
 import { IoAddCircle } from "react-icons/io5";
@@ -28,3 +29,8 @@ const UsersPage = async () => {
 };
 
 export default UsersPage;
+
+export const metadata: Metadata = {
+  title: "Dashboard | Users",
+  description: "List of users",
+};

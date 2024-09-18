@@ -13,9 +13,11 @@ const UsersTable = ({ users }: { users: User[] }) => {
       typeof target.requestFullscreen === "function" &&
       !document.fullscreenElement
     ) {
-      return target.requestFullscreen();
+      target.style.objectFit = "contain";
+      target.requestFullscreen();
     } else if (typeof document.exitFullscreen === "function") {
       document.exitFullscreen();
+      target.style.objectFit = "cover";
     }
   };
 
@@ -69,7 +71,7 @@ const UsersTable = ({ users }: { users: User[] }) => {
                       {user.profilePicture ? (
                         <Image
                           onClick={handleImageClicked}
-                          className="mx-auto aspect-square max-w-52 cursor-pointer rounded shadow"
+                          className="mx-auto aspect-square max-w-52 cursor-pointer rounded object-cover shadow"
                           width={500}
                           height={500}
                           unoptimized

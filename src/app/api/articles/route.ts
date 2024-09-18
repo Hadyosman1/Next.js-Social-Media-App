@@ -35,7 +35,6 @@ export async function GET(req: NextRequest) {
             include: {
               user: { select: { userName: true, profilePicture: true } },
             },
-            orderBy: { createdAt: "desc" },
           },
         },
       });
@@ -50,7 +49,6 @@ export async function GET(req: NextRequest) {
           include: {
             user: { select: { userName: true, profilePicture: true } },
           },
-          orderBy: { createdAt: "desc" },
         },
       },
     });

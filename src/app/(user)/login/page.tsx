@@ -1,4 +1,5 @@
 import LoginForm from "@/components/forms/LoginForm";
+import { Metadata } from "next";
 
 const LoginPage = () => {
   return (
@@ -9,3 +10,8 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: "User login",
+};

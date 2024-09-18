@@ -8,6 +8,7 @@ import Link from "next/link";
 
 //icons
 import { IoAddCircle } from "react-icons/io5";
+import { Metadata } from "next";
 
 type TProps = {
   searchParams: {
@@ -63,3 +64,9 @@ const ArticlesPage = async ({ searchParams: { page, limit } }: TProps) => {
 };
 
 export default ArticlesPage;
+
+export const metadata: Metadata = {
+  title: "Dashboard | Articles",
+  description: "List of all articles",
+};
+

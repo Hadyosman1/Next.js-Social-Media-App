@@ -4,8 +4,21 @@ export function middleware(req: NextRequest) {
   const jwtToken = req.cookies.get("jwt_token");
   const token = jwtToken?.value;
 
+  const origin = req.headers.get("origin");
   const response = NextResponse.next();
-  response.headers.set("Access-Control-Allow-Origin", "*");
+
+  if (origin === "http://localhost:3000") {
+    response.headers.set(
+      "Access-Control-Allow-Origin",
+      "http://localhost:3000",
+    );
+  } else if (origin === "https://learn-next-js-pied-eight.vercel.app") {
+    response.headers.set(
+      "Access-Control-Allow-Origin",
+      "https://learn-next-js-pied-eight.vercel.app",
+    );
+  }
+
   response.headers.set(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS",
@@ -14,6 +27,7 @@ export function middleware(req: NextRequest) {
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization",
   );
+  response.headers.set("Access-Control-Allow-Credentials", "true");
 
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: response.headers });
@@ -37,17 +51,10 @@ export function middleware(req: NextRequest) {
   if (
     !token &&
     req.method !== "GET" &&
-    req.nextUrl.pathname !== "/api/users/login" &&
-    req.nextUrl.pathname !== "/api/users/register"
+    !["/api/users/login", "/api/users/register"].includes(req.nextUrl.pathname)
   ) {
     return NextResponse.json({ message: "No token provided" }, { status: 401 });
   }
-
-  // if (!req.nextUrl.pathname.includes("api")) {
-  //   const headers = new Headers(req.headers);
-  //   headers.set("x-current-path", req.nextUrl.pathname);
-  //   return NextResponse.next({ headers });
-  // }
 
   return response;
 }
@@ -55,7 +62,6 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/api/:path*",
-    "/api/users/profile/:path*",
     "/dashboard/:path*",
     "/profile",
     "/login",
