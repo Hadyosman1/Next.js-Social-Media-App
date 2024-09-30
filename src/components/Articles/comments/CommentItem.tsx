@@ -3,13 +3,13 @@
 import Image from "next/image";
 import anonymousUser from "@/../../public/anonymous_user.svg";
 import getTimeAgo from "@/utils/getTimeAgo";
-import useTextDirByLine from "@/hooks/useTextDirByLine";
 import { TComment, TypeJWTPayload } from "@/types";
 
 import CommentControls from "./CommentControls";
 import { useState } from "react";
 import CommentForm from "./CommentForm";
 import Link from "next/link";
+import FixTextDirection from "@/components/shared/FixTextDirection";
 
 type TProps = {
   comment: TComment & {
@@ -23,7 +23,6 @@ type TProps = {
 
 const CommentItem = ({ comment, user }: TProps) => {
   const commentCreatedAt = getTimeAgo(comment.createdAt);
-  const commentContent = useTextDirByLine(comment.content);
   const [isEditComment, setIsEditComment] = useState(false);
 
   return (
@@ -55,7 +54,7 @@ const CommentItem = ({ comment, user }: TProps) => {
           </div>
 
           <div className="mb-3 break-all text-sm font-normal text-gray-700 md:text-base">
-            {commentContent}
+            <FixTextDirection text={comment.content} />
           </div>
 
           {user && comment.userId === user.id && (

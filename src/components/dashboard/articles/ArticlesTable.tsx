@@ -5,9 +5,8 @@ import Image from "next/image";
 import { MouseEventHandler } from "react";
 import DeleteArticleBtn from "../../Articles/DeleteArticleBtn";
 import EditArticleBtn from "../../Articles/EditArticleBtn";
-import Description from "./Description";
-import Title from "./Title";
 import Link from "next/link";
+import FixTextDirection from "@/components/shared/FixTextDirection";
 
 const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
   const handleImageClicked: MouseEventHandler = (e) => {
@@ -70,21 +69,21 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
                       key={article.id}
                       className="border-b border-neutral-200 font-medium"
                     >
-                      <td dir="auto" className="px-6 py-4">
+                      <td dir="auto" className="px-6 py-4 min-w-52">
                         <div
                           dir="auto"
                           className="mx-auto max-w-[350px] rounded bg-slate-100 px-2 py-1 text-start"
                         >
-                          <Title str={article.title} />
+                          <FixTextDirection text={article.title} />
                         </div>
                       </td>
 
-                      <td dir="auto" className="px-6 py-4">
+                      <td dir="auto" className="px-6 py-4 min-w-52">
                         <div
                           dir="auto"
                           className="mx-auto max-w-[350px] rounded bg-slate-100 px-2 py-1 text-start"
                         >
-                          <Description str={article.description} />
+                          <FixTextDirection text={article.description} />
                         </div>
                       </td>
 

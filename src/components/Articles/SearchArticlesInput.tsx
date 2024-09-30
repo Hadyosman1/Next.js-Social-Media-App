@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { IoMdSearch } from "react-icons/io";
 
 const SearchArticlesInput = ({ defaultValue }: { defaultValue?: string }) => {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState(defaultValue || "");
 
   const router = useRouter();
 
@@ -22,7 +22,6 @@ const SearchArticlesInput = ({ defaultValue }: { defaultValue?: string }) => {
       onSubmit={handleSubmit}
     >
       <input
-        defaultValue={defaultValue}
         className="flex-shrink flex-grow bg-transparent py-2 ps-2 outline-none valid:bg-transparent"
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}

@@ -1,4 +1,4 @@
-import useTextDirByLine from "@/hooks/useTextDirByLine";
+import useTextDirByLine from "@/components/shared/FixTextDirection";
 
 const CommentContent = ({ str }: { str: string }) => {
   const result = useTextDirByLine(str);

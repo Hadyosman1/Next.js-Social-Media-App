@@ -1,4 +1,4 @@
-const useTextDirByLine = (text: string) => {
+const FixTextDirection = ({text}:{text: string}) => {
   return text.split(/\n/).map((line, i) => (
     <p className="break-all" dir="auto" key={i}>
       {line}
@@ -6,4 +6,4 @@ const useTextDirByLine = (text: string) => {
   ));
 };
 
-export default useTextDirByLine;
+export default FixTextDirection;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import ArticleModal from "../Modals/ArticleModal";
 
 //icons
@@ -22,7 +22,7 @@ const OpenAddArticleModalBtn = () => {
         onClick={() => setIsModalOpen(true)}
         className="add_article_btn tooltip_wrapper"
       >
-        <span className="p-2 text-2xl text-blue-600">
+        <span className="p-2 text-2xl text-blue-400">
           <MdPostAdd />
         </span>
 

@@ -165,7 +165,7 @@ html {
   }
 
   .add_article_btn {
-    @apply fixed bottom-5 right-8 z-20 flex aspect-square items-center justify-center rounded-full border border-blue-400 bg-white shadow-md transition hover:bg-slate-100 md:bottom-10 md:right-10;
+    @apply fixed bottom-20 right-8 z-20 flex aspect-square items-center justify-center rounded-full border border-blue-400 bg-white shadow-md transition hover:bg-slate-100 md:bottom-16 md:right-10;
   }
 
   .tooltip_wrapper {
@@ -210,7 +210,7 @@ html {
     }
 
     > span.absolute_right {
-      @apply invisible absolute right-0 top-1/2 -translate-y-1/2 translate-x-[calc(100%_+_15px)] z-10 rounded border border-blue-400 bg-white px-2 py-0.5 text-blue-400 shadow-md transition-all hover:bg-slate-100;
+      @apply invisible absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-[calc(100%_+_15px)] rounded border border-blue-400 bg-white px-2 py-0.5 text-blue-400 shadow-md transition-all hover:bg-slate-100;
     }
 
     &:hover > span.absolute_right {

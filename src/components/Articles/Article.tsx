@@ -1,3 +1,4 @@
+import React from "react";
 import ArticleImage from "./ArticleImage";
 import Comments from "./comments/Comments";
 import CommentForm from "./comments/CommentForm";
@@ -7,9 +8,9 @@ import Image from "next/image";
 import { cookies } from "next/headers";
 
 import anonymousUser from "@/../../public/anonymous_user.svg";
+import FixTextDirection from "@/components/shared/FixTextDirection";
 
 import getTimeAgo from "@/utils/getTimeAgo";
-import useTextDirByLine from "@/hooks/useTextDirByLine";
 import { verifyTokenForPage } from "@/utils/verifyToken";
 
 import { TArticle } from "@/types";
@@ -24,8 +25,6 @@ const Article = ({
 }) => {
   const timeAgo = getTimeAgo(article.createdAt);
   const updatedAgo = getTimeAgo(article.updatedAt);
-  const title = useTextDirByLine(article.title);
-  const description = useTextDirByLine(article.description);
   const isUpdatedAtDisplay = !(article.createdAt === article.updatedAt);
 
   const token = cookies().get("jwt_token")?.value;
@@ -71,8 +70,13 @@ const Article = ({
           )}
         </div>
 
-        <div className={`-mb-1 text-sm font-medium md:text-lg`}>{title}</div>
-        <div className={`text-sm md:text-lg`}>{description}</div>
+        <div className={`-mb-1 text-sm font-medium md:text-lg`}>
+          <FixTextDirection text={article.title} />
+        </div>
+
+        <div className={`text-sm md:text-lg`}>
+          <FixTextDirection text={article.description} />
+        </div>
 
         <ArticleImage
           imagePriority={imagePriority}
