@@ -1,8 +1,9 @@
 import DeleteCommentBtn from "@/components/Articles/comments/DeleteCommentBtn";
 import { Comment } from "@prisma/client";
-import CommentContent from "./CommentContent";
+
 
 import { FaTrash } from "react-icons/fa6";
+import FixTextDirection from "@/components/shared/FixTextDirection";
 
 const CommentsTable = ({ comments }: { comments: Comment[] }) => {
   return (
@@ -34,8 +35,8 @@ const CommentsTable = ({ comments }: { comments: Comment[] }) => {
                     className="border-b border-neutral-200 font-medium"
                   >
                     <td className="px-6 py-4">
-                      <div dir="auto" className="max-w-[350px] mx-auto text-start bg-slate-100 rounded py-1 px-2">
-                        <CommentContent str={comment.content} />
+                      <div dir="auto" className="max-w-[350px] min-w-52 mx-auto text-start bg-slate-100 rounded py-1 px-2">
+                        <FixTextDirection text={comment.content} />
                       </div>
                     </td>
 
