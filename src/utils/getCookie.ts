@@ -1,3 +1,4 @@
+// todo: remove if i don't want it
 const getCookie = (name: string): string | undefined => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -7,5 +8,3 @@ const getCookie = (name: string): string | undefined => {
   }
   return undefined;
 };
-
-

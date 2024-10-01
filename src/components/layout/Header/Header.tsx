@@ -18,7 +18,7 @@ const Header = async () => {
         <div className="hidden w-1/5 shrink justify-start md:flex">
           <Link className="max-w-11 rounded-full" href={"/"}>
             <Image
-              className="max-h-11 max-w-11 object-contain"
+              className="max-h-14 max-w-14 object-contain"
               alt="logo"
               src={logo}
             />

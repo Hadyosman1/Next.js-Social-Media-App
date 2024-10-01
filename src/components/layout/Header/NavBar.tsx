@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TypeJWTPayload } from "@/types";
@@ -8,10 +8,11 @@ import { TypeJWTPayload } from "@/types";
 //icons
 import { IoHome as HomeIcon } from "react-icons/io5";
 import { FaCircleUser } from "react-icons/fa6";
-import { TbLayoutDashboard as DashboardIcon } from "react-icons/tb";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseSharp } from "react-icons/io5";
-import { GrArticle as ArticleIcon } from "react-icons/gr";
+import { MdArticle } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
+import { BiSolidDashboard } from "react-icons/bi";
 
 const isActive = (href: string, pathname: string) => {
   if (href !== "/") {
@@ -32,8 +33,9 @@ const NavBar = ({ user }: TProps) => {
       {
         href: "/articles?page=1&limit=10",
         label: "Articles",
-        icon: <ArticleIcon />,
+        icon: <MdArticle />,
       },
+      { href: "/users", label: "Users", icon: <FaUsers /> },
     ];
 
     if (user) {
@@ -47,7 +49,7 @@ const NavBar = ({ user }: TProps) => {
         links.push({
           href: "/dashboard",
           label: "Dashboard",
-          icon: <DashboardIcon />,
+          icon: <BiSolidDashboard />,
         });
       }
     }

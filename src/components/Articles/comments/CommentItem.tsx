@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import anonymousUser from "@/../../public/anonymous_user.svg";
-import getTimeAgo from "@/utils/getTimeAgo";
 import { TComment, TypeJWTPayload } from "@/types";
 
 import CommentControls from "./CommentControls";
@@ -10,6 +9,7 @@ import { useState } from "react";
 import CommentForm from "./CommentForm";
 import Link from "next/link";
 import FixTextDirection from "@/components/shared/FixTextDirection";
+import CreatedAt from "./CreatedAt";
 
 type TProps = {
   comment: TComment & {
@@ -22,7 +22,6 @@ type TProps = {
 };
 
 const CommentItem = ({ comment, user }: TProps) => {
-  const commentCreatedAt = getTimeAgo(comment.createdAt);
   const [isEditComment, setIsEditComment] = useState(false);
 
   return (
@@ -48,9 +47,8 @@ const CommentItem = ({ comment, user }: TProps) => {
             <b className="shrink-0 text-sm md:text-base">
               {comment.user.userName}
             </b>
-            <span className="rounded bg-slate-200 p-1 text-sm text-slate-700">
-              {commentCreatedAt}
-            </span>
+
+            <CreatedAt createdAt={comment.createdAt} />
           </div>
 
           <div className="mb-3 break-all text-sm font-normal text-gray-700 md:text-base">

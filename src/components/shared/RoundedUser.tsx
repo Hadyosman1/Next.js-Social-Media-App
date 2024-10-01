@@ -72,7 +72,7 @@ const RoundedUser = ({ user }: TProps) => {
           closeDropDown={closeDropDown}
           isOpen={isDropDownOpen}
         >
-          <DropDown.Header className="font-bold text-blue-700">
+          <DropDown.Header className="font-bold text-slate-500 text-center">
             {user?.userName}
           </DropDown.Header>
 
@@ -82,12 +82,12 @@ const RoundedUser = ({ user }: TProps) => {
             <FaCircleUser /> Profile
           </DropDown.Item>
 
-          {user && <EditUserBtn user={user} />}
+          {user && <EditUserBtn user={user} inDropDown={true} />}
 
           <button
             disabled={isLoading}
             onClick={logOutHandler}
-            className={`logout-btn flex items-center justify-center gap-1 rounded-sm bg-red-700/80 px-3 py-1 text-slate-100 transition-all hover:bg-red-800/80 hover:indent-2`}
+            className={`logout-btn  flex items-center whitespace-nowrap  gap-1 rounded-sm bg-red-700/80 px-3 py-1 text-slate-100 transition-all hover:bg-red-800/80 hover:indent-1`}
           >
             {isLoading ? <SmallLoadingIndicator size="sm" /> : <FaSignOutAlt />}{" "}
             Log out

@@ -9,12 +9,11 @@ import { cookies } from "next/headers";
 
 import anonymousUser from "@/../../public/anonymous_user.svg";
 import FixTextDirection from "@/components/shared/FixTextDirection";
-
-import getTimeAgo from "@/utils/getTimeAgo";
 import { verifyTokenForPage } from "@/utils/verifyToken";
 
 import { TArticle } from "@/types";
 import ArticleControls from "./ArticleControls";
+import CreatedAtAndUpdatedAt from "./CreatedAtAndUpdatedAt";
 
 const Article = ({
   article,
@@ -23,10 +22,6 @@ const Article = ({
   article: TArticle;
   imagePriority: boolean;
 }) => {
-  const timeAgo = getTimeAgo(article.createdAt);
-  const updatedAgo = getTimeAgo(article.updatedAt);
-  const isUpdatedAtDisplay = !(article.createdAt === article.updatedAt);
-
   const token = cookies().get("jwt_token")?.value;
   const user = verifyTokenForPage(token || "");
 
@@ -50,14 +45,10 @@ const Article = ({
 
           <h2 className="flex flex-col font-bold">
             {article.author.userName}
-            <span className="text-sm font-normal text-slate-500">
-              {timeAgo}
-            </span>
-            {isUpdatedAtDisplay && (
-              <span className="text-sm font-normal text-slate-500">
-                updated at {updatedAgo}
-              </span>
-            )}
+            <CreatedAtAndUpdatedAt
+              createdAt={article.createdAt}
+              updatedAt={article.createdAt}
+            />
           </h2>
 
           {user?.id === article.authorId && (

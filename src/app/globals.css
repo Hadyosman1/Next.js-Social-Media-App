@@ -6,7 +6,7 @@
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #4e86d0 #dcdbdb;
+  scrollbar-color: #4e86d0 #fff;
 }
 
 /* Chrome, Edge, and Safari */
@@ -15,7 +15,7 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #dcdbdb;
+  background: #fff;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -28,7 +28,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@layer utilities {
+@layer components {
   .container {
     @apply xl:max-w-[1280px];
   }
@@ -108,11 +108,11 @@ html {
   }
 
   .drop_down_sm {
-    @apply min-w-24 max-w-28;
+    @apply min-w-20 max-w-28;
   }
 
   .drop_down_md {
-    @apply min-w-44 max-w-48;
+    @apply min-w-32 max-w-48;
   }
 
   .drop_down_lg {
@@ -136,11 +136,16 @@ html {
   }
 
   .dropdown_item {
-    @apply flex items-center justify-center gap-2 rounded bg-white px-2 py-1 font-medium text-slate-700 shadow transition-all hover:bg-slate-50 hover:indent-2;
+    @apply flex items-center gap-2 whitespace-nowrap rounded bg-white px-2 py-1 font-medium text-slate-700 shadow transition-all hover:bg-slate-50 hover:indent-1;
   }
 
   .search_input_wrapper:has(input:focus) {
     @apply bg-slate-100 ring-[2.5px] ring-blue-400;
+
+    input,
+    label {
+      @apply bg-slate-100;
+    }
   }
 
   .pagination_btn {

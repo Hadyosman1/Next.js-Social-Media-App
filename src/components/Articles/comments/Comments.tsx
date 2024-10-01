@@ -1,7 +1,8 @@
 "use client";
+
+import React, { useState } from "react";
 import CommentItem from "./CommentItem";
 import { TArticle, TypeJWTPayload } from "@/types";
-import { useState } from "react";
 
 // icons
 import { FaComments } from "react-icons/fa6";

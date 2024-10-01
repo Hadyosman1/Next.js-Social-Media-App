@@ -1,3 +1,4 @@
+import React from "react";
 import { Metadata } from "next";
 import Pagination from "@/components/shared/Pagination";
 import ArticlesList from "@/components/Articles/ArticlesList";

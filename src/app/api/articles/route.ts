@@ -32,6 +32,7 @@ export async function GET(req: NextRequest) {
         include: {
           author: { select: { userName: true, profilePicture: true } },
           comments: {
+            orderBy: { createdAt: "desc" },
             include: {
               user: { select: { userName: true, profilePicture: true } },
             },
