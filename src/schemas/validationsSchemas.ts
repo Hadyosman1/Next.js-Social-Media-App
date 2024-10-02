@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+/* ======== Articles ======== */
 export const createArticleSchema = z.object({
   title: z
     .string()
@@ -20,6 +21,7 @@ export const updateArticleSchema = z.object({
     .min(10, "description must be more than 10 digits")
     .optional(),
 });
+/* ======== Articles ======== */
 
 export const createUserSchema = z.object({
   userName: z

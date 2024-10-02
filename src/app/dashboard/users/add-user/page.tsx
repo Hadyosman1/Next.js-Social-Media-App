@@ -1,7 +1,19 @@
+import AddUserForm from "@/components/forms/AddUserForm";
+import BackBtn from "@/components/shared/BackBtn";
 import { Metadata } from "next";
 
 const AddUserPage = () => {
-  return <div>AddUserPage</div>;
+  return (
+    <section className="flex flex-col gap-3 py-10">
+      <div className="flex items-center">
+        <BackBtn />
+      </div>
+
+      <div className="flex justify-center">
+        <AddUserForm />
+      </div>
+    </section>
+  );
 };
 
 export default AddUserPage;

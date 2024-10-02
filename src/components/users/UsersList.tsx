@@ -4,7 +4,6 @@ import React, { useMemo, useState } from "react";
 import { User } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
-import anonymousUser from "@/../../public/anonymous_user.svg";
 
 //icons
 import { FaSearch } from "react-icons/fa";
@@ -52,7 +51,7 @@ const UsersList = ({ users }: IProps) => {
           >
             <div className="flex grow items-center justify-center sm:grow-0">
               <Image
-                src={user.profilePicture ?? anonymousUser}
+                src={user.profilePicture ?? "/anonymous_user.svg"}
                 alt={user.userName}
                 width={160}
                 height={160}

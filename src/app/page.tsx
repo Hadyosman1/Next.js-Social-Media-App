@@ -23,7 +23,7 @@ const HomePage = () => {
             Next.js blog project
           </h1>
 
-          <p className="mt-6 text-lg leading-8 text-gray-600">
+          <p className="mt-6 text-xl font-semibold leading-8 text-gray-600">
             First project with Next.js
           </p>
 

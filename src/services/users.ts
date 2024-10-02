@@ -1,6 +1,7 @@
 import API_URL from "./API_URL";
 import { User } from "@prisma/client";
 import { TArticle } from "@/types";
+import { revalidatePath } from "next/cache";
 
 export async function getAllUsers(): Promise<User[]> {
   try {
@@ -130,6 +131,9 @@ export async function deleteUser(id: number): Promise<TDeleteUserReturn> {
     const data = await res.json();
 
     if (!res.ok) throw new Error(data?.message || "Failed to delete user");
+
+    revalidatePath("/dashboard/users");
+    revalidatePath("/users");
 
     return {
       ok: true,

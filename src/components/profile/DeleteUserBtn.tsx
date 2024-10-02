@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { FaTrash } from "react-icons/fa6";
 import DeleteItemModal from "../Modals/DeleteItemModal";
 import { useCallback, useState } from "react";

@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: "storage.googleapis.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
     ],
   },
 };

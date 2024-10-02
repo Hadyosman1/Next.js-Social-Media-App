@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <footer className="mt-auto border-t bg-gradient-to-l from-blue-500 to-blue-600">
-      <div className="container mx-auto flex flex-wrap items-center justify-center gap-3 py-[17.5px] md:justify-between">
+      <div className="container mx-auto flex flex-wrap items-center justify-center gap-3 py-[16px] md:justify-between">
         <span className="grow text-center text-sm text-white md:text-start dark:text-white">
           © 2024 <span>Hady Osman</span>. All Rights Reserved.
         </span>

@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   if (!userFromToken?.isAdmin || !token) return redirect("/");
 
   return (
-    <div className="grid max-h-[calc(100dvh_-_120px)] grid-cols-[auto_1fr] ">
+    <div className="grid max-h-[calc(100svh_-_124px)] grid-cols-[auto_1fr]">
       <SideBar />
       <div className="grow overflow-y-auto px-3 md:px-6">{children}</div>
     </div>

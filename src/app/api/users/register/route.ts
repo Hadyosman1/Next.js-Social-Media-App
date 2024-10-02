@@ -6,7 +6,8 @@ import bcrypt from "bcryptjs";
 import generateJWT from "@/utils/generateJWT";
 import prepareCookie from "@/utils/prepareCookie";
 import verifyImage from "@/utils/verifyImage";
-import {uploadImageToFirebase} from "@/services/firebase";
+import { uploadImageToFirebase } from "@/services/firebase";
+import { verifyToken } from "@/utils/verifyToken";
 
 /**
  * @method  POST
@@ -22,6 +23,7 @@ export async function POST(req: NextRequest) {
       userName: formData.get("userName"),
       email: formData.get("email"),
       password: formData.get("password"),
+      isAdmin: Boolean(formData.get("isAdmin")),
     } as IRegisterUserDto;
 
     const validation = createUserSchema.safeParse(data);
@@ -69,6 +71,14 @@ export async function POST(req: NextRequest) {
 
     // eslint-disable-next-line no-unused-vars
     const { password, ...createdUserWithOutPassword } = createdUser;
+
+    const userFromToken = verifyToken(req);
+    if (userFromToken?.isAdmin) {
+      return NextResponse.json(
+        { ...createdUserWithOutPassword },
+        { status: 201 },
+      );
+    }
 
     const token = generateJWT({
       id: createdUser.id,

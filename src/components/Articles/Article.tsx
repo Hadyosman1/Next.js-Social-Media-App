@@ -6,8 +6,6 @@ import CommentForm from "./comments/CommentForm";
 import Link from "next/link";
 import Image from "next/image";
 import { cookies } from "next/headers";
-
-import anonymousUser from "@/../../public/anonymous_user.svg";
 import FixTextDirection from "@/components/shared/FixTextDirection";
 import { verifyTokenForPage } from "@/utils/verifyToken";
 
@@ -33,7 +31,7 @@ const Article = ({
             href={`/profile/${!(user?.id === article.authorId) ? article.authorId : ""}`}
           >
             <Image
-              src={article.author.profilePicture ?? anonymousUser}
+              src={article.author.profilePicture ?? "/anonymous_user.svg"}
               alt={article.author.userName}
               width={64}
               height={64}

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import anonymousUserPicture from "@/../../public/anonymous_user.svg";
 import { User } from "@prisma/client";
 import ChangeProfilePictureBtn from "./ChangeProfilePictureBtn";
 
@@ -35,7 +34,7 @@ const UserInfo = ({ user }: TProps) => {
 
         <div className="relative">
           <Image
-            src={profilePicture ?? anonymousUserPicture}
+            src={profilePicture ?? "/anonymous_user.svg"}
             alt={userName}
             unoptimized
             width={280}

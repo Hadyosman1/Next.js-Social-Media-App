@@ -15,7 +15,10 @@ import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import OpenAddArticleModalBtn from "@/components/Articles/OpenAddArticleModalBtn";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Learn Next ",
@@ -40,7 +43,7 @@ export default function RootLayout({
         <div className="mx-auto flex min-h-svh flex-col">
           {user && <OpenAddArticleModalBtn />}
 
-          <Header />
+          <Header user={user} />
 
           <main className="grid flex-grow bg-slate-200/70">{children}</main>
 

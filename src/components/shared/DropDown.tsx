@@ -65,14 +65,12 @@ export const DropDown = ({
 
 // eslint-disable-next-line react/display-name
 DropDown.Header = ({
-  className,
   children,
   href,
   onClick,
   as: Element = "p",
   ...other
 }: {
-  className?: string;
   children: React.ReactNode;
   as?: React.ElementType;
   href?: string;
@@ -89,7 +87,7 @@ DropDown.Header = ({
       href={href}
       onClick={handleClick}
       {...other}
-      className={`drop_down_header ${className}`}
+      className={`bg-white text-center font-bold text-slate-500`}
     >
       {children}
     </Element>

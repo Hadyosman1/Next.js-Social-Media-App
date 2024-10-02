@@ -91,7 +91,7 @@ const ArticlesTable = ({ articles }: { articles: TArticle[] }) => {
                         {article.imageUrl ? (
                           <Image
                             onClick={handleImageClicked}
-                            className="mx-auto aspect-square max-w-52 cursor-pointer rounded object-cover shadow"
+                            className="mx-auto aspect-square max-w-52 cursor-pointer rounded object-center object-cover shadow"
                             width={500}
                             height={500}
                             unoptimized

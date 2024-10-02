@@ -1,15 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import anonymousUser from "@/../../public/anonymous_user.svg";
-import { TComment, TypeJWTPayload } from "@/types";
-
-import CommentControls from "./CommentControls";
 import { useState } from "react";
+import Image from "next/image";
+import CommentControls from "./CommentControls";
 import CommentForm from "./CommentForm";
 import Link from "next/link";
 import FixTextDirection from "@/components/shared/FixTextDirection";
 import CreatedAt from "./CreatedAt";
+import { TComment, TypeJWTPayload } from "@/types";
 
 type TProps = {
   comment: TComment & {
@@ -31,7 +29,7 @@ const CommentItem = ({ comment, user }: TProps) => {
           href={`/profile/${comment.userId === user?.id ? "" : comment.userId}`}
         >
           <Image
-            src={comment.user.profilePicture ?? anonymousUser}
+            src={comment.user.profilePicture ?? "/anonymous_user.svg"}
             alt={"user"}
             width={48}
             height={48}

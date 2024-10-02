@@ -1,3 +1,4 @@
+import React from "react";
 import ArticlesList from "@/components/Articles/ArticlesList";
 import SearchArticlesInput from "@/components/Articles/SearchArticlesInput";
 import { searchInArticles } from "@/services/articles";

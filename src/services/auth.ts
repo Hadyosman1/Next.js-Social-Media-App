@@ -7,9 +7,11 @@ type TRegisterData = {
   email: string;
   password: string;
   profilePicture?: File | null;
+  isAdmin?: boolean;
 };
 
 type TRegisterReturn = (User & { ok: true }) | { error: string; ok: false };
+
 export async function userRegister(
   data: TRegisterData,
 ): Promise<TRegisterReturn> {
@@ -19,10 +21,10 @@ export async function userRegister(
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("profilePicture", data.profilePicture ?? "");
+    formData.append("isAdmin", data?.isAdmin?.toString() ?? "false");
 
     const res = await fetch(`${API_URL}/users/register`, {
       method: "POST",
-
       body: formData,
     });
 

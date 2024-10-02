@@ -3,7 +3,6 @@
 import { TypeJWTPayload } from "@/types";
 import Image from "next/image";
 import { useCallback, useState } from "react";
-import anonymousUser from "@/../../public/anonymous_user.svg";
 import Link from "next/link";
 import SmallLoadingIndicator from "./SmallLoadingIndicator";
 import { useRouter } from "next/navigation";
@@ -52,7 +51,7 @@ const RoundedUser = ({ user }: TProps) => {
           className="relative rounded-full align-middle"
         >
           <Image
-            src={user?.profilePicture ?? anonymousUser}
+            src={user?.profilePicture ?? "/anonymous_user.svg"}
             alt={user?.userName ?? "user"}
             width={48}
             height={48}
@@ -72,9 +71,7 @@ const RoundedUser = ({ user }: TProps) => {
           closeDropDown={closeDropDown}
           isOpen={isDropDownOpen}
         >
-          <DropDown.Header className="font-bold text-slate-500 text-center">
-            {user?.userName}
-          </DropDown.Header>
+          <DropDown.Header>{user?.userName}</DropDown.Header>
 
           <hr />
 
@@ -87,7 +84,7 @@ const RoundedUser = ({ user }: TProps) => {
           <button
             disabled={isLoading}
             onClick={logOutHandler}
-            className={`logout-btn  flex items-center whitespace-nowrap  gap-1 rounded-sm bg-red-700/80 px-3 py-1 text-slate-100 transition-all hover:bg-red-800/80 hover:indent-1`}
+            className={`logout-btn flex items-center gap-1 whitespace-nowrap rounded-sm bg-red-700/80 px-3 py-1 text-slate-100 transition-all hover:bg-red-800/80 hover:indent-1`}
           >
             {isLoading ? <SmallLoadingIndicator size="sm" /> : <FaSignOutAlt />}{" "}
             Log out
