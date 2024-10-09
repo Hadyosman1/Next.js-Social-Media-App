@@ -7,8 +7,6 @@ import Link from "next/link";
 
 import { IoAddCircle } from "react-icons/io5";
 
-export const dynamic = "force-dynamic";
-
 const UsersPage = async () => {
   const users: User[] = await getAllUsers();
 

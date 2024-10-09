@@ -27,6 +27,7 @@ const FileInput = ({ setter, label, fileName }: TProps) => {
           className="absolute inset-0 z-10 min-w-full max-w-xs cursor-pointer opacity-0 file:cursor-pointer "
           onChange={(e) => {
             const file = e.target.files?.[0];
+            // eslint-disable-next-line no-unused-vars
             setter((_) => file ?? null);
           }}
         />

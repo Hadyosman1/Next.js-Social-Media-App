@@ -54,6 +54,17 @@ html {
 
     .label {
       @apply text-center text-sm transition-all delay-200 md:invisible md:absolute md:bottom-0 md:min-w-full md:translate-y-[130%] md:rounded md:bg-slate-700/70 md:px-3 md:py-1 md:text-white md:opacity-0;
+
+      &::after {
+        content: "";
+        position: absolute;
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent transparent #6b7480 transparent;
+        top: 0;
+        left: 50%;
+        translate: -50% -100%;
+      }
     }
 
     &::after {
@@ -136,7 +147,7 @@ html {
   }
 
   .drop_down_header {
-    @apply overflow-hidden text-ellipsis whitespace-nowrap bg-white text-center font-semibold text-slate-500 py-1 px-2;
+    @apply overflow-hidden text-ellipsis whitespace-nowrap bg-white px-2 py-1 text-center font-semibold text-slate-500;
   }
 
   .search_input_wrapper:has(input:focus) {
@@ -179,10 +190,32 @@ html {
 
       &.tooltip_center_top {
         @apply left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%_+_10px)];
+
+        &::after {
+          content: "";
+          position: absolute;
+          border-width: 8px;
+          border-style: solid;
+          border-color: #6b7480 transparent transparent transparent;
+          bottom: 0;
+          left: 50%;
+          translate: -50% 100%;
+        }
       }
 
       &.tooltip_center_bottom {
         @apply bottom-0 left-1/2 -translate-x-1/2 translate-y-[calc(100%_+_10px)];
+
+        &::after {
+          content: "";
+          position: absolute;
+          border-width: 8px;
+          border-style: solid;
+          border-color: transparent transparent #6b7480 transparent;
+          top: 0;
+          left: 50%;
+          translate: -50% -100%;
+        }
       }
     }
 

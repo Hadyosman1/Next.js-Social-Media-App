@@ -12,10 +12,10 @@ import {
   TRegisterInputs,
   createUserSchema,
 } from "@/schemas/validationsSchemas";
-
-import { FaCheck } from "react-icons/fa";
 import { userRegister } from "@/services/auth";
 import { toast } from "react-toastify";
+
+import { FaCheck } from "react-icons/fa";
 
 const AddUserForm = () => {
   const [file, setFile] = useState<File | null>(null);

@@ -2,6 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/utils/db";
 
+export const dynamic = "force-dynamic";
+
 /**
  * @method  GET
  * @route   ~/api/users

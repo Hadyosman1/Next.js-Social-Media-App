@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
+import { BsArrowRight } from "react-icons/bs";
+
 const HomePage = () => {
   return (
     <div className="relative isolate px-6 lg:px-8">
@@ -20,18 +22,18 @@ const HomePage = () => {
       <div className="mx-auto flex h-full max-w-2xl flex-col items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Next.js blog project
+            Next.js Social Media App
           </h1>
 
           <p className="mt-6 text-xl font-semibold leading-8 text-gray-600">
-            First project with Next.js
+            My First project with Next.js
           </p>
 
           <Link
-            className="mt-5 inline-block rounded bg-blue-500 px-3 py-1.5 text-white hover:bg-blue-600"
+            className="mt-5 inline-flex group hover:underline items-center gap-2 rounded bg-blue-500 px-5 py-1.5 text-white hover:bg-blue-600"
             href={"/articles?page=1&limit=10"}
           >
-            See articles
+            Explore Articles <BsArrowRight className="group-hover:translate-x-1.5 transition-all" />
           </Link>
         </div>
       </div>

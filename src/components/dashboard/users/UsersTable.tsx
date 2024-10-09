@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MouseEventHandler } from "react";
 
 const UsersTable = ({ users }: { users: User[] }) => {
+  
   const handleImageClicked: MouseEventHandler = (e) => {
     const target = e.target as HTMLElement;
 
