@@ -50,6 +50,8 @@ const ModalWrapper = ({
           )}
 
           <button
+            tabIndex={-1}
+            autoFocus={isOpen}
             title="close"
             className={`${bg === "transparent" ? "bg-gray-400 text-white hover:bg-gray-500" : "bg-slate-100 text-slate-700 hover:bg-slate-200"} ms-auto rounded p-1 text-xl`}
             onClick={onClose}
