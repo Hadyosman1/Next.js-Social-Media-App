@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TypeJWTPayload } from "@/types";
+import { motion } from "framer-motion";
 
 //icons
 import { IoHome as HomeIcon } from "react-icons/io5";
@@ -79,6 +80,12 @@ const NavBar = ({ user }: TProps) => {
             >
               {link.icon}
               <span className="label">{link.label}</span>
+              {isActive(link.href, pathname) === "active" && (
+                <motion.span
+                  layoutId="navLink"
+                  className="absolute bottom-0 left-0 right-0 h-[4px] bg-blue-400"
+                />
+              )}
             </Link>
           ))}
         </ul>

@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { verifyTokenForPage } from "@/utils/verifyToken";
 import { redirect } from "next/navigation";
+import PagesWrapper from "@/components/PagesWrapper";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const token = cookies().get("jwt_token")?.value;
@@ -15,7 +16,13 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="grid max-h-[calc(100svh_-_124px)] grid-cols-[auto_1fr]">
       <SideBar />
-      <div className="grow overflow-y-auto px-3 md:px-6">{children}</div>
+
+      <PagesWrapper
+        subPage={true}
+        className="grow overflow-y-auto px-3 md:px-6"
+      >
+        {children}
+      </PagesWrapper>
     </div>
   );
 };
