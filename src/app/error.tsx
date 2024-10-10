@@ -30,6 +30,5 @@ const Error = ({ error, reset }: TErrorProps) => {
 export default Error;
 
 export const metadata: Metadata = {
-  title: "Error",
   description: "Error page",
 };

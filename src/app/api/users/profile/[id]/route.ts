@@ -123,7 +123,7 @@ export async function PUT(req: NextRequest, { params }: IProps) {
 
     const data = {
       userName: formData.get("userName") ?? user.userName,
-      email: formData.get("email") ?? user.email,
+      email: formData.get("email")?.toString()?.toLowerCase() ?? user.email,
       password: formData.get("password") || undefined,
       isAdmin: formData.get("isAdmin") ?? user.isAdmin,
     } as IUpdateUserDto;

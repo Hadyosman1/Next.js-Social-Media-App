@@ -1,4 +1,5 @@
 import Image from "next/image";
+import dashboardPlaceholder from "../../../public/dashboard_placeholder.webp";
 
 const DashboardPage = () => {
   return (
@@ -15,8 +16,9 @@ const DashboardPage = () => {
           <div className="relative h-64 overflow-hidden sm:h-80 lg:h-full">
             <Image
               alt="dashboard ipsum"
-              src="/dashboard_placeholder.webp"
+              src={dashboardPlaceholder}
               className="absolute inset-0 h-full w-full object-cover"
+              placeholder="blur"
               priority
               fill
             />

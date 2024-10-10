@@ -12,6 +12,6 @@ const RegisterPage = () => {
 export default RegisterPage;
 
 export const metadata: Metadata = {
-  title: "Register",
-  description: "User Registration",
+  title: "Register |",
+  description: "User Registration Page.",
 };

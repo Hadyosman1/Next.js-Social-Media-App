@@ -31,8 +31,6 @@ const ModalWrapper = ({
     setIsMounted(true);
   }, []);
 
-  
-
   if (!isMounted) return null;
 
   const Modal = isOpen && (

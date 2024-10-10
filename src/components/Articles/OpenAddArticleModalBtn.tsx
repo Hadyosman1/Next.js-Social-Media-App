@@ -26,6 +26,7 @@ const OpenAddArticleModalBtn = () => {
           <MdPostAdd />
         </span>
 
+        <span className="sr-only">Add Article</span>
         <ToolTipItem position="top-center">Add Article</ToolTipItem>
       </button>
 

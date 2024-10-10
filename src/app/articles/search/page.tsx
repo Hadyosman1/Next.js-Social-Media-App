@@ -29,7 +29,7 @@ const SearchArticlePage = async ({ searchParams: { searchKey } }: TProps) => {
         <>
           <h1 className="text-xl text-slate-700">
             <span className="break-all">( {searchKey} )</span> results :{" "}
-            {articles.length} article
+            {articles.length} Article{articles.length>1&&"s"}
           </h1>
 
           <ArticlesList articles={articles} />
