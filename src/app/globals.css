@@ -67,18 +67,8 @@ html {
       }
     }
 
-    &::after {
-      content: "";
-      border-radius: 6px 6px 0 0;
-      @apply absolute bottom-0 left-0 right-0 h-[4px] bg-blue-400 opacity-0 transition-all;
-    }
-
     &.active {
       @apply bg-slate-200/70 text-blue-400;
-    }
-
-    &.active::after {
-      @apply opacity-100;
     }
   }
 
@@ -229,15 +219,15 @@ html {
   }
 
   .modal_wrapper {
-    @apply fixed inset-0 z-[1200] flex max-h-dvh items-center justify-center bg-gray-700 bg-opacity-50 p-3 backdrop-blur-sm transition-all delay-200 duration-200;
+    @apply fixed inset-0 z-[1200] flex max-h-dvh items-center justify-center bg-gray-700 bg-opacity-50 p-3 backdrop-blur-sm;
 
-    &.hide {
+    /* &.hide {
       @apply invisible translate-y-[110%] opacity-0;
     }
 
     &.show {
       @apply visible translate-y-0 opacity-100;
-    }
+    } */
   }
 
   .side_bar_link {

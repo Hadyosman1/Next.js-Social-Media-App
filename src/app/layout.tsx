@@ -14,6 +14,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import OpenAddArticleModalBtn from "@/components/Articles/OpenAddArticleModalBtn";
+import PagesWrapper from "@/components/PagesWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,7 +46,9 @@ export default function RootLayout({
 
           <Header user={user} />
 
-          <main className="grid flex-grow bg-slate-200/70">{children}</main>
+          <PagesWrapper className="grid flex-grow bg-slate-200/70">
+            {children}
+          </PagesWrapper>
 
           <Footer />
         </div>

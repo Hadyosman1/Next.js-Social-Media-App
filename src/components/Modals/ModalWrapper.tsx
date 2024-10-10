@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "framer-motion";
+
 import { RiCloseLargeFill } from "react-icons/ri";
 
 interface ModalProps {
@@ -29,10 +31,15 @@ const ModalWrapper = ({
     setIsMounted(true);
   }, []);
 
+  
+
   if (!isMounted) return null;
 
-  const Modal = (
-    <div
+  const Modal = isOpen && (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.7 } }}
+      exit={{ opacity: 0, y: -20, transition: { duration: 0.5 } }}
       onClick={onClose}
       className={`${isOpen ? "show" : "hide"} modal_wrapper`}
     >
@@ -62,7 +69,7 @@ const ModalWrapper = ({
 
         <div className="max-h-full overflow-y-auto">{children}</div>
       </div>
-    </div>
+    </motion.div>
   );
 
   return createPortal(
