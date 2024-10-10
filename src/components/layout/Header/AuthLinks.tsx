@@ -6,7 +6,7 @@ const AuthLinks = () => {
   return (
     <div className="ms-auto flex items-center justify-end gap-1.5 text-sm md:w-1/5">
       <Link
-        className={`${linkStyle} bg-green-700/80 hover:bg-green-800/80`}
+        className={`${linkStyle} bg-green-800 hover:bg-green-900`}
         href={"/register"}
       >
         Register

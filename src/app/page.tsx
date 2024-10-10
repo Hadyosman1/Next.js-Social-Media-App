@@ -30,10 +30,11 @@ const HomePage = () => {
           </p>
 
           <Link
-            className="mt-5 inline-flex group hover:underline items-center gap-2 rounded bg-blue-500 px-5 py-1.5 text-white hover:bg-blue-600"
+            className="group mt-5 inline-flex items-center gap-2 rounded bg-blue-500 px-5 py-1.5 text-white hover:bg-blue-600 hover:underline"
             href={"/articles?page=1&limit=10"}
           >
-            Explore Articles <BsArrowRight className="group-hover:translate-x-1.5 transition-all" />
+            Explore Articles{" "}
+            <BsArrowRight className="transition-all group-hover:translate-x-1.5" />
           </Link>
         </div>
       </div>
@@ -44,6 +45,6 @@ const HomePage = () => {
 export default HomePage;
 
 export const metadata: Metadata = {
-  title: "Blog | Home",
-  description: "Next.js Blog Home Page",
+  title: "Home | DEVO",
+  description: "Social Media App Home Page.",
 };

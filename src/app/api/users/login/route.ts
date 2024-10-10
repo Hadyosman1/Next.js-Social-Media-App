@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     }
 
     const user = await prisma.user.findUnique({
-      where: { email: data.email },
+      where: { email: data.email?.toLowerCase() },
     });
 
     const isAuthenticatedUser =
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
 
     const token = generateJWT({
       id: user.id,
-      email: user.email,
+      email: user.email.toLowerCase(),
       isAdmin: user.isAdmin,
       userName: user.userName,
       profilePicture: user.profilePicture,

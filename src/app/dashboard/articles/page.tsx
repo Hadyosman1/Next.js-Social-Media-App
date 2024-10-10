@@ -66,7 +66,7 @@ const ArticlesPage = async ({ searchParams: { page, limit } }: TProps) => {
 export default ArticlesPage;
 
 export const metadata: Metadata = {
-  title: "Dashboard | Articles",
-  description: "List of all articles",
+  title: "Dashboard | Articles ",
+  description: "Article List.",
 };
 

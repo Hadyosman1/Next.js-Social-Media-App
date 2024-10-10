@@ -19,6 +19,6 @@ const AddProductPage = () => {
 export default AddProductPage;
 
 export const metadata: Metadata = {
-  title: "Dashboard | Articles",
+  title: "Dashboard | Articles ",
   description: "Add article from admin",
 };

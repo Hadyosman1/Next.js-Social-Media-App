@@ -40,6 +40,6 @@ const UserProfilePage = async ({ params: { id } }: TProps) => {
 export default UserProfilePage;
 
 export const metadata: Metadata = {
-  title: "User Profile",
+  title: "User Profile |",
   description: "User Profile",
 };

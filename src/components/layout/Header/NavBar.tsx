@@ -79,6 +79,7 @@ const NavBar = ({ user }: TProps) => {
               href={link.href}
             >
               {link.icon}
+              <span className="sr-only">{link.label}</span>
               <span className="label">{link.label}</span>
               {isActive(link.href, pathname) === "active" && (
                 <motion.span

@@ -44,7 +44,7 @@ const RoundedUser = ({ user }: TProps) => {
   }, []);
 
   return (
-    <div className="ms-auto flex items-center justify-end gap-2.5 text-sm md:w-1/5">
+    <div className="ms-auto flex items-center flex-shrink justify-end gap-2.5 text-sm md:w-1/5">
       <div className="relative">
         <button
           onClick={() => setIsDropDownOpen((prev) => !prev)}
@@ -56,7 +56,6 @@ const RoundedUser = ({ user }: TProps) => {
             width={48}
             height={48}
             quality={100}
-            unoptimized
             priority={true}
             className="aspect-square w-12 rounded-full border bg-slate-100 object-cover object-top shadow-sm hover:shadow-inner"
           />

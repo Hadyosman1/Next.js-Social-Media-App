@@ -14,7 +14,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   if (!userFromToken?.isAdmin || !token) return redirect("/");
 
   return (
-    <div className="grid max-h-[calc(100svh_-_124px)] grid-cols-[auto_1fr]">
+    <div className="grid max-h-[calc(100dvh_-_140px)] grid-cols-[auto_1fr] overflow-hidden sm:max-h-[calc(100dvh_-_116px)] md:max-h-[calc(100dvh_-_123.5px)]">
       <SideBar />
 
       <PagesWrapper
@@ -30,6 +30,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 export default DashboardLayout;
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "Dashboard |",
   description: "Admin Dashboard",
 };

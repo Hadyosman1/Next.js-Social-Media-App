@@ -31,6 +31,6 @@ const UsersPage = async () => {
 export default UsersPage;
 
 export const metadata: Metadata = {
-  title: "Dashboard | Users",
+  title: "Dashboard | Users ",
   description: "List of users",
 };

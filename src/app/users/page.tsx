@@ -7,9 +7,11 @@ const UsersPage = async () => {
 
   return (
     <section className="main-props container py-8">
-      <h1 className="mb-3 w-fit border-b-2 border-slate-400 pb-2 text-2xl font-semibold text-slate-700">
-        All Users
-      </h1>
+      <div className="mb-7">
+        <h1 className="w-fit border-b-2 border-slate-400 pb-2 text-2xl font-semibold text-slate-700">
+          All Users
+        </h1>
+      </div>
 
       <div className="mx-auto max-w-xs sm:max-w-xl">
         <UsersList users={users} />
@@ -21,6 +23,6 @@ const UsersPage = async () => {
 export default UsersPage;
 
 export const metadata: Metadata = {
-  title: "Blog | Users",
+  title: "Users |",
   description: "Users",
 };

@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
     const data = {
       userName: formData.get("userName"),
-      email: formData.get("email"),
+      email: formData.get("email")?.toString()?.toLowerCase(),
       password: formData.get("password"),
       isAdmin: Boolean(formData.get("isAdmin")),
     } as IRegisterUserDto;

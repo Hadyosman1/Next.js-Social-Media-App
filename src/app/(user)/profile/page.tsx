@@ -37,7 +37,7 @@ async function ProfilePage() {
 export default ProfilePage;
 
 export const metadata: Metadata = {
-  title: "Profile",
-  description: "Your Profile",
+  title: "Profile |",
+  description: "User Profile.",
 };
 
