@@ -45,15 +45,10 @@ const ArticlesPage = async ({ searchParams: { page, limit } }: TProps) => {
 
       <ArticlesTable articles={articles} />
 
-      <p className="my-3 text-sm font-medium text-slate-600 md:text-xl">
-        {(parseInt(page) - 1) * parseInt(limit) + 1} to{" "}
-        {articles.length + (parseInt(page) - 1) * parseInt(limit)} from (
-        {articlesCount} Articles)
-      </p>
-
-      <div className="mt-auto pb-3">
+      <div className="mt-auto gap-3 flex flex-col items-center py-6 ">
         <Pagination
           path="/dashboard/articles"
+          CurrentArticlesCount={articles.length}
           page={page}
           limit={limit}
           count={articlesCount}
@@ -69,4 +64,3 @@ export const metadata: Metadata = {
   title: "Dashboard | Articles ",
   description: "Article List.",
 };
-

@@ -69,11 +69,12 @@ export async function GET(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   try {
+    // seed article in database
     // let articles = [];
     // for (let i = 0; i < 40; i++) {
     //   articles.push({
-    //     title: "*".repeat(i + 1) + " -" + (i + 1),
-    //     description: "*".repeat(i + 1) + " -" + (i + 1),
+    //     title: "# ".repeat(i + 1) + " - " + (i + 1),
+    //     description: "# ".repeat(i + 1) + " - " + (i + 1),
     //     authorId: 1,
     //   });
     // }
