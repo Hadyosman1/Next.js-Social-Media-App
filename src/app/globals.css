@@ -28,15 +28,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@layer utilities {
-  .container {
-    @apply xl:max-w-[1280px];
-  }
-
-  .container.main-props {
-    @apply mx-auto px-3;
-  }
-
+@layer components {
   .bg_glassy {
     backdrop-filter: blur(12px);
   }
@@ -119,15 +111,21 @@ html {
   }
 
   .absolute_bottom_center {
-    @apply bottom-0 left-1/2 -translate-x-1/2 translate-y-[calc(100%_+_9px)];
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, calc(100% + 9px));
   }
 
   .absolute_bottom_right {
-    @apply bottom-0 left-0 translate-y-[calc(100%_+_9px)];
+    bottom: 0;
+    left: 0;
+    transform: translateY(calc(100% + 9px));
   }
 
   .absolute_bottom_left {
-    @apply bottom-0 right-0 translate-y-[calc(100%_+_9px)];
+    bottom: 0;
+    right: 0;
+    transform: translateY(calc(100% + 9px));
   }
 
   .dropdown_item {
@@ -169,47 +167,67 @@ html {
   }
 
   .add_article_btn {
-    @apply fixed bottom-20 right-8 z-20 flex aspect-square items-center justify-center rounded-full border border-blue-400 bg-white shadow-md transition hover:bg-slate-100 md:bottom-16 md:right-10;
+    position: fixed;
+    bottom: 5rem;
+    right: 2rem;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background: #fff;
+    @apply border border-blue-400 shadow-md transition hover:bg-slate-100 md:bottom-16 md:right-10;
   }
 
-  .tooltip_wrapper {
-    .tooltip {
-      @apply invisible absolute z-10 min-w-24 rounded bg-gray-600/80 p-1 text-sm text-white opacity-0 transition delay-300;
+  .tooltip_wrapper .tooltip {
+    @apply bg-gray-600/80 p-1 text-sm;
+    border-radius: 0.25rem;
+    min-width: 96px;
+    z-index: 10;
+    visibility: hidden;
+    position: absolute;
+    transition: all 0.4s 250ms;
+    opacity: 0;
+    color: white;
 
-      &.tooltip_center_top {
-        @apply left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%_+_10px)];
+    &.tooltip_center_top {
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, calc(-100% + -10px));
 
-        &::after {
-          content: "";
-          position: absolute;
-          border-width: 8px;
-          border-style: solid;
-          border-color: #6b7480 transparent transparent transparent;
-          bottom: 0;
-          left: 50%;
-          translate: -50% 100%;
-        }
-      }
-
-      &.tooltip_center_bottom {
-        @apply bottom-0 left-1/2 -translate-x-1/2 translate-y-[calc(100%_+_10px)];
-
-        &::after {
-          content: "";
-          position: absolute;
-          border-width: 8px;
-          border-style: solid;
-          border-color: transparent transparent #6b7480 transparent;
-          top: 0;
-          left: 50%;
-          translate: -50% -100%;
-        }
+      &::after {
+        content: "";
+        position: absolute;
+        border-width: 8px;
+        border-style: solid;
+        border-color: #6b7480 transparent transparent transparent;
+        bottom: 0;
+        left: 50%;
+        translate: -50% 100%;
       }
     }
 
-    &:hover .tooltip {
-      @apply visible opacity-100;
+    &.tooltip_center_bottom {
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, calc(100% + 10px));
+
+      &::after {
+        content: "";
+        position: absolute;
+        border-width: 8px;
+        border-style: solid;
+        border-color: transparent transparent #6b7480 transparent;
+        top: 0;
+        left: 50%;
+        translate: -50% -100%;
+      }
     }
+  }
+
+  .tooltip_wrapper:hover .tooltip {
+    @apply visible opacity-100;
   }
 
   .profile_section {
@@ -234,5 +252,15 @@ html {
     &:hover > span.absolute_right {
       @apply visible;
     }
+  }
+}
+
+@layer utilities {
+  .container {
+    @apply xl:max-w-[1280px];
+  }
+
+  .container.main-props {
+    @apply mx-auto px-3;
   }
 }

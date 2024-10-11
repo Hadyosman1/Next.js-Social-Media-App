@@ -1,10 +1,9 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Metadata } from "next";
-import Pagination from "@/components/shared/Pagination";
 import ArticlesList from "@/components/Articles/ArticlesList";
-import { getArticles } from "@/services/articles";
 import SearchArticlesInput from "@/components/Articles/SearchArticlesInput";
 import prisma from "@/utils/db";
+import ArticlesLoader from "@/components/loadingIndicators/ArticlesLoader/ArticlesLoader";
 
 type TProps = {
   searchParams: {
@@ -15,7 +14,6 @@ type TProps = {
 
 const ArticlesPage = async ({ searchParams }: TProps) => {
   const { page, limit } = searchParams;
-  const articles = await getArticles(page, limit);
   let articlesCount: number = 0;
 
   try {
@@ -27,28 +25,15 @@ const ArticlesPage = async ({ searchParams }: TProps) => {
     );
   }
 
-  const currentPage = parseInt(page ?? "1");
-  const currentLimit = parseInt(limit ?? "10");
-  const start = (currentPage - 1) * currentLimit + 1;
-  const end = start + articles.length - 1;
-
   return (
     <div className="main-props container flex flex-col items-center gap-5 py-8">
       {articlesCount > 0 ? (
         <>
           <SearchArticlesInput />
-          <ArticlesList articles={articles} />
 
-          <p className="my-3 text-sm font-medium text-slate-600 md:text-xl">
-            {start} to {end} of ({articlesCount} Articles)
-          </p>
-
-          <Pagination
-            path="/articles"
-            limit={limit}
-            page={page}
-            count={articlesCount}
-          />
+          <Suspense fallback={<ArticlesLoader />}>
+            <ArticlesList limit={limit} page={page} count={articlesCount} />
+          </Suspense>
         </>
       ) : (
         <p className="flex grow items-center text-lg font-semibold text-slate-600">

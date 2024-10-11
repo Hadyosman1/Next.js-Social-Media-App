@@ -36,7 +36,7 @@ const Article = ({
               alt={article.author.userName}
               width={64}
               height={64}
-              // unoptimized
+              unoptimized
               className="aspect-square w-16 rounded-full bg-slate-100 object-cover object-top shadow"
               priority={imagePriority}
             />

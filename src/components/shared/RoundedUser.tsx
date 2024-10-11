@@ -56,9 +56,10 @@ const RoundedUser = ({ user }: TProps) => {
             alt={user?.userName ?? "user"}
             width={48}
             height={48}
-            quality={100}
             priority={true}
-            unoptimized
+            sizes="(min-width: 0px) 48px"
+            // quality={100}
+            // unoptimized
           />
 
           <span className="absolute bottom-0 right-0 translate-y-0.5 rounded-full border bg-slate-100 p-0.5 text-sm text-slate-700 shadow-md">

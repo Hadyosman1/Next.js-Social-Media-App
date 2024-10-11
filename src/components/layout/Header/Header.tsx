@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Link from "next/link";
 import AuthLinks from "./AuthLinks";
 import NavBar from "./NavBar";
 import RoundedUser from "@/components/shared/RoundedUser";

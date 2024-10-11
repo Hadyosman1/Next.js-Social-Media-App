@@ -49,7 +49,7 @@ export default function RootLayout({
 
           <Header user={user} />
 
-          <RootTemplate >
+          <RootTemplate key={"root_template"} >
             {children}
           </RootTemplate>
 

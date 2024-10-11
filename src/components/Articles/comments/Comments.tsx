@@ -24,7 +24,7 @@ const Comments = ({ comments, user }: TProps) => {
 
   return (
     <div>
-      <h5 className={`mt-2 border border-x-0 border-y-2 py-2 text-slate-600`}>
+      <div className={`mt-2 border border-x-0 border-y-2 py-2 text-slate-600`}>
         <button
           onClick={() => setIsCommentsVisible((prev) => !prev)}
           className="flex items-center gap-1 rounded bg-slate-200 px-4 py-1 underline-offset-2 hover:underline"
@@ -32,7 +32,7 @@ const Comments = ({ comments, user }: TProps) => {
           {comments.length} Comments
           <FaComments />
         </button>
-      </h5>
+      </div>
 
       {comments.length === 0 && isCommentsVisible && (
         <p className="pt-3 text-center text-slate-600">No comments yet.</p>

@@ -1,19 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { IoMdSearch } from "react-icons/io";
+import SmallSpinner from "../loadingIndicators/smallSpinner/SmallSpinner";
 
 const SearchArticlesInput = ({ defaultValue }: { defaultValue?: string }) => {
   const [searchInput, setSearchInput] = useState(defaultValue || "");
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    router.push(`/articles/search?searchKey=${searchInput}`);
+    startTransition(() => {
+      router.push(`/articles/search?searchKey=${searchInput}`);
+    });
   };
 
   return (
@@ -31,11 +35,12 @@ const SearchArticlesInput = ({ defaultValue }: { defaultValue?: string }) => {
       />
 
       <button
-        disabled={!searchInput}
+        disabled={!searchInput || isPending}
         type="submit"
         className="border-s-2 border-blue-400 bg-slate-100 px-2 text-2xl text-sky-500 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none"
       >
-        <IoMdSearch />
+        <span className="sr-only">Submit</span>
+        {isPending ? <SmallSpinner /> : <IoMdSearch />}
       </button>
     </form>
   );

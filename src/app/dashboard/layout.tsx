@@ -17,7 +17,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="grid max-h-[calc(100dvh_-_140px)] grid-cols-[auto_1fr] overflow-hidden sm:max-h-[calc(100dvh_-_116px)] md:max-h-[calc(100dvh_-_123.5px)]">
       <SideBar />
 
-      <DashboardTemplate>{children}</DashboardTemplate>
+      <DashboardTemplate key={"dashboard_template"}>
+        {children}
+      </DashboardTemplate>
     </div>
   );
 };

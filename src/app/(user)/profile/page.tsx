@@ -3,10 +3,10 @@ import { verifyTokenForPage } from "@/utils/verifyToken";
 import { cookies } from "next/headers";
 import { getUserArticles, getUserInfo } from "@/services/users";
 import UserInfo from "@/components/profile/UserInfo";
-import ArticlesList from "@/components/Articles/ArticlesList";
 import { User } from "@prisma/client";
 import { TArticle } from "@/types";
 import { Metadata } from "next";
+import Article from "@/components/Articles/Article";
 
 async function ProfilePage() {
   const token = cookies().get("jwt_token")?.value;
@@ -25,7 +25,15 @@ async function ProfilePage() {
           </h2>
 
           {userArticles.length ? (
-            <ArticlesList articles={userArticles} />
+            <div className="flex w-full max-w-full grow flex-wrap items-start justify-center gap-1.5 md:max-w-xl md:gap-3">
+              {userArticles.map((article, i) => (
+                <Article
+                  imagePriority={i < 4}
+                  key={article.id}
+                  article={article}
+                />
+              ))}
+            </div>
           ) : (
             <p className="text-center">No articles yet..</p>
           )}
@@ -40,4 +48,3 @@ export const metadata: Metadata = {
   title: "Profile |",
   description: "User Profile.",
 };
-
