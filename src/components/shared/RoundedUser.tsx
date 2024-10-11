@@ -44,20 +44,21 @@ const RoundedUser = ({ user }: TProps) => {
   }, []);
 
   return (
-    <div className="ms-auto flex items-center flex-shrink justify-end gap-2.5 text-sm md:w-1/5">
+    <div className="ms-auto flex flex-shrink items-center justify-end gap-2.5 text-sm md:w-1/5">
       <div className="relative">
         <button
           onClick={() => setIsDropDownOpen((prev) => !prev)}
           className="relative rounded-full align-middle"
         >
           <Image
+            className="aspect-square w-12 rounded-full border bg-slate-100 object-cover object-top shadow-sm hover:shadow-inner"
             src={user?.profilePicture ?? "/anonymous_user.svg"}
             alt={user?.userName ?? "user"}
             width={48}
             height={48}
             quality={100}
             priority={true}
-            className="aspect-square w-12 rounded-full border bg-slate-100 object-cover object-top shadow-sm hover:shadow-inner"
+            unoptimized
           />
 
           <span className="absolute bottom-0 right-0 translate-y-0.5 rounded-full border bg-slate-100 p-0.5 text-sm text-slate-700 shadow-md">

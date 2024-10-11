@@ -10,17 +10,9 @@ const Header = ({ user }: { user: TypeJWTPayload | null }) => {
   return (
     <header className="bg_glassy sticky top-0 z-[999] bg-white/50 shadow shadow-sky-200">
       <div className="main-props container flex items-center justify-start gap-3 py-2">
-        <div className="hidden w-1/5 shrink justify-start md:flex">
-          <Link className="w-fit" href={"/"}>
-            <Image
-              src={"/logo.svg"}
-              className="h-[55px] w-[150px] object-contain"
-              alt="logo"
-              width={150}
-              height={55}
-            />
-          </Link>
-        </div>
+        <h1 className="hidden h-[55px] w-1/5 shrink items-center justify-start text-2xl font-extrabold text-slate-700 md:flex">
+          DE<span className="text-blue-600">V</span>O
+        </h1>
 
         <NavBar user={user} />
 

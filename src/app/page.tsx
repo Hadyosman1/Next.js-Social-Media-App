@@ -30,7 +30,7 @@ const HomePage = () => {
           </p>
 
           <Link
-            className="group mt-5 inline-flex items-center gap-2 rounded bg-blue-500 px-5 py-1.5 text-white hover:bg-blue-600 hover:underline"
+            className="group mt-5 inline-flex items-center gap-2 rounded bg-blue-600 px-5 py-1.5 text-white hover:bg-blue-700 hover:underline"
             href={"/articles?page=1&limit=10"}
           >
             Explore Articles{" "}
