@@ -40,13 +40,13 @@ const Pagination = ({
     }
 
     if (page >= pagesCount - 3) {
-      return [pagesArr.at(0), "...", ...pagesArr.slice(page - 5)];
+      return [pagesArr.at(0), "...", ...pagesArr.slice(page - 4)];
     }
 
     return [
       pagesArr.at(0),
       "...",
-      ...pagesArr.slice(page - 3, page + 3),
+      ...pagesArr.slice(page - 3, page + 2),
       "...",
       pagesArr.at(-1),
     ];
