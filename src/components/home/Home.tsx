@@ -6,10 +6,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { BsArrowRight } from "react-icons/bs";
+import { LuFileSpreadsheet } from "react-icons/lu";
 
 const Home = () => {
   return (
-    <div className="relative isolate px-6 lg:px-8">
+    <div className="relative isolate overflow-x-hidden px-3 md:px-6 lg:px-8">
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -42,6 +43,7 @@ const Home = () => {
             transition={{ type: "spring", delay: 0.2, duration: 1 }}
             initial={{ scale: 0.5, y: 300, opacity: 0.3 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
+            className="relative mx-auto w-fit"
           >
             <Link
               className="group mt-5 inline-flex items-center gap-2 rounded bg-blue-600 px-5 py-1.5 text-white hover:bg-blue-700 hover:underline"
@@ -50,6 +52,15 @@ const Home = () => {
               Explore Articles{" "}
               <BsArrowRight className="transition-all group-hover:translate-x-1.5" />
             </Link>
+
+            <motion.span
+              transition={{ duration: 0.8, delay: 0.4 }}
+              initial={{ rotate: 125, y: -550, x: 120, opacity: 0.5 }}
+              animate={{ rotate: -45, y: 0, x: "-50%", opacity: 0.9 }}
+              className="absolute -top-2 -left-2 "
+            >
+              <LuFileSpreadsheet className="text-5xl text-blue-600" />
+            </motion.span>
           </motion.div>
         </div>
       </div>

@@ -72,22 +72,23 @@ const NavBar = ({ user }: TProps) => {
       >
         <ul className="flex w-full flex-col items-start justify-center gap-3 md:flex-row md:items-center">
           {navLinks.map((link) => (
-            <Link
-              className={`${isActive(link.href, pathname)} nav_link relative font-semibold md:text-3xl`}
-              key={link.href}
-              onClick={() => setIsNavOpen(false)}
-              href={link.href}
-            >
-              {link.icon}
-              <span className="sr-only">{link.label}</span>
-              <span className="label">{link.label}</span>
-              {isActive(link.href, pathname) === "active" && (
-                <motion.span
-                  layoutId="navLink"
-                  className="absolute bottom-0 left-0 right-0 h-[4px] bg-blue-400"
-                />
-              )}
-            </Link>
+            <li key={link.label}>
+              <Link
+                className={`${isActive(link.href, pathname)} nav_link relative font-semibold md:text-3xl`}
+                onClick={() => setIsNavOpen(false)}
+                href={link.href}
+              >
+                {link.icon}
+                <span className="sr-only">{link.label}</span>
+                <span className="label">{link.label}</span>
+                {isActive(link.href, pathname) === "active" && (
+                  <motion.span
+                    layoutId="navLink"
+                    className="absolute bottom-0 left-0 right-0 h-[4px] bg-blue-400"
+                  />
+                )}
+              </Link>
+            </li>
           ))}
         </ul>
       </nav>
