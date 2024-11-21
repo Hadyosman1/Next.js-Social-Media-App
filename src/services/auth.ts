@@ -21,7 +21,7 @@ export async function userRegister(
     formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("profilePicture", data.profilePicture ?? "");
-    formData.append("isAdmin", data?.isAdmin?.toString() ?? "false");
+    formData.append("isAdmin", data?.isAdmin?.toString() ?? "");
 
     const res = await fetch(`${API_URL}/users/register`, {
       method: "POST",

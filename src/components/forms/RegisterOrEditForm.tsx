@@ -130,8 +130,10 @@ const RegisterOrEditForm = ({ status, oldData, closeModal }: TProps) => {
         <FormInput
           type="password"
           error={errors?.password?.message}
-          placeholder="Enter your password"
-          label="Password"
+          placeholder={
+            status === "edit" ? "Enter new password" : "Enter your password"
+          }
+          label={status === "edit" ? "New Password" : "Password"}
           name="password"
           register={register}
           isValid={
