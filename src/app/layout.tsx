@@ -7,7 +7,7 @@ import { verifyTokenForPage } from "@/utils/verifyToken";
 import { ToastContainer } from "react-toastify";
 
 //styles
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
 //components
@@ -38,7 +38,7 @@ export default function RootLayout({
   const user = verifyTokenForPage(token || "");
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <div id="modal-container"></div>
 
@@ -49,9 +49,7 @@ export default function RootLayout({
 
           <Header user={user} />
 
-          <RootTemplate key={"root_template"} >
-            {children}
-          </RootTemplate>
+          <RootTemplate key={"root_template"}>{children}</RootTemplate>
 
           <Footer />
         </div>
